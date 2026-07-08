@@ -81,6 +81,17 @@ $about         = $settings['about_text'] ?? '';
   </div>
 </section>
 
+<!-- ===== GROWTH CTA BANNER ===== -->
+<section class="cta-banner"<?= !empty($settings['cta_banner_image']) ? ' style="background-image:url(\'/uploads/banners/' . sanitize($settings['cta_banner_image']) . '\')"' : '' ?>>
+  <div class="cta-banner-overlay"></div>
+  <div class="container">
+    <div class="cta-banner-content">
+      <h2>Ready to grow?</h2>
+      <p>Get a free strategy session with our team – no obligation, just results.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===== WHY US ===== -->
 <section class="section section-alt">
   <div class="container">

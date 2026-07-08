@@ -23,6 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('logo','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
+    // Growth CTA banner image upload
+    if (!empty($_FILES['cta_banner']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['cta_banner']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
+            $newName = 'cta_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/banners/' . $newName;
+            if (move_uploaded_file($_FILES['cta_banner']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('cta_banner_image',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_cta_banner'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('cta_banner_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
     // Change password
     if (!empty($_POST['new_password']) && !empty($_POST['current_password'])) {
         $stmt = $db->prepare("SELECT * FROM admin_users WHERE username=?");
@@ -66,6 +80,32 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group" style="margin-bottom:0">
       <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
         <input type="checkbox" name="remove_logo" value="1" style="width:auto"> Remove logo and use the default text logo instead
+      </label>
+    </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Growth CTA Banner</h2></div>
+  <div class="card-body">
+    <div class="form-group">
+      <label>Current Banner Image</label>
+      <?php if (!empty($settings['cta_banner_image'])): ?>
+        <div style="margin:.5rem 0 1rem"><img src="/uploads/banners/<?= sanitize($settings['cta_banner_image']) ?>" alt="Current banner" style="max-height:100px;max-width:100%;border-radius:8px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No banner uploaded yet — the "Ready to grow?" section will show a plain dark background until you add one.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group">
+      <label>Upload New Banner Image</label>
+      <input type="file" name="cta_banner" accept="image/png,image/jpeg,image/webp">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">A wide landscape photo works best — it displays full-width behind the "Ready to grow?" text.</small>
+    </div>
+    <?php if (!empty($settings['cta_banner_image'])): ?>
+    <div class="form-group" style="margin-bottom:0">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_cta_banner" value="1" style="width:auto"> Remove banner image
       </label>
     </div>
     <?php endif; ?>
