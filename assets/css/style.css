@@ -318,11 +318,11 @@ body.page-index .navbar.scrolled {
   gap: .55rem;
   margin-top: 1.1rem;
   color: var(--text);
-  font-size: .95rem;
+  font-size: 1.1rem;
   font-weight: 500;
 }
 .stat-dot {
-  width: 10px; height: 10px;
+  width: 12px; height: 12px;
   border-radius: 50%;
   background: var(--orange);
   flex-shrink: 0;
