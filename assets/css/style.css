@@ -218,7 +218,7 @@ body.page-index .navbar {
 body.page-index .navbar:not(.scrolled) .logo-mark,
 body.page-index .navbar:not(.scrolled) .logo-text { color: var(--white); }
 body.page-index .navbar:not(.scrolled) .logo-text em { color: var(--teal); }
-body.page-index .navbar:not(.scrolled) .nav-menu a { color: var(--white); }
+body.page-index .navbar:not(.scrolled) .nav-menu a { color: #000000; }
 body.page-index .navbar:not(.scrolled) .nav-menu a:hover,
 body.page-index .navbar:not(.scrolled) .nav-menu a.active { color: var(--orange); background: rgba(255,255,255,.1); }
 body.page-index .navbar:not(.scrolled) .nav-toggle span { background: var(--white); }
