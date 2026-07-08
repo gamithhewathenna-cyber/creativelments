@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `hero_slides` (
   `image` varchar(255) DEFAULT '',
   `badge` varchar(255) DEFAULT '',
   `title` varchar(255) NOT NULL,
+  `title_font_size` int(11) DEFAULT NULL,
   `description` text,
   `button_text` varchar(100) DEFAULT '',
   `button_link` varchar(500) DEFAULT '',

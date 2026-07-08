@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id          = intval($_POST['id'] ?? 0);
     $badge       = trim($_POST['badge'] ?? '');
     $title       = trim($_POST['title'] ?? '');
+    $titleSize   = intval($_POST['title_font_size'] ?? 0);
     $desc        = trim($_POST['description'] ?? '');
     $buttonText  = trim($_POST['button_text'] ?? '');
     $buttonLink  = trim($_POST['button_link'] ?? '');
@@ -65,11 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$formError) {
         if ($id) {
-            $sql = "UPDATE hero_slides SET badge=?,title=?,description=?,button_text=?,button_link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
-            $params = $image ? [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$image,$id] : [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$id];
+            $sql = "UPDATE hero_slides SET badge=?,title=?,title_font_size=?,description=?,button_text=?,button_link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
+            $params = $image ? [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$image,$id] : [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$id];
         } else {
-            $sql = "INSERT INTO hero_slides (badge,title,description,button_text,button_link,sort_order,image) VALUES (?,?,?,?,?,?,?)";
-            $params = [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$image];
+            $sql = "INSERT INTO hero_slides (badge,title,title_font_size,description,button_text,button_link,sort_order,image) VALUES (?,?,?,?,?,?,?,?)";
+            $params = [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$image];
         }
         $db->prepare($sql)->execute($params);
         header('Location: /admin/sliders.php?msg=saved');
@@ -77,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validation failed — redisplay the form with what was typed
-    $editSlide = ['id' => $id, 'badge' => $badge, 'title' => $title, 'description' => $desc, 'button_text' => $buttonText, 'button_link' => $buttonLink, 'sort_order' => $sort];
+    $editSlide = ['id' => $id, 'badge' => $badge, 'title' => $title, 'title_font_size' => $titleSize, 'description' => $desc, 'button_text' => $buttonText, 'button_link' => $buttonLink, 'sort_order' => $sort];
 }
 
 if (isset($_GET['edit']) && !$editSlide) {
@@ -101,10 +102,17 @@ if (isset($_GET['msg'])): ?>
     <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $editSlide['id'] ?? 0 ?>">
       <div class="form-group"><label>Badge Text (small label above the heading)</label><input name="badge" value="<?= sanitize($editSlide['badge'] ?? '') ?>" placeholder="e.g. Trusted by 130+ businesses across Australia & Sri Lanka"></div>
-      <div class="form-group" style="max-width:500px">
-        <label>Heading *</label>
-        <input name="title" required value="<?= htmlspecialchars($editSlide['title'] ?? '', ENT_QUOTES, 'UTF-8') ?>" placeholder="e.g. Your Digital Agency for Melbourne & Sydney">
-        <small style="color:#8892A4;display:block;margin-top:.4rem">Type &lt;br&gt; anywhere to force a line break.</small>
+      <div class="form-row">
+        <div class="form-group" style="max-width:500px">
+          <label>Heading *</label>
+          <input name="title" required value="<?= htmlspecialchars($editSlide['title'] ?? '', ENT_QUOTES, 'UTF-8') ?>" placeholder="e.g. Your Digital Agency for Melbourne & Sydney">
+          <small style="color:#8892A4;display:block;margin-top:.4rem">Type &lt;br&gt; anywhere to force a line break.</small>
+        </div>
+        <div class="form-group">
+          <label>Heading Font Size (px)</label>
+          <input name="title_font_size" type="number" min="16" max="120" value="<?= !empty($editSlide['title_font_size']) ? intval($editSlide['title_font_size']) : '' ?>" placeholder="e.g. 45" style="width:120px">
+          <small style="color:#8892A4;display:block;margin-top:.4rem">Leave blank for the default responsive size.</small>
+        </div>
       </div>
       <div class="form-group"><label>Description</label><textarea name="description" placeholder="Supporting paragraph text"><?= sanitize($editSlide['description'] ?? '') ?></textarea></div>
       <div class="form-row">

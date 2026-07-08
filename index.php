@@ -21,7 +21,7 @@ $about         = $settings['about_text'] ?? '';
           <?php if (!empty($slide['badge'])): ?>
           <div class="hero-badge"><span>⚡</span> <?= sanitize($slide['badge']) ?></div>
           <?php endif; ?>
-          <h1><?= sanitizeBr($slide['title']) ?></h1>
+          <h1<?= !empty($slide['title_font_size']) ? ' style="font-size:' . intval($slide['title_font_size']) . 'px"' : '' ?>><?= sanitizeBr($slide['title']) ?></h1>
           <?php if (!empty($slide['description'])): ?>
           <p><?= sanitize($slide['description']) ?></p>
           <?php endif; ?>
