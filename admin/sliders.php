@@ -19,6 +19,14 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 
+// Required dimensions/format so every slide displays identically
+const SLIDER_WIDTH  = 1920;
+const SLIDER_HEIGHT = 600;
+const SLIDER_EXT    = 'jpg';
+
+$formError = '';
+$editSlide = null;
+
 // Save (add or edit)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id          = intval($_POST['id'] ?? 0);
@@ -30,32 +38,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sort        = intval($_POST['sort_order'] ?? 0);
     $image       = '';
 
-    // Handle file upload
+    // Handle file upload — every slide must match the same size & format
     if (!empty($_FILES['image']['name'])) {
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
-            $newName = uniqid('slide_') . '.' . $ext;
-            $dest    = '../uploads/hero/' . $newName;
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
-                $image = $newName;
+        if (!in_array($ext, ['jpg','jpeg'])) {
+            $formError = 'Image must be a ' . strtoupper(SLIDER_EXT) . ' file (all slides must use the same format).';
+        } else {
+            $dimensions = @getimagesize($_FILES['image']['tmp_name']);
+            if (!$dimensions) {
+                $formError = 'Could not read the uploaded image.';
+            } elseif ($dimensions[0] !== SLIDER_WIDTH || $dimensions[1] !== SLIDER_HEIGHT) {
+                $formError = "Image must be exactly " . SLIDER_WIDTH . "×" . SLIDER_HEIGHT . "px (yours was {$dimensions[0]}×{$dimensions[1]}px). All slides must be the same dimensions.";
+            } else {
+                $newName = uniqid('slide_') . '.' . SLIDER_EXT;
+                $dest    = '../uploads/hero/' . $newName;
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
+                    $image = $newName;
+                } else {
+                    $formError = 'Image upload failed. Please try again.';
+                }
             }
         }
+    } elseif (!$id) {
+        $formError = 'Please choose a slide image.';
     }
 
-    if ($id) {
-        $sql = "UPDATE hero_slides SET badge=?,title=?,description=?,button_text=?,button_link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
-        $params = $image ? [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$image,$id] : [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$id];
-    } else {
-        $sql = "INSERT INTO hero_slides (badge,title,description,button_text,button_link,sort_order,image) VALUES (?,?,?,?,?,?,?)";
-        $params = [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$image];
+    if (!$formError) {
+        if ($id) {
+            $sql = "UPDATE hero_slides SET badge=?,title=?,description=?,button_text=?,button_link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
+            $params = $image ? [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$image,$id] : [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$id];
+        } else {
+            $sql = "INSERT INTO hero_slides (badge,title,description,button_text,button_link,sort_order,image) VALUES (?,?,?,?,?,?,?)";
+            $params = [$badge,$title,$desc,$buttonText,$buttonLink,$sort,$image];
+        }
+        $db->prepare($sql)->execute($params);
+        header('Location: /admin/sliders.php?msg=saved');
+        exit;
     }
-    $db->prepare($sql)->execute($params);
-    header('Location: /admin/sliders.php?msg=saved');
-    exit;
+
+    // Validation failed — redisplay the form with what was typed
+    $editSlide = ['id' => $id, 'badge' => $badge, 'title' => $title, 'description' => $desc, 'button_text' => $buttonText, 'button_link' => $buttonLink, 'sort_order' => $sort];
 }
 
-$editSlide = null;
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit']) && !$editSlide) {
     $stmt = $db->prepare("SELECT * FROM hero_slides WHERE id=?");
     $stmt->execute([$_GET['edit']]);
     $editSlide = $stmt->fetch();
@@ -64,6 +89,9 @@ if (isset($_GET['edit'])) {
 $slides = $db->query("SELECT * FROM hero_slides ORDER BY sort_order")->fetchAll();
 if (isset($_GET['msg'])): ?>
 <div class="alert alert-success"><?= $_GET['msg'] === 'saved' ? 'Slide saved successfully.' : 'Slide deleted.' ?></div>
+<?php endif; ?>
+<?php if ($formError): ?>
+<div class="alert alert-error"><?= htmlspecialchars($formError) ?></div>
 <?php endif; ?>
 
 <!-- Add/Edit Form -->
@@ -80,7 +108,10 @@ if (isset($_GET['msg'])): ?>
         <div class="form-group"><label>Button Link (optional)</label><input name="button_link" type="url" value="<?= sanitize($editSlide['button_link'] ?? '') ?>" placeholder="https://wa.me/94777130597"></div>
       </div>
       <div class="form-group"><label>Sort Order</label><input name="sort_order" type="number" value="<?= $editSlide['sort_order'] ?? 0 ?>" style="width:100px"></div>
-      <div class="form-group"><label>Slide Image (1920&times;500px recommended)</label><input type="file" name="image" accept="image/*">
+      <div class="form-group">
+        <label>Slide Image <?= $editSlide['id'] ?? 0 ? '' : '*' ?></label>
+        <input type="file" name="image" accept=".jpg,.jpeg">
+        <small style="color:#8892A4;display:block;margin-top:.4rem">Must be exactly 1920&times;600px, JPG format &mdash; every slide must match so the slider displays consistently.</small>
         <?php if (!empty($editSlide['image'])): ?><br><small>Current: <?= sanitize($editSlide['image']) ?></small><?php endif; ?>
       </div>
       <button type="submit" class="btn btn-primary">Save Slide</button>
