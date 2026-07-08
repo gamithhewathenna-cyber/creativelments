@@ -65,7 +65,6 @@ $about         = $settings['about_text'] ?? '';
   <div class="container">
     <div class="services-showcase">
       <div class="services-showcase-left">
-        <div class="services-showcase-ring"></div>
         <h2>Why Melbourne & Sydney Businesses Choose Creative Elements</h2>
         <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
         <a href="/services.php" class="btn btn-primary">Read More</a>
