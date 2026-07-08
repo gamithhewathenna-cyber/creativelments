@@ -76,7 +76,7 @@ if (isset($_GET['id'])) {
           </td>
         </tr>
         <?php endforeach; ?>
-        <?php if (!$enquiries): ?><tr><td colspan="6" style="text-align:center;color:#8892A4;padding:2rem">No enquiries yet.</td></tr><?php endif; ?>
+        <?php if (!$enquiries): ?><tr><td colspan="6" style="text-align:center;color:#313131;padding:2rem">No enquiries yet.</td></tr><?php endif; ?>
         </tbody>
       </table>
     </div>

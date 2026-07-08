@@ -54,7 +54,7 @@ $recentEnquiries = $db->query("SELECT * FROM enquiries ORDER BY created_at DESC 
         <td><a href="/admin/enquiries.php?id=<?= $e['id'] ?>" class="btn btn-outline btn-sm">View</a></td>
       </tr>
       <?php endforeach; ?>
-      <?php if (!$recentEnquiries): ?><tr><td colspan="6" style="text-align:center;color:#8892A4;padding:2rem">No enquiries yet.</td></tr><?php endif; ?>
+      <?php if (!$recentEnquiries): ?><tr><td colspan="6" style="text-align:center;color:#313131;padding:2rem">No enquiries yet.</td></tr><?php endif; ?>
     </tbody>
   </table>
 </div>

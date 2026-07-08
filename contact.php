@@ -97,9 +97,9 @@ require_once 'includes/header.php';
 
         <div style="background:#F7F8FC;border-radius:12px;padding:1.5rem">
           <h4 style="font-size:1rem;margin-bottom:.75rem">Business Hours</h4>
-          <p style="font-size:.88rem;color:#8892A4;margin-bottom:.4rem">Monday – Friday: 9 AM – 6 PM (SLST)</p>
-          <p style="font-size:.88rem;color:#8892A4;margin-bottom:.4rem">Saturday: 9 AM – 2 PM</p>
-          <p style="font-size:.88rem;color:#8892A4">Sunday: Closed</p>
+          <p style="font-size:.88rem;color:#313131;margin-bottom:.4rem">Monday – Friday: 9 AM – 6 PM (SLST)</p>
+          <p style="font-size:.88rem;color:#313131;margin-bottom:.4rem">Saturday: 9 AM – 2 PM</p>
+          <p style="font-size:.88rem;color:#313131">Sunday: Closed</p>
         </div>
       </div>
     </div>

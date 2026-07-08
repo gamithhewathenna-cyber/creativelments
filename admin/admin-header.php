@@ -17,17 +17,17 @@ $currentPage  = basename($_SERVER['PHP_SELF'], '.php');
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Poppins',sans-serif;background:#F1F5F9;color:#0A0F1E;display:flex;min-height:100vh}
+body{font-family:'Poppins',sans-serif;background:#F1F5F9;color:#313131;display:flex;min-height:100vh}
 /* Sidebar */
 .sidebar{width:240px;background:#0A0F1E;display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sidebar-logo{padding:1.5rem;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:.75rem}
-.lm{width:38px;height:38px;background:#3B7BFF;border-radius:8px;display:grid;place-items:center;font-family:'Poppins',sans-serif;font-weight:800;color:white;font-size:.9rem;flex-shrink:0}
+.lm{width:38px;height:38px;background:#804899;border-radius:8px;display:grid;place-items:center;font-family:'Poppins',sans-serif;font-weight:800;color:white;font-size:.9rem;flex-shrink:0}
 .lt{font-family:'Poppins',sans-serif;font-size:.8rem;font-weight:700;color:white;line-height:1.2}
-.lt em{font-style:normal;color:#5A94FF}
+.lt em{font-style:normal;color:#5bc1c1}
 .sidebar-nav{padding:1rem 0;flex:1}
 .nav-section{padding:.5rem 1rem .25rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4B5563}
 .sidebar a{display:flex;align-items:center;gap:.7rem;padding:.65rem 1.25rem;color:rgba(255,255,255,.6);font-size:.85rem;font-weight:500;text-decoration:none;transition:all .2s;border-left:3px solid transparent}
-.sidebar a:hover,.sidebar a.active{color:white;background:rgba(59,123,255,.12);border-left-color:#3B7BFF}
+.sidebar a:hover,.sidebar a.active{color:white;background:rgba(128,72,153,.12);border-left-color:#804899}
 .badge{background:#EF4444;color:white;font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:100px;margin-left:auto}
 .sidebar-footer{padding:1.25rem;border-top:1px solid rgba(255,255,255,.07)}
 .sidebar-footer a{color:#4B5563;font-size:.8rem;text-decoration:none}
@@ -36,39 +36,39 @@ body{font-family:'Poppins',sans-serif;background:#F1F5F9;color:#0A0F1E;display:f
 /* Main */
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 .topbar-admin{background:white;border-bottom:1px solid #E2E8F0;padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.topbar-admin h1{font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:700}
-.admin-user{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:#8892A4}
-.user-avatar{width:32px;height:32px;background:#3B7BFF;border-radius:50%;display:grid;place-items:center;color:white;font-weight:700;font-size:.8rem}
+.topbar-admin h1{font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:700;color:#804899}
+.admin-user{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:#313131}
+.user-avatar{width:32px;height:32px;background:#804899;border-radius:50%;display:grid;place-items:center;color:white;font-weight:700;font-size:.8rem}
 
 .content{padding:2rem;flex:1}
 
 /* Cards */
 .card{background:white;border-radius:12px;border:1px solid #E2E8F0;overflow:hidden;margin-bottom:1.5rem}
 .card-header{padding:1.25rem 1.5rem;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.card-header h2{font-size:1rem;font-weight:700}
+.card-header h2{font-size:1rem;font-weight:700;color:#804899}
 .card-body{padding:1.5rem}
 
 /* Forms */
 .form-group{margin-bottom:1.25rem}
 .form-group label{display:block;font-size:.82rem;font-weight:600;color:#374151;margin-bottom:.4rem}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:.7rem 1rem;border:1.5px solid #E2E8F0;border-radius:8px;font-family:'Poppins',sans-serif;font-size:.9rem;color:#0A0F1E;background:white;outline:none;transition:border-color .2s}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3B7BFF;box-shadow:0 0 0 3px rgba(59,123,255,.1)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.7rem 1rem;border:1.5px solid #E2E8F0;border-radius:8px;font-family:'Poppins',sans-serif;font-size:.9rem;color:#313131;background:white;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#804899;box-shadow:0 0 0 3px rgba(128,72,153,.1)}
 .form-group textarea{min-height:140px;resize:vertical}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 
 /* Buttons */
 .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.35rem;border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer;border:none;text-decoration:none;transition:all .2s}
-.btn-primary{background:#3B7BFF;color:white}
-.btn-primary:hover{background:#2563EB}
+.btn-primary{background:#804899;color:white}
+.btn-primary:hover{background:#ff9243}
 .btn-danger{background:#EF4444;color:white}
 .btn-danger:hover{background:#DC2626}
 .btn-sm{padding:.45rem 1rem;font-size:.8rem}
 .btn-outline{background:transparent;color:#374151;border:1.5px solid #E2E8F0}
-.btn-outline:hover{border-color:#3B7BFF;color:#3B7BFF}
+.btn-outline:hover{border-color:#ff9243;color:#ff9243}
 
 /* Table */
 table{width:100%;border-collapse:collapse}
-th{padding:.75rem 1rem;text-align:left;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#8892A4;background:#F8FAFC;border-bottom:1px solid #E2E8F0}
+th{padding:.75rem 1rem;text-align:left;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#313131;background:#F8FAFC;border-bottom:1px solid #E2E8F0}
 td{padding:.85rem 1rem;font-size:.88rem;border-bottom:1px solid #F1F5F9;vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#F8FAFC}
@@ -88,8 +88,8 @@ tr:hover td{background:#F8FAFC}
 /* Stat cards */
 .stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:1.5rem}
 .stat-card{background:white;border:1px solid #E2E8F0;border-radius:12px;padding:1.5rem}
-.stat-card .num{font-family:'Poppins',sans-serif;font-size:2rem;font-weight:800;color:#3B7BFF}
-.stat-card .label{font-size:.82rem;color:#8892A4;margin-top:.25rem}
+.stat-card .num{font-family:'Poppins',sans-serif;font-size:2rem;font-weight:800;color:#ff9243}
+.stat-card .label{font-size:.82rem;color:#313131;margin-top:.25rem}
 
 @media(max-width:900px){.sidebar{width:200px}.stat-cards{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.sidebar{display:none}.stat-cards{grid-template-columns:1fr}}

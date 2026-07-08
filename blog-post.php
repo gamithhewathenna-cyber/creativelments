@@ -25,7 +25,7 @@ require_once 'includes/header.php';
 <section class="section">
   <div class="container" style="max-width:760px">
     <?php if ($post['excerpt']): ?>
-    <p style="font-size:1.15rem;color:#8892A4;margin-bottom:2rem;font-style:italic"><?= sanitize($post['excerpt']) ?></p>
+    <p style="font-size:1.15rem;color:#313131;margin-bottom:2rem;font-style:italic"><?= sanitize($post['excerpt']) ?></p>
     <?php endif; ?>
     <div style="line-height:1.85;font-size:.97rem">
       <?= nl2br(sanitize($post['content'])) ?>

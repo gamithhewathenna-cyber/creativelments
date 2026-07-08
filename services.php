@@ -43,7 +43,7 @@ $services = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort_orde
   <div class="container">
     <h2>Not Sure Which Service You Need?</h2>
     <p>Chat with us — we'll build you a custom package that fits your business goals and budget.</p>
-    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#3B7BFF;font-weight:700" target="_blank">Free Consultation</a>
+    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank">Free Consultation</a>
   </div>
 </section>
 

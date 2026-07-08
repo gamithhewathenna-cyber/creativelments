@@ -230,7 +230,7 @@ $about         = $settings['about_text'] ?? '';
     <h2>Ready to Grow?</h2>
     <p>Get a free strategy session with our team — no obligation, just results.</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-      <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#3B7BFF;font-weight:700" target="_blank">Chat on WhatsApp</a>
+      <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank">Chat on WhatsApp</a>
       <a href="/contact.php" class="btn btn-outline">Send a Message</a>
     </div>
   </div>

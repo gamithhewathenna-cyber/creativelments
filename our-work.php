@@ -42,7 +42,7 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
     </div>
 
     <?php if (empty($projects)): ?>
-    <p style="text-align:center;color:#8892A4;padding:4rem 0">No projects yet. Add them from the admin panel.</p>
+    <p style="text-align:center;color:#313131;padding:4rem 0">No projects yet. Add them from the admin panel.</p>
     <?php endif; ?>
   </div>
 </section>
@@ -51,7 +51,7 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
   <div class="container">
     <h2>Like What You See?</h2>
     <p>Let's create something exceptional for your business. Get a free quote today.</p>
-    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#3B7BFF;font-weight:700" target="_blank">Start a Project</a>
+    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank">Start a Project</a>
   </div>
 </section>
 
@@ -72,8 +72,8 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
   transition: all .2s;
 }
 .filter-btn:hover, .filter-btn.active {
-  background: #3B7BFF;
-  border-color: #3B7BFF;
+  background: #804899;
+  border-color: #804899;
   color: white;
 }
 </style>

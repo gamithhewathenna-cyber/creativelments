@@ -18,10 +18,10 @@ $stats = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
       <div>
         <span class="section-label">Our Story</span>
         <h2>Built on Results, Driven by Creativity</h2>
-        <p style="color:#8892A4;margin-top:1rem;font-size:.95rem;line-height:1.8">
+        <p style="color:#313131;margin-top:1rem;font-size:.95rem;line-height:1.8">
           <?= sanitize($settings['about_text'] ?? '') ?>
         </p>
-        <p style="color:#8892A4;margin-top:1rem;font-size:.95rem;line-height:1.8">
+        <p style="color:#313131;margin-top:1rem;font-size:.95rem;line-height:1.8">
           Founded and headquartered in Colombo, Sri Lanka, we serve clients across Melbourne and Sydney who want world-class digital output without the premium agency price tag. We believe great design shouldn't cost a fortune — and great results shouldn't be a mystery.
         </p>
         <div style="display:flex;gap:1rem;margin-top:1.75rem;flex-wrap:wrap">
@@ -91,7 +91,7 @@ $stats = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
   <div class="container">
     <h2>Want to Know More?</h2>
     <p>Book a free 30-minute strategy call and let's talk about your business goals.</p>
-    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#3B7BFF;font-weight:700" target="_blank">Chat on WhatsApp</a>
+    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank">Chat on WhatsApp</a>
   </div>
 </section>
 

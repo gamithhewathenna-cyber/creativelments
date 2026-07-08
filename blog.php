@@ -35,7 +35,7 @@ $posts = $db->query("SELECT id,title,slug,excerpt,image,category,created_at FROM
       <?php endforeach; ?>
     </div>
     <?php else: ?>
-    <p style="text-align:center;color:#8892A4;padding:4rem 0">No blog posts yet. Add posts from the admin panel.</p>
+    <p style="text-align:center;color:#313131;padding:4rem 0">No blog posts yet. Add posts from the admin panel.</p>
     <?php endif; ?>
   </div>
 </section>
