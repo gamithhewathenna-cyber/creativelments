@@ -421,7 +421,7 @@ body.page-index .navbar.scrolled {
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--navy3);
-  aspect-ratio: 4/3;
+  aspect-ratio: 4/5;
   cursor: pointer;
 }
 .portfolio-img {
