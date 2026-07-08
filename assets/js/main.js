@@ -1,6 +1,6 @@
 /* Creative Elements — Main JS */
 
-// ---- Hero image slider ----
+// ---- Hero image slider (sliding transition) ----
 const heroSlides = document.querySelectorAll('.hero-slide');
 if (heroSlides.length > 1) {
   const heroPrev = document.querySelector('.hero-arrow-prev');
@@ -8,14 +8,28 @@ if (heroSlides.length > 1) {
   let currentHeroSlide = 0;
   let heroInterval;
 
-  const showHeroSlide = (index) => {
-    heroSlides[currentHeroSlide].classList.remove('active');
-    currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
-    heroSlides[currentHeroSlide].classList.add('active');
+  const showHeroSlide = (targetIndex, direction = 1) => {
+    const newIndex = (targetIndex + heroSlides.length) % heroSlides.length;
+    if (newIndex === currentHeroSlide) return;
+    const oldSlide = heroSlides[currentHeroSlide];
+    const newSlide = heroSlides[newIndex];
+
+    // Park the incoming slide on the correct side before revealing it
+    newSlide.style.transition = 'none';
+    newSlide.style.transform = direction > 0 ? 'translateX(100%)' : 'translateX(-100%)';
+    newSlide.classList.add('active');
+    void newSlide.offsetHeight; // force reflow so the browser registers the starting position
+    newSlide.style.transition = '';
+    newSlide.style.transform = 'translateX(0)';
+
+    oldSlide.style.transform = direction > 0 ? 'translateX(-100%)' : 'translateX(100%)';
+    oldSlide.classList.remove('active');
+
+    currentHeroSlide = newIndex;
   };
 
   const startHeroAutoplay = () => {
-    heroInterval = setInterval(() => showHeroSlide(currentHeroSlide + 1), 5000);
+    heroInterval = setInterval(() => showHeroSlide(currentHeroSlide + 1, 1), 5000);
   };
   const resetHeroAutoplay = () => {
     clearInterval(heroInterval);
@@ -24,8 +38,8 @@ if (heroSlides.length > 1) {
 
   startHeroAutoplay();
 
-  if (heroPrev) heroPrev.addEventListener('click', () => { showHeroSlide(currentHeroSlide - 1); resetHeroAutoplay(); });
-  if (heroNext) heroNext.addEventListener('click', () => { showHeroSlide(currentHeroSlide + 1); resetHeroAutoplay(); });
+  if (heroPrev) heroPrev.addEventListener('click', () => { showHeroSlide(currentHeroSlide - 1, -1); resetHeroAutoplay(); });
+  if (heroNext) heroNext.addEventListener('click', () => { showHeroSlide(currentHeroSlide + 1, 1); resetHeroAutoplay(); });
 }
 
 // ---- Navbar scroll effect ----

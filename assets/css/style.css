@@ -235,16 +235,19 @@ body.page-index .navbar.scrolled {
   position: relative;
   overflow: hidden;
 }
-.hero-slider { position: absolute; inset: 0; z-index: 0; }
+.hero-slider { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
 .hero-slide {
   position: absolute;
   inset: 0;
-  display: none;
+  display: flex;
   align-items: flex-start;
   background-size: cover;
   background-position: center;
+  transform: translateX(100%);
+  transition: transform .8s cubic-bezier(.65,0,.35,1);
+  z-index: 1;
 }
-.hero-slide.active { display: flex; }
+.hero-slide.active { transform: translateX(0); z-index: 2; }
 .hero-arrow {
   position: absolute;
   top: 50%;
