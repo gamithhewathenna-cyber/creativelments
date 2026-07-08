@@ -101,7 +101,7 @@ if (isset($_GET['msg'])): ?>
     <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $editSlide['id'] ?? 0 ?>">
       <div class="form-group"><label>Badge Text (small label above the heading)</label><input name="badge" value="<?= sanitize($editSlide['badge'] ?? '') ?>" placeholder="e.g. Trusted by 130+ businesses across Australia & Sri Lanka"></div>
-      <div class="form-group"><label>Heading *</label><input name="title" required value="<?= sanitize($editSlide['title'] ?? '') ?>" placeholder="e.g. Your Digital Agency for Melbourne & Sydney"></div>
+      <div class="form-group" style="max-width:500px"><label>Heading *</label><input name="title" required value="<?= sanitize($editSlide['title'] ?? '') ?>" placeholder="e.g. Your Digital Agency for Melbourne & Sydney"></div>
       <div class="form-group"><label>Description</label><textarea name="description" placeholder="Supporting paragraph text"><?= sanitize($editSlide['description'] ?? '') ?></textarea></div>
       <div class="form-row">
         <div class="form-group"><label>Button Text (optional)</label><input name="button_text" value="<?= sanitize($editSlide['button_text'] ?? '') ?>" placeholder="e.g. Get a Free Quote"></div>
