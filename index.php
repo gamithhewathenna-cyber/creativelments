@@ -104,7 +104,7 @@ $about         = $settings['about_text'] ?? '';
         <?php endif; ?>
       </div>
       <div class="unique-showcase-content">
-        <h2>What Makes Us Unique?</h2>
+        <h2>What Makes<br>Us Unique?</h2>
         <p><?= sanitize($settings['unique_section_text'] ?? '') ?></p>
       </div>
     </div>
