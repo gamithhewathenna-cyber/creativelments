@@ -366,6 +366,30 @@ body.page-index .navbar.scrolled {
 .service-card h3 { margin-bottom: .6rem; font-size: 1.1rem; }
 .service-card p { color: var(--text); font-size: .9rem; }
 
+/* ---- Homepage Services Showcase ---- */
+.services-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+.services-showcase-left { padding-top: .5rem; }
+.services-showcase-ring {
+  width: 44px; height: 44px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+.services-showcase-left h2 { color: var(--navy2); margin-bottom: 1.25rem; }
+.services-showcase-left p { color: var(--gray); font-size: .95rem; line-height: 1.7; margin-bottom: 1.75rem; }
+.services-showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem 3rem;
+}
+.services-showcase-item h3 { color: var(--navy2); font-size: 1.2rem; margin-bottom: .6rem; }
+.services-showcase-item p { color: var(--gray); font-size: .92rem; line-height: 1.65; }
+
 /* ---- Portfolio ---- */
 .portfolio-grid {
   display: grid;
@@ -696,6 +720,7 @@ body.page-index .navbar.scrolled {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
+  .services-showcase { grid-template-columns: 1fr; gap: 2.5rem; }
 }
 
 @media (max-width: 768px) {
@@ -717,6 +742,7 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .topbar { display: none; }
   .hero { height: 480px; }
+  .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .services-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }

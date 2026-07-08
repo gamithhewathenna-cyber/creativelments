@@ -63,32 +63,21 @@ $about         = $settings['about_text'] ?? '';
 <!-- ===== SERVICES ===== -->
 <section class="section">
   <div class="container">
-    <div class="section-header">
-      <span class="section-label">What We Do</span>
-      <h2>Why Melbourne & Sydney Businesses Choose Creative Elements</h2>
-      <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
-    </div>
-    <div class="services-grid">
-      <?php
-      $icons = [
-        'monitor'      => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
-        'pen-tool'     => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
-        'trending-up'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
-        'shopping-bag' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
-        'share-2'      => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>',
-        'tablet'       => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',
-        'star'         => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
-      ];
-      foreach ($services as $svc): ?>
-      <div class="service-card">
-        <div class="service-icon"><?= $icons[$svc['icon']] ?? $icons['star'] ?></div>
-        <h3><?= sanitize($svc['title']) ?></h3>
-        <p><?= sanitize($svc['description']) ?></p>
+    <div class="services-showcase">
+      <div class="services-showcase-left">
+        <div class="services-showcase-ring"></div>
+        <h2>Why Melbourne & Sydney Businesses Choose Creative Elements</h2>
+        <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
+        <a href="/services.php" class="btn btn-primary">Read More</a>
       </div>
-      <?php endforeach; ?>
-    </div>
-    <div style="text-align:center;margin-top:2.5rem">
-      <a href="/services.php" class="btn btn-dark">View All Services</a>
+      <div class="services-showcase-grid">
+        <?php foreach (array_slice($services, 0, 4) as $svc): ?>
+        <div class="services-showcase-item">
+          <h3><?= sanitize($svc['title']) ?></h3>
+          <p><?= sanitize($svc['description']) ?></p>
+        </div>
+        <?php endforeach; ?>
+      </div>
     </div>
   </div>
 </section>
