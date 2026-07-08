@@ -194,7 +194,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
 <section class="section">
   <div class="container">
     <div class="section-header">
-      <h2>Trusted by 130+ Businesses Across Australia & Sri Lanka</h2>
+      <h2 class="logos-heading">Trusted by 130+ Businesses Across Australia & Sri Lanka</h2>
     </div>
     <div class="logos-grid">
       <?php foreach ($clientLogos as $logo): ?>

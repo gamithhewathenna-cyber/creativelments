@@ -507,6 +507,7 @@ body.page-index .navbar.scrolled {
 .portfolio-arrow-next { right: 12px; }
 
 /* ---- Client Logos ---- */
+.logos-heading { color: #000000; font-weight: 400; }
 .logos-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
