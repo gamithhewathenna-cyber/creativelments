@@ -10,7 +10,7 @@ define('DB_NAME', 'creaeina_creativelements');        // CPanel DB name
 // ============================================================
 // SITE CONFIGURATION
 // ============================================================
-define('SITE_URL', 'https://yourdomain.com');   // Your domain
+define('SITE_URL', 'http://creative.creativelements-dev.info');   // Your domain
 define('SITE_NAME', 'Creative Elements');
 define('ADMIN_EMAIL', 'reach@creativelements.co');
 define('WHATSAPP_NUMBER', '94777130597');
