@@ -22,6 +22,9 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 
+$formError = '';
+$editProject = null;
+
 // Save (add or edit)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id       = intval($_POST['id'] ?? 0);
@@ -35,29 +38,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle file upload
     if (!empty($_FILES['image']['name'])) {
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg','jpeg','png','webp','gif'])) {
+        if (!in_array($ext, ['jpg','jpeg','png','webp','gif'])) {
+            $formError = 'Image must be a JPG, PNG, WEBP or GIF file.';
+        } elseif (!is_dir('../uploads/projects') || !is_writable('../uploads/projects')) {
+            $formError = 'Upload folder "uploads/projects" is missing or not writable on the server. Create it and set permissions to 755.';
+        } else {
             $newName = uniqid('proj_') . '.' . $ext;
             $dest    = '../uploads/projects/' . $newName;
             if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
                 $image = $newName;
+            } else {
+                $formError = 'Image upload failed. Please try again.';
             }
         }
     }
 
-    if ($id) {
-        $sql = "UPDATE projects SET title=?,category=?,description=?,link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
-        $params = $image ? [$title,$category,$desc,$link,$sort,$image,$id] : [$title,$category,$desc,$link,$sort,$id];
-    } else {
-        $sql = "INSERT INTO projects (title,category,description,link,sort_order,image) VALUES (?,?,?,?,?,?)";
-        $params = [$title,$category,$desc,$link,$sort,$image];
+    if (!$formError) {
+        if ($id) {
+            $sql = "UPDATE projects SET title=?,category=?,description=?,link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
+            $params = $image ? [$title,$category,$desc,$link,$sort,$image,$id] : [$title,$category,$desc,$link,$sort,$id];
+        } else {
+            $sql = "INSERT INTO projects (title,category,description,link,sort_order,image) VALUES (?,?,?,?,?,?)";
+            $params = [$title,$category,$desc,$link,$sort,$image];
+        }
+        $db->prepare($sql)->execute($params);
+        header('Location: /admin/projects.php?msg=saved');
+        exit;
     }
-    $db->prepare($sql)->execute($params);
-    header('Location: /admin/projects.php?msg=saved');
-    exit;
+
+    // Validation failed — redisplay the form with what was typed
+    $editProject = ['id' => $id, 'title' => $title, 'category' => $category, 'description' => $desc, 'link' => $link, 'sort_order' => $sort];
 }
 
-$editProject = null;
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit']) && !$editProject) {
     $stmt = $db->prepare("SELECT * FROM projects WHERE id=?");
     $stmt->execute([$_GET['edit']]);
     $editProject = $stmt->fetch();
@@ -66,6 +79,9 @@ if (isset($_GET['edit'])) {
 $projects = $db->query("SELECT * FROM projects ORDER BY sort_order")->fetchAll();
 if (isset($_GET['msg'])): ?>
 <div class="alert alert-success"><?= $_GET['msg'] === 'saved' ? 'Project saved successfully.' : 'Project deleted.' ?></div>
+<?php endif; ?>
+<?php if ($formError): ?>
+<div class="alert alert-error"><?= htmlspecialchars($formError) ?></div>
 <?php endif; ?>
 
 <!-- Add/Edit Form -->
@@ -96,10 +112,11 @@ if (isset($_GET['msg'])): ?>
 <div class="card">
   <div class="card-header"><h2>All Projects (<?= count($projects) ?>)</h2></div>
   <table>
-    <thead><tr><th>Title</th><th>Category</th><th>Active</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Active</th><th>Actions</th></tr></thead>
     <tbody>
     <?php foreach ($projects as $p): ?>
     <tr>
+      <td><?php if ($p['image']): ?><img src="/uploads/projects/<?= sanitize($p['image']) ?>" alt="" style="width:60px;height:45px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($p['title']) ?></strong></td>
       <td><?= sanitize($p['category']) ?></td>
       <td><span class="pill <?= $p['active'] ? 'pill-green' : 'pill-red' ?>"><?= $p['active'] ? 'Active' : 'Hidden' ?></span></td>
