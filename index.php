@@ -10,9 +10,14 @@ $about         = $settings['about_text'] ?? '';
 ?>
 
 <!-- ===== HERO ===== -->
+<?php $heroSlides = ['slide1.jpg', 'slide2.jpg', 'slide3.jpg']; ?>
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid-overlay"></div>
+  <div class="hero-slider">
+    <?php foreach ($heroSlides as $i => $slideImg): ?>
+    <div class="hero-slide <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/uploads/hero/<?= sanitize($slideImg) ?>')"></div>
+    <?php endforeach; ?>
+  </div>
+  <div class="hero-overlay"></div>
   <div class="container">
     <div class="hero-content">
       <div class="hero-badge">
@@ -20,54 +25,6 @@ $about         = $settings['about_text'] ?? '';
       </div>
       <h1>Your Digital Agency for <em>Melbourne & Sydney</em></h1>
       <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
-      <div class="hero-cta">
-        <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary" target="_blank">Get a Free Quote</a>
-        <a href="/our-work.php" class="btn btn-outline">View Our Work</a>
-      </div>
-      <div class="hero-slides">
-        <?php
-        $slides = [
-          'Web Design & Development — Fast, modern, Google-ready',
-          'Social Media Management — Content that converts',
-          'Ongoing Support — We don\'t disappear after launch',
-          'Design Retainers — Fresh creative, every month',
-          'Flexible Payment Plans — Pay in stages, zero stress',
-        ];
-        foreach ($slides as $i => $slide): ?>
-        <div class="slide-item <?= $i === 0 ? 'active' : '' ?>">
-          <span class="slide-dot"></span>
-          <span class="slide-label"><?= htmlspecialchars($slide) ?></span>
-        </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-
-    <!-- Hero Card -->
-    <div class="hero-card">
-      <div class="hero-card-title">Start Your Project</div>
-      <div class="hero-card-sub">Free strategy session — no obligation, just results.</div>
-      <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary" target="_blank">
-        Chat on WhatsApp
-      </a>
-      <div class="hero-card-divider"></div>
-      <div class="hero-card-stats">
-        <div class="hcs-item">
-          <div class="hcs-num">15+</div>
-          <div class="hcs-label">Years Experience</div>
-        </div>
-        <div class="hcs-item">
-          <div class="hcs-num">130+</div>
-          <div class="hcs-label">Clients Worldwide</div>
-        </div>
-        <div class="hcs-item">
-          <div class="hcs-num">3</div>
-          <div class="hcs-label">Countries Served</div>
-        </div>
-        <div class="hcs-item">
-          <div class="hcs-num">100%</div>
-          <div class="hcs-label">On-time Delivery</div>
-        </div>
-      </div>
     </div>
   </div>
 </section>

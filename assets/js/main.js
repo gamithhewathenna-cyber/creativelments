@@ -1,5 +1,16 @@
 /* Creative Elements — Main JS */
 
+// ---- Hero image slider ----
+const heroSlides = document.querySelectorAll('.hero-slide');
+if (heroSlides.length > 1) {
+  let currentHeroSlide = 0;
+  setInterval(() => {
+    heroSlides[currentHeroSlide].classList.remove('active');
+    currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+    heroSlides[currentHeroSlide].classList.add('active');
+  }, 5000);
+}
+
 // ---- Navbar scroll effect ----
 const navbar = document.getElementById('navbar');
 if (navbar) {
