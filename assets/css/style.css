@@ -385,6 +385,37 @@ body.page-index .navbar.scrolled {
 .services-showcase-item h3 { color: var(--navy2); font-size: 1.2rem; margin-bottom: .6rem; }
 .services-showcase-item p { color: var(--gray); font-size: .92rem; line-height: 1.65; }
 
+/* ---- What Makes Us Unique ---- */
+.unique-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 3rem;
+  align-items: center;
+}
+.unique-showcase-image { display: flex; justify-content: center; }
+.unique-showcase-image img { max-width: 100%; height: auto; }
+.unique-showcase-placeholder {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: var(--off);
+  border: 2px dashed var(--light);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+  color: var(--gray);
+  font-size: .9rem;
+  text-align: center;
+  padding: 2rem;
+}
+.unique-showcase-content h2 { color: var(--primary); margin-bottom: 1.25rem; }
+.unique-showcase-ring {
+  width: 40px; height: 40px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  margin-bottom: 1.25rem;
+}
+.unique-showcase-content p { color: var(--gray); font-size: .95rem; line-height: 1.8; }
+
 /* ---- Portfolio ---- */
 .portfolio-grid {
   display: grid;
@@ -733,6 +764,8 @@ body.page-index .navbar.scrolled {
   .contact-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
   .services-showcase { grid-template-columns: 1fr; gap: 2.5rem; }
+  .unique-showcase { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
+  .unique-showcase-ring { margin-left: auto; margin-right: auto; }
 }
 
 @media (max-width: 768px) {

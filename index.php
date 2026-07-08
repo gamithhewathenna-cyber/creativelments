@@ -92,6 +92,26 @@ $about         = $settings['about_text'] ?? '';
   </div>
 </section>
 
+<!-- ===== WHAT MAKES US UNIQUE ===== -->
+<section class="section">
+  <div class="container">
+    <div class="unique-showcase">
+      <div class="unique-showcase-image">
+        <?php if (!empty($settings['unique_section_image'])): ?>
+          <img src="/uploads/sections/<?= sanitize($settings['unique_section_image']) ?>" alt="What Makes Us Unique">
+        <?php else: ?>
+          <div class="unique-showcase-placeholder">Upload an image from<br>Admin → Settings</div>
+        <?php endif; ?>
+      </div>
+      <div class="unique-showcase-content">
+        <h2>What Makes Us Unique?</h2>
+        <div class="unique-showcase-ring"></div>
+        <p><?= sanitize($settings['about_text'] ?? '') ?></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== WHY US ===== -->
 <section class="section section-alt">
   <div class="container">

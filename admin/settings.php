@@ -37,6 +37,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('cta_banner_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
+    // "What Makes Us Unique" section image upload
+    if (!empty($_FILES['unique_image']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['unique_image']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
+            $newName = 'unique_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/sections/' . $newName;
+            if (move_uploaded_file($_FILES['unique_image']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('unique_section_image',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_unique_image'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('unique_section_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
     // Change password
     if (!empty($_POST['new_password']) && !empty($_POST['current_password'])) {
         $stmt = $db->prepare("SELECT * FROM admin_users WHERE username=?");
@@ -106,6 +120,32 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group" style="margin-bottom:0">
       <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
         <input type="checkbox" name="remove_cta_banner" value="1" style="width:auto"> Remove banner image
+      </label>
+    </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>"What Makes Us Unique" Image</h2></div>
+  <div class="card-body">
+    <div class="form-group">
+      <label>Current Image</label>
+      <?php if (!empty($settings['unique_section_image'])): ?>
+        <div style="margin:.5rem 0 1rem"><img src="/uploads/sections/<?= sanitize($settings['unique_section_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — the homepage section will show a placeholder box until you add one.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group">
+      <label>Upload New Image</label>
+      <input type="file" name="unique_image" accept="image/png,image/jpeg,image/webp">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">A cutout-style photo (transparent PNG) works best for the "What Makes Us Unique?" homepage section.</small>
+    </div>
+    <?php if (!empty($settings['unique_section_image'])): ?>
+    <div class="form-group" style="margin-bottom:0">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_unique_image" value="1" style="width:auto"> Remove image
       </label>
     </div>
     <?php endif; ?>
