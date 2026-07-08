@@ -72,9 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "INSERT INTO hero_slides (badge,title,title_font_size,description,button_text,button_link,sort_order,image) VALUES (?,?,?,?,?,?,?,?)";
             $params = [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$image];
         }
-        $db->prepare($sql)->execute($params);
-        header('Location: /admin/sliders.php?msg=saved');
-        exit;
+        try {
+            $db->prepare($sql)->execute($params);
+            header('Location: /admin/sliders.php?msg=saved');
+            exit;
+        } catch (PDOException $e) {
+            $formError = 'Database error: ' . $e->getMessage();
+        }
     }
 
     // Validation failed — redisplay the form with what was typed
