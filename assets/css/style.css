@@ -174,10 +174,10 @@ h3 { font-size: 1.35rem; }
   border-radius: 6px;
   font-size: .88rem;
   font-weight: 500;
-  color: var(--navy2);
+  color: #000000;
   transition: var(--trans);
 }
-.nav-menu a:hover, .nav-menu a.active { color: var(--primary); background: rgba(128,72,153,.07); }
+.nav-menu a:hover, .nav-menu a.active { color: var(--orange); background: rgba(255,146,67,.08); }
 .btn-nav {
   background: var(--primary) !important;
   color: var(--white) !important;
@@ -220,12 +220,12 @@ body.page-index .navbar:not(.scrolled) .logo-text { color: var(--white); }
 body.page-index .navbar:not(.scrolled) .logo-text em { color: var(--teal); }
 body.page-index .navbar:not(.scrolled) .nav-menu a { color: var(--white); }
 body.page-index .navbar:not(.scrolled) .nav-menu a:hover,
-body.page-index .navbar:not(.scrolled) .nav-menu a.active { color: var(--teal); background: rgba(255,255,255,.1); }
+body.page-index .navbar:not(.scrolled) .nav-menu a.active { color: var(--orange); background: rgba(255,255,255,.1); }
 body.page-index .navbar:not(.scrolled) .nav-toggle span { background: var(--white); }
 /* Mobile dropdown panel is always opaque white, so its links stay dark regardless of scroll state */
-body.page-index .navbar:not(.scrolled) .nav-menu.open a { color: var(--navy2); }
+body.page-index .navbar:not(.scrolled) .nav-menu.open a { color: #000000; }
 body.page-index .navbar:not(.scrolled) .nav-menu.open a:hover,
-body.page-index .navbar:not(.scrolled) .nav-menu.open a.active { color: var(--primary); background: rgba(128,72,153,.07); }
+body.page-index .navbar:not(.scrolled) .nav-menu.open a.active { color: var(--orange); background: rgba(255,146,67,.08); }
 body.page-index .navbar.scrolled {
   background: rgba(255,255,255,.96);
   backdrop-filter: blur(12px);
