@@ -49,7 +49,7 @@ INSERT INTO `projects` (`title`, `category`, `description`, `sort_order`) VALUES
 ('Tribe Lanka Corporate Profile', 'Branding', 'Complete corporate identity and branding package for a leading Sri Lankan company.', 2),
 ('Drunken Monkey', 'Branding', 'Bold restaurant branding that captures personality and drives footfall.', 3),
 ('Shack Restaurant Menu', 'Graphic Design', 'Stunning digital and print menu design for a Sydney-based restaurant.', 4),
-('MAS Intimates Concept', 'Graphic Design', 'Creative concept designs for one of Sri Lanka's largest apparel brands.', 5);
+('MAS Intimates Concept', 'Graphic Design', 'Creative concept designs for one of Sri Lanka''s largest apparel brands.', 5);
 
 -- ----------------------------
 -- Testimonials
