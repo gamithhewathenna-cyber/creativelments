@@ -29,7 +29,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <!-- Top Bar -->
 <div class="topbar">
   <div class="container">
-    <span>📍 Colombo, Sri Lanka</span>
     <span><a href="tel:<?= sanitize($settings['phone'] ?? '') ?>"><?= sanitize($settings['phone'] ?? '') ?></a></span>
     <span><a href="mailto:<?= sanitize($settings['email'] ?? '') ?>"><?= sanitize($settings['email'] ?? '') ?></a></span>
   </div>
@@ -37,7 +36,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
 <!-- Navigation -->
 <nav class="navbar" id="navbar">
-  <div class="container nav-inner">
+  <div class="nav-inner">
     <a href="/" class="logo">
       <?php if (!empty($settings['logo'])): ?>
         <img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">

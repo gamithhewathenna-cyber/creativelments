@@ -130,8 +130,8 @@ h3 { font-size: 1.35rem; }
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 32px;
+  width: 100%;
 }
 
 .logo {
