@@ -193,7 +193,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
 <?php if ($clientLogos): ?>
 <section class="section">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header logos-section-header">
       <h2 class="logos-heading">Trusted by 130+ Businesses Across Australia & Sri Lanka</h2>
     </div>
     <div class="logos-grid">

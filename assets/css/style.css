@@ -507,7 +507,11 @@ body.page-index .navbar.scrolled {
 .portfolio-arrow-next { right: 12px; }
 
 /* ---- Client Logos ---- */
-.logos-heading { color: #000000; font-weight: 400; font-size: clamp(1.1rem, 2.4vw, 1.6rem); }
+.logos-section-header { max-width: none; }
+.logos-heading { color: #000000; font-weight: 400; font-size: clamp(1rem, 2.2vw, 1.5rem); }
+@media (min-width: 600px) {
+  .logos-heading { white-space: nowrap; }
+}
 .logos-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
