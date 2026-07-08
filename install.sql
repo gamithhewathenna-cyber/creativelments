@@ -28,6 +28,19 @@ INSERT INTO `hero_slides` (`image`, `badge`, `title`, `description`, `button_tex
 ('slide1.jpg', 'Trusted by 130+ businesses across Australia & Sri Lanka', 'Your Digital Agency for Melbourne & Sydney', 'We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.', 'Get a Free Quote', 'https://wa.me/94777130597', 1);
 
 -- ----------------------------
+-- Client Logos
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `client_logos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT '',
+  `image` varchar(255) NOT NULL,
+  `sort_order` int(11) DEFAULT 0,
+  `active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
 -- Services
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `services` (

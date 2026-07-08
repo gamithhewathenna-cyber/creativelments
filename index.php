@@ -7,6 +7,7 @@ $projects      = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort
 $testimonials  = $db->query("SELECT * FROM testimonials WHERE active=1 ORDER BY sort_order")->fetchAll();
 $stats         = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
 $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY sort_order")->fetchAll();
+$clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY sort_order")->fetchAll();
 ?>
 
 <!-- ===== HERO ===== -->
@@ -183,6 +184,24 @@ $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY s
   <div class="container">
     <div style="text-align:center;margin-top:2.5rem">
       <a href="/our-work.php" class="btn btn-primary">View All Projects</a>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- ===== CLIENT LOGOS ===== -->
+<?php if ($clientLogos): ?>
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Trusted by 130+ Businesses Across Australia & Sri Lanka</h2>
+    </div>
+    <div class="logos-grid">
+      <?php foreach ($clientLogos as $logo): ?>
+      <div class="logos-item">
+        <img src="/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>">
+      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
