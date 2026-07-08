@@ -52,7 +52,7 @@ $stats = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
       <?php foreach ($stats as $s): ?>
       <div>
         <div class="stat-num"><?= sanitize($s['value']) ?><?= sanitize($s['suffix']) ?></div>
-        <div class="stat-label"><?= sanitize($s['label']) ?></div>
+        <div class="stat-label"><span class="stat-dot"></span><?= sanitize($s['label']) ?></div>
       </div>
       <?php endforeach; ?>
     </div>
