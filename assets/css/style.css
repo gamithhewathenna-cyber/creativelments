@@ -204,7 +204,7 @@ body.page-index .site-header {
   top: 0; left: 0; right: 0;
   z-index: 1000;
 }
-body.page-index .topbar { background: rgba(10,15,30,.4); }
+body.page-index .topbar { background: transparent; }
 body.page-index .navbar {
   background: transparent;
   border-bottom-color: transparent;
