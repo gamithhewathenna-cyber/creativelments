@@ -236,7 +236,7 @@ body.page-index .navbar.scrolled {
 .hero {
   background: var(--navy);
   color: var(--white);
-  height: 500px;
+  height: 600px;
   position: relative;
   overflow: hidden;
 }
@@ -244,21 +244,12 @@ body.page-index .navbar.scrolled {
 .hero-slide {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: none;
   align-items: flex-start;
   background-size: cover;
   background-position: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1.2s ease;
 }
-.hero-slide.active { opacity: 1; pointer-events: auto; }
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to right, rgba(10,15,30,.92) 0%, rgba(10,15,30,.75) 45%, rgba(10,15,30,.35) 100%);
-}
+.hero-slide.active { display: flex; }
 .hero-slide .container {
   position: relative;
   z-index: 2;
@@ -691,7 +682,7 @@ body.page-index .navbar.scrolled {
   .nav-inner { position: relative; }
   .navbar { position: sticky; }
   .topbar { display: none; }
-  .hero { height: 400px; }
+  .hero { height: 480px; }
   .hero-slide .container { padding-top: 174px; }
   .services-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }

@@ -16,7 +16,6 @@ $about         = $settings['about_text'] ?? '';
   <div class="hero-slider">
     <?php foreach ($heroSlides as $i => $slide): ?>
     <div class="hero-slide <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/uploads/hero/<?= sanitize($slide['image']) ?>')">
-      <div class="hero-overlay"></div>
       <div class="container">
         <div class="hero-content">
           <?php if (!empty($slide['badge'])): ?>
