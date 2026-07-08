@@ -1,0 +1,106 @@
+/* Creative Elements — Main JS */
+
+// ---- Navbar scroll effect ----
+const navbar = document.getElementById('navbar');
+if (navbar) {
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+}
+
+// ---- Mobile menu toggle ----
+const navToggle = document.getElementById('navToggle');
+const navMenu   = document.getElementById('navMenu');
+if (navToggle && navMenu) {
+  navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+  });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+      navMenu.classList.remove('open');
+    }
+  });
+}
+
+// ---- Animated counter ----
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const duration = 1800;
+  const start = performance.now();
+  const update = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(ease * target);
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+// ---- Intersection Observer for counters & reveals ----
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      if (entry.target.classList.contains('counter')) {
+        animateCounter(entry.target);
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.counter, .reveal').forEach(el => observer.observe(el));
+
+// ---- AJAX Contact Form ----
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('[type=submit]');
+    const success = document.getElementById('formSuccess');
+    const error   = document.getElementById('formError');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    success.style.display = 'none';
+    error.style.display   = 'none';
+
+    try {
+      const res  = await fetch('/contact-handler.php', {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      });
+      const data = await res.json();
+      if (data.ok) {
+        success.style.display = 'block';
+        contactForm.reset();
+      } else {
+        error.textContent = data.message || 'Something went wrong. Please try again.';
+        error.style.display = 'block';
+      }
+    } catch {
+      error.textContent = 'Network error. Please try again.';
+      error.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    }
+  });
+}
+
+// ---- Reveal animations ----
+const style = document.createElement('style');
+style.textContent = `
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+`;
+document.head.appendChild(style);
+
+document.querySelectorAll(
+  '.service-card, .portfolio-item, .testimonial-card, .blog-card, .stat-num'
+).forEach((el, i) => {
+  el.classList.add('reveal');
+  el.style.transitionDelay = (i % 4) * 80 + 'ms';
+  observer.observe(el);
+});
