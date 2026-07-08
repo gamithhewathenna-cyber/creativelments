@@ -32,10 +32,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <span>📍 Colombo, Sri Lanka</span>
     <span><a href="tel:<?= sanitize($settings['phone'] ?? '') ?>"><?= sanitize($settings['phone'] ?? '') ?></a></span>
     <span><a href="mailto:<?= sanitize($settings['email'] ?? '') ?>"><?= sanitize($settings['email'] ?? '') ?></a></span>
-    <div class="topbar-social">
-      <a href="<?= sanitize($settings['facebook'] ?? '#') ?>" target="_blank" rel="noopener">Facebook</a>
-      <a href="<?= sanitize($settings['instagram'] ?? '#') ?>" target="_blank" rel="noopener">Instagram</a>
-    </div>
   </div>
 </div>
 

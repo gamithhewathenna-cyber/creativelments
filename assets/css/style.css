@@ -113,7 +113,6 @@ h3 { font-size: 1.35rem; }
 }
 .topbar a { color: var(--gray); transition: color .2s; }
 .topbar a:hover { color: var(--primary); }
-.topbar-social { margin-left: auto; display: flex; gap: 1rem; }
 
 /* ---- Navbar ---- */
 .navbar {
@@ -239,10 +238,11 @@ body.page-index .navbar.scrolled {
   color: var(--white);
   height: 500px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
   overflow: hidden;
 }
+.hero .container { padding-top: 210px; }
 .hero-slider { position: absolute; inset: 0; z-index: 0; }
 .hero-slide {
   position: absolute;
@@ -690,6 +690,7 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .topbar { display: none; }
   .hero { height: 400px; }
+  .hero .container { padding-top: 174px; }
   .services-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
