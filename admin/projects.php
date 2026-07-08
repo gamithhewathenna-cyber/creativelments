@@ -42,13 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $formError = 'Image must be a JPG, PNG, WEBP or GIF file.';
         } elseif (!is_dir('../uploads/projects') || !is_writable('../uploads/projects')) {
             $formError = 'Upload folder "uploads/projects" is missing or not writable on the server. Create it and set permissions to 755.';
+        } elseif (!extension_loaded('gd')) {
+            $formError = 'The GD image library is not enabled on this server, so images cannot be resized.';
         } else {
-            $newName = uniqid('proj_') . '.' . $ext;
-            $dest    = '../uploads/projects/' . $newName;
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
-                $image = $newName;
+            $baseName  = uniqid('proj_');
+            $fullName  = $baseName . '.' . $ext;
+            $thumbName = $baseName . '_thumb.' . $ext;
+            $fullOk  = resizeCoverCrop($_FILES['image']['tmp_name'], '../uploads/projects/' . $fullName, 1080, 1350, $ext);
+            $thumbOk = $fullOk && resizeCoverCrop($_FILES['image']['tmp_name'], '../uploads/projects/' . $thumbName, 300, 375, $ext);
+            if ($fullOk && $thumbOk) {
+                $image = $fullName;
             } else {
-                $formError = 'Image upload failed. Please try again.';
+                $formError = 'Image processing failed. Please try again.';
             }
         }
     }
@@ -116,7 +121,7 @@ if (isset($_GET['msg'])): ?>
     <tbody>
     <?php foreach ($projects as $p): ?>
     <tr>
-      <td><?php if ($p['image']): ?><img src="/uploads/projects/<?= sanitize($p['image']) ?>" alt="" style="width:60px;height:45px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
+      <td><?php if ($p['image']): $thumb = preg_replace('/(\.[^.]+)$/', '_thumb$1', $p['image']); ?><img src="/uploads/projects/<?= sanitize($thumb) ?>" alt="" style="width:60px;height:75px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($p['title']) ?></strong></td>
       <td><?= sanitize($p['category']) ?></td>
       <td><span class="pill <?= $p['active'] ? 'pill-green' : 'pill-red' ?>"><?= $p['active'] ? 'Active' : 'Hidden' ?></span></td>
