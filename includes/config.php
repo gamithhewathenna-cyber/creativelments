@@ -42,6 +42,12 @@ function sanitize($input) {
     return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
 }
 
+// Same as sanitize(), but allows a literal <br> to pass through as a real line break.
+function sanitizeBr($input) {
+    $escaped = htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+    return preg_replace('/&lt;br\s*\/?&gt;/i', '<br>', $escaped);
+}
+
 function isLoggedIn() {
     return isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
 }
