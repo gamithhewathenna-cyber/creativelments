@@ -42,8 +42,12 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <nav class="navbar" id="navbar">
   <div class="container nav-inner">
     <a href="/" class="logo">
-      <span class="logo-mark">CE</span>
-      <span class="logo-text">Creative<br><em>Elements</em></span>
+      <?php if (!empty($settings['logo'])): ?>
+        <img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">
+      <?php else: ?>
+        <span class="logo-mark">CE</span>
+        <span class="logo-text">Creative<br><em>Elements</em></span>
+      <?php endif; ?>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
       <span></span><span></span><span></span>

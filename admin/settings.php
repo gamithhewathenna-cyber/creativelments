@@ -8,6 +8,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
     }
+
+    // Logo upload
+    if (!empty($_FILES['logo']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg','jpeg','png','webp','svg'])) {
+            $newName = 'logo_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/branding/' . $newName;
+            if (move_uploaded_file($_FILES['logo']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('logo',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_logo'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('logo','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
     // Change password
     if (!empty($_POST['new_password']) && !empty($_POST['current_password'])) {
         $stmt = $db->prepare("SELECT * FROM admin_users WHERE username=?");
@@ -30,7 +45,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) ?></div><?php endif; ?>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Branding</h2></div>
+  <div class="card-body">
+    <div class="form-group">
+      <label>Current Logo</label>
+      <?php if (!empty($settings['logo'])): ?>
+        <div style="margin:.5rem 0 1rem"><img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="Current logo" style="max-height:60px;max-width:220px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No logo uploaded yet — the site is currently using the default "CE" text logo.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group">
+      <label>Upload New Logo</label>
+      <input type="file" name="logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">PNG, JPG, WEBP or SVG. Transparent background recommended, ~60px tall.</small>
+    </div>
+    <?php if (!empty($settings['logo'])): ?>
+    <div class="form-group" style="margin-bottom:0">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_logo" value="1" style="width:auto"> Remove logo and use the default text logo instead
+      </label>
+    </div>
+    <?php endif; ?>
+  </div>
+</div>
+
 <div class="card" style="margin-bottom:1.5rem">
   <div class="card-header"><h2>Contact & Social</h2></div>
   <div class="card-body">

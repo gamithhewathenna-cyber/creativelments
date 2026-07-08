@@ -6,6 +6,7 @@ $db = getDB();
 // Unread enquiries count
 $newEnquiries = $db->query("SELECT COUNT(*) FROM enquiries WHERE status='new'")->fetchColumn();
 $currentPage  = basename($_SERVER['PHP_SELF'], '.php');
+$siteLogo     = $db->query("SELECT setting_value FROM settings WHERE setting_key='logo'")->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,8 +101,12 @@ tr:hover td{background:#F8FAFC}
 <!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-logo">
-    <div class="lm">CE</div>
-    <div class="lt">Creative<br><em>Elements</em></div>
+    <?php if (!empty($siteLogo)): ?>
+      <img src="/uploads/branding/<?= htmlspecialchars($siteLogo) ?>" alt="Logo" style="max-height:38px;max-width:170px">
+    <?php else: ?>
+      <div class="lm">CE</div>
+      <div class="lt">Creative<br><em>Elements</em></div>
+    <?php endif; ?>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">Main</div>

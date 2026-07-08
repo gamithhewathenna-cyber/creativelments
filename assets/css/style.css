@@ -161,6 +161,7 @@ h3 { font-size: 1.35rem; }
 .logo-text em { font-style: normal; color: var(--teal); }
 .logo-light .logo-text, .logo-light .logo-mark { color: var(--white); }
 .logo-light .logo-text em { color: var(--teal); }
+.logo-img { max-height: 42px; width: auto; }
 
 .nav-menu {
   display: flex;

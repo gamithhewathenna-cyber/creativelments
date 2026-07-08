@@ -7,13 +7,14 @@ if (isLoggedIn()) {
 }
 
 $error = '';
+$db = getDB();
+$siteLogo = $db->query("SELECT setting_value FROM settings WHERE setting_key='logo'")->fetchColumn();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
     if ($username && $password) {
-        $db = getDB();
         $stmt = $db->prepare("SELECT * FROM admin_users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch();
@@ -66,8 +67,12 @@ a{color:#804899;text-decoration:none;font-size:.82rem}
 <body>
 <div class="login-box">
   <div class="logo">
-    <div class="logo-mark">CE</div>
-    <div class="logo-text">Creative<br><em>Elements</em></div>
+    <?php if (!empty($siteLogo)): ?>
+      <img src="/uploads/branding/<?= htmlspecialchars($siteLogo) ?>" alt="Logo" style="max-height:48px;max-width:200px">
+    <?php else: ?>
+      <div class="logo-mark">CE</div>
+      <div class="logo-text">Creative<br><em>Elements</em></div>
+    <?php endif; ?>
   </div>
   <h2>Admin Login</h2>
   <p class="sub">Sign in to manage your website</p>

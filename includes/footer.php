@@ -3,8 +3,12 @@
   <div class="container footer-grid">
     <div class="footer-brand">
       <a href="/" class="logo logo-light">
-        <span class="logo-mark">CE</span>
-        <span class="logo-text">Creative<br><em>Elements</em></span>
+        <?php if (!empty($settings['logo'])): ?>
+          <img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">
+        <?php else: ?>
+          <span class="logo-mark">CE</span>
+          <span class="logo-text">Creative<br><em>Elements</em></span>
+        <?php endif; ?>
       </a>
       <p>A trusted digital agency serving businesses across Melbourne, Sydney, and Sri Lanka. Web design, SEO, branding, and digital marketing that drives real growth.</p>
       <div class="footer-social">
