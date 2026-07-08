@@ -6,28 +6,38 @@ $services      = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort
 $projects      = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort_order LIMIT 6")->fetchAll();
 $testimonials  = $db->query("SELECT * FROM testimonials WHERE active=1 ORDER BY sort_order")->fetchAll();
 $stats         = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
+$heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY sort_order")->fetchAll();
 $about         = $settings['about_text'] ?? '';
 ?>
 
 <!-- ===== HERO ===== -->
-<?php $heroSlides = ['slide1.jpg', 'slide2.jpg', 'slide3.jpg']; ?>
+<?php if ($heroSlides): ?>
 <section class="hero">
   <div class="hero-slider">
-    <?php foreach ($heroSlides as $i => $slideImg): ?>
-    <div class="hero-slide <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/uploads/hero/<?= sanitize($slideImg) ?>')"></div>
+    <?php foreach ($heroSlides as $i => $slide): ?>
+    <div class="hero-slide <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/uploads/hero/<?= sanitize($slide['image']) ?>')">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <?php if (!empty($slide['badge'])): ?>
+          <div class="hero-badge"><span>⚡</span> <?= sanitize($slide['badge']) ?></div>
+          <?php endif; ?>
+          <h1><?= sanitize($slide['title']) ?></h1>
+          <?php if (!empty($slide['description'])): ?>
+          <p><?= sanitize($slide['description']) ?></p>
+          <?php endif; ?>
+          <?php if (!empty($slide['button_text']) && !empty($slide['button_link'])): ?>
+          <div class="hero-cta">
+            <a href="<?= sanitize($slide['button_link']) ?>" class="btn btn-primary" target="_blank"><?= sanitize($slide['button_text']) ?></a>
+          </div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
     <?php endforeach; ?>
   </div>
-  <div class="hero-overlay"></div>
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span>⚡</span> Trusted by 130+ businesses across Australia & Sri Lanka
-      </div>
-      <h1>Your Digital Agency for <em>Melbourne & Sydney</em></h1>
-      <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
-    </div>
-  </div>
 </section>
+<?php endif; ?>
 
 <!-- ===== STATS BAND ===== -->
 <section class="stats-band">

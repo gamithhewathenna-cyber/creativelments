@@ -121,6 +121,10 @@ tr:hover td{background:#F8FAFC}
     </a>
 
     <div class="nav-section">Content</div>
+    <a href="/admin/sliders.php" class="<?= $currentPage==='sliders'?'active':'' ?>">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      Hero Slider
+    </a>
     <a href="/admin/projects.php" class="<?= $currentPage==='projects'?'active':'' ?>">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
       Projects
