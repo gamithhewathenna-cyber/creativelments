@@ -5,14 +5,6 @@ $projects = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort_orde
 $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 ORDER BY category")->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
-<section class="page-hero">
-  <div class="container">
-    <span class="section-label">Portfolio</span>
-    <h1>Our Work</h1>
-    <p>A selection of websites, branding, and digital marketing projects delivered for clients in Melbourne, Sydney, and beyond.</p>
-  </div>
-</section>
-
 <section class="section">
   <div class="container">
     <!-- Filter Tabs -->
