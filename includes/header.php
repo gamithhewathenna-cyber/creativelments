@@ -20,7 +20,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <meta name="description" content="Creative Elements helps Melbourne &amp; Sydney businesses dominate Google. Expert web design, SEO, and branding — global standards, transparent pricing.">
 <title><?= isset($pageTitle) ? sanitize($pageTitle) . ' — ' : '' ?>Creative Elements | Digital Marketing Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body class="page-<?= sanitize($currentPage) ?>">
