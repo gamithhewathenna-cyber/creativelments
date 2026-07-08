@@ -269,7 +269,15 @@ body.page-index .navbar.scrolled {
   padding-top: 160px;
   width: 100%;
 }
-.hero-content { max-width: 640px; margin-left: auto; text-align: right; }
+.hero-content {
+  max-width: 640px;
+  margin-left: auto;
+  text-align: right;
+  background: rgba(255,255,255,.95);
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.15);
+}
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -697,6 +705,7 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .topbar { display: none; }
   .hero { height: 480px; }
+  .hero-content { padding: 1.25rem 1.5rem; }
   .services-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
