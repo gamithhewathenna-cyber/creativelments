@@ -514,7 +514,7 @@ body.page-index .navbar.scrolled {
   align-items: center;
 }
 .logos-item { display: flex; align-items: center; justify-content: center; }
-.logos-item img { max-width: 100%; max-height: 55px; width: auto; height: auto; object-fit: contain; }
+.logos-item img { max-width: 100%; max-height: 75px; width: auto; height: auto; object-fit: contain; }
 
 /* ---- Testimonials ---- */
 .testimonials-grid {
