@@ -3,8 +3,8 @@
   <div class="container footer-grid">
     <div class="footer-brand">
       <a href="/" class="logo logo-light">
-        <?php if (!empty($settings['logo'])): ?>
-          <img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">
+        <?php if (!empty($settings['footer_logo'])): ?>
+          <img src="/uploads/branding/<?= sanitize($settings['footer_logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">
         <?php else: ?>
           <span class="logo-mark">CE</span>
           <span class="logo-text">Creative<br><em>Elements</em></span>

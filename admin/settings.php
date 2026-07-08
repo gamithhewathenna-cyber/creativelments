@@ -23,6 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('logo','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
+    // Footer logo (white version) upload
+    if (!empty($_FILES['footer_logo']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['footer_logo']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg','jpeg','png','webp','svg'])) {
+            $newName = 'footerlogo_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/branding/' . $newName;
+            if (move_uploaded_file($_FILES['footer_logo']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('footer_logo',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_footer_logo'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('footer_logo','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
     // Growth CTA banner image upload
     if (!empty($_FILES['cta_banner']['name'])) {
         $ext = strtolower(pathinfo($_FILES['cta_banner']['name'], PATHINFO_EXTENSION));
@@ -105,9 +119,32 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
       <small style="color:#8892A4;display:block;margin-top:.4rem">PNG, JPG, WEBP or SVG. Transparent background recommended, ~60px tall.</small>
     </div>
     <?php if (!empty($settings['logo'])): ?>
-    <div class="form-group" style="margin-bottom:0">
+    <div class="form-group">
       <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
         <input type="checkbox" name="remove_logo" value="1" style="width:auto"> Remove logo and use the default text logo instead
+      </label>
+    </div>
+    <?php endif; ?>
+
+    <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
+
+    <div class="form-group">
+      <label>Current Footer Logo (White Version)</label>
+      <?php if (!empty($settings['footer_logo'])): ?>
+        <div style="background:#0A0F1E;padding:1rem;border-radius:8px;margin:.5rem 0 1rem;display:inline-block"><img src="/uploads/branding/<?= sanitize($settings['footer_logo']) ?>" alt="Current footer logo" style="max-height:60px;max-width:220px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No footer logo uploaded yet — the footer is currently using the default white "CE" text logo.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group">
+      <label>Upload New Footer Logo</label>
+      <input type="file" name="footer_logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">Use a white or light-colored version of your logo — the footer background is dark navy. Transparent PNG or SVG recommended.</small>
+    </div>
+    <?php if (!empty($settings['footer_logo'])): ?>
+    <div class="form-group" style="margin-bottom:0">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_footer_logo" value="1" style="width:auto"> Remove footer logo and use the default text logo instead
       </label>
     </div>
     <?php endif; ?>
