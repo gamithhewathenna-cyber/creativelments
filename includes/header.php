@@ -25,6 +25,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 </head>
 <body class="page-<?= sanitize($currentPage) ?>">
 
+<header class="site-header">
 <!-- Top Bar -->
 <div class="topbar">
   <div class="container">
@@ -63,3 +64,4 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     </ul>
   </div>
 </nav>
+</header>

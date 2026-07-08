@@ -204,11 +204,40 @@ h3 { font-size: 1.35rem; }
   border-radius: 2px;
 }
 
+/* Homepage: header floats transparent over the hero slider until scrolled */
+body.page-index .site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+}
+body.page-index .topbar { background: rgba(10,15,30,.4); }
+body.page-index .navbar {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+}
+body.page-index .navbar:not(.scrolled) .logo-mark,
+body.page-index .navbar:not(.scrolled) .logo-text { color: var(--white); }
+body.page-index .navbar:not(.scrolled) .logo-text em { color: var(--teal); }
+body.page-index .navbar:not(.scrolled) .nav-menu a { color: var(--white); }
+body.page-index .navbar:not(.scrolled) .nav-menu a:hover,
+body.page-index .navbar:not(.scrolled) .nav-menu a.active { color: var(--teal); background: rgba(255,255,255,.1); }
+body.page-index .navbar:not(.scrolled) .nav-toggle span { background: var(--white); }
+/* Mobile dropdown panel is always opaque white, so its links stay dark regardless of scroll state */
+body.page-index .navbar:not(.scrolled) .nav-menu.open a { color: var(--navy2); }
+body.page-index .navbar:not(.scrolled) .nav-menu.open a:hover,
+body.page-index .navbar:not(.scrolled) .nav-menu.open a.active { color: var(--primary); background: rgba(128,72,153,.07); }
+body.page-index .navbar.scrolled {
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--light);
+}
+
 /* ---- Hero ---- */
 .hero {
   background: var(--navy);
   color: var(--white);
-  height: 600px;
+  height: 500px;
   display: flex;
   align-items: center;
   position: relative;
@@ -660,7 +689,7 @@ h3 { font-size: 1.35rem; }
   .nav-inner { position: relative; }
   .navbar { position: sticky; }
   .topbar { display: none; }
-  .hero { height: 480px; }
+  .hero { height: 400px; }
   .services-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
