@@ -458,19 +458,18 @@ body.page-index .navbar.scrolled {
 .portfolio-meta h4 { color: var(--white); font-size: 1rem; }
 .portfolio-meta span { color: var(--teal); font-size: .8rem; }
 
-/* ---- Homepage Recent Projects (full-width scrolling row) ---- */
+/* ---- Homepage Recent Projects (full-width row with arrow navigation) ---- */
+.portfolio-scroll-wrap { position: relative; }
 .portfolio-scroll {
   display: flex;
   gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
   padding: 0 24px 1rem;
 }
 .portfolio-slide {
   flex: 0 0 auto;
   width: 320px;
-  scroll-snap-align: start;
 }
 .portfolio-slide-img {
   width: 100%;
@@ -487,6 +486,25 @@ body.page-index .navbar.scrolled {
   color: var(--gray);
   font-size: .88rem;
 }
+.portfolio-arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid var(--light);
+  background: var(--white);
+  color: var(--navy2);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+  transition: var(--trans);
+}
+.portfolio-arrow:hover { background: var(--primary); border-color: var(--primary); color: var(--white); }
+.portfolio-arrow-prev { left: 12px; }
+.portfolio-arrow-next { right: 12px; }
 
 /* ---- Testimonials ---- */
 .testimonials-grid {

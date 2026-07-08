@@ -158,17 +158,27 @@ $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY s
       <h2>Recent Projects</h2>
     </div>
   </div>
-  <div class="portfolio-scroll">
-    <?php foreach ($projects as $proj): ?>
-    <div class="portfolio-slide">
-      <?php if ($proj['image']): ?>
-        <img class="portfolio-slide-img" src="/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
-      <?php else: ?>
-        <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
-      <?php endif; ?>
-      <div class="portfolio-slide-caption"><?= sanitize($proj['title']) ?></div>
+  <div class="portfolio-scroll-wrap">
+    <div class="portfolio-scroll" id="portfolioScroll">
+      <?php foreach ($projects as $proj): ?>
+      <div class="portfolio-slide">
+        <?php if ($proj['image']): ?>
+          <img class="portfolio-slide-img" src="/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
+        <?php else: ?>
+          <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
+        <?php endif; ?>
+        <div class="portfolio-slide-caption"><?= sanitize($proj['title']) ?></div>
+      </div>
+      <?php endforeach; ?>
     </div>
-    <?php endforeach; ?>
+    <?php if (count($projects) > 1): ?>
+    <button class="portfolio-arrow portfolio-arrow-prev" aria-label="Previous projects">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="portfolio-arrow portfolio-arrow-next" aria-label="Next projects">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <?php endif; ?>
   </div>
   <div class="container">
     <div style="text-align:center;margin-top:2.5rem">

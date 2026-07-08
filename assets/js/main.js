@@ -42,6 +42,19 @@ if (heroSlides.length > 1) {
   if (heroNext) heroNext.addEventListener('click', () => { showHeroSlide(currentHeroSlide + 1, 1); resetHeroAutoplay(); });
 }
 
+// ---- Recent Projects arrow navigation ----
+const portfolioScroll = document.getElementById('portfolioScroll');
+const portfolioPrev   = document.querySelector('.portfolio-arrow-prev');
+const portfolioNext   = document.querySelector('.portfolio-arrow-next');
+if (portfolioScroll && portfolioPrev && portfolioNext) {
+  const scrollStep = () => {
+    const slide = portfolioScroll.querySelector('.portfolio-slide');
+    return slide ? slide.offsetWidth + 24 : 340;
+  };
+  portfolioPrev.addEventListener('click', () => portfolioScroll.scrollBy({ left: -scrollStep(), behavior: 'smooth' }));
+  portfolioNext.addEventListener('click', () => portfolioScroll.scrollBy({ left: scrollStep(), behavior: 'smooth' }));
+}
+
 // ---- Navbar scroll effect ----
 const navbar = document.getElementById('navbar');
 if (navbar) {
