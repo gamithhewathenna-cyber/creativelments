@@ -152,30 +152,25 @@ $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY s
 
 <!-- ===== RECENT WORK ===== -->
 <?php if ($projects): ?>
-<section class="section section-dark">
+<section class="section">
   <div class="container">
     <div class="section-header">
-      <span class="section-label">Our Work</span>
       <h2>Recent Projects</h2>
-      <p>A selection of branding, web, and creative work delivered for our clients.</p>
     </div>
-    <div class="portfolio-grid">
-      <?php foreach ($projects as $proj): ?>
-      <div class="portfolio-item">
-        <?php if ($proj['image']): ?>
-          <img class="portfolio-img" src="/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
-        <?php else: ?>
-          <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
-        <?php endif; ?>
-        <div class="portfolio-overlay">
-          <div class="portfolio-meta">
-            <h4><?= sanitize($proj['title']) ?></h4>
-            <span><?= sanitize($proj['category']) ?></span>
-          </div>
-        </div>
-      </div>
-      <?php endforeach; ?>
+  </div>
+  <div class="portfolio-scroll">
+    <?php foreach ($projects as $proj): ?>
+    <div class="portfolio-slide">
+      <?php if ($proj['image']): ?>
+        <img class="portfolio-slide-img" src="/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
+      <?php else: ?>
+        <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
+      <?php endif; ?>
+      <div class="portfolio-slide-caption"><?= sanitize($proj['title']) ?></div>
     </div>
+    <?php endforeach; ?>
+  </div>
+  <div class="container">
     <div style="text-align:center;margin-top:2.5rem">
       <a href="/our-work.php" class="btn btn-primary">View All Projects</a>
     </div>

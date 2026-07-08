@@ -458,6 +458,36 @@ body.page-index .navbar.scrolled {
 .portfolio-meta h4 { color: var(--white); font-size: 1rem; }
 .portfolio-meta span { color: var(--teal); font-size: .8rem; }
 
+/* ---- Homepage Recent Projects (full-width scrolling row) ---- */
+.portfolio-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 24px 1rem;
+}
+.portfolio-slide {
+  flex: 0 0 auto;
+  width: 320px;
+  scroll-snap-align: start;
+}
+.portfolio-slide-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+}
+.portfolio-slide .portfolio-placeholder { aspect-ratio: 4/5; border-radius: var(--radius); }
+.portfolio-slide-caption {
+  margin-top: 1rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--gray);
+  font-size: .88rem;
+}
+
 /* ---- Testimonials ---- */
 .testimonials-grid {
   display: grid;
