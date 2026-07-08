@@ -316,7 +316,7 @@ body.page-index .navbar.scrolled {
   display: inline-flex;
   align-items: center;
   gap: .55rem;
-  margin-top: .5rem;
+  margin-top: .2rem;
   color: var(--text);
   font-size: 1.1rem;
   font-weight: 500;
