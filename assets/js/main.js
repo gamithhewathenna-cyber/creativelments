@@ -3,12 +3,29 @@
 // ---- Hero image slider ----
 const heroSlides = document.querySelectorAll('.hero-slide');
 if (heroSlides.length > 1) {
+  const heroPrev = document.querySelector('.hero-arrow-prev');
+  const heroNext = document.querySelector('.hero-arrow-next');
   let currentHeroSlide = 0;
-  setInterval(() => {
+  let heroInterval;
+
+  const showHeroSlide = (index) => {
     heroSlides[currentHeroSlide].classList.remove('active');
-    currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+    currentHeroSlide = (index + heroSlides.length) % heroSlides.length;
     heroSlides[currentHeroSlide].classList.add('active');
-  }, 5000);
+  };
+
+  const startHeroAutoplay = () => {
+    heroInterval = setInterval(() => showHeroSlide(currentHeroSlide + 1), 5000);
+  };
+  const resetHeroAutoplay = () => {
+    clearInterval(heroInterval);
+    startHeroAutoplay();
+  };
+
+  startHeroAutoplay();
+
+  if (heroPrev) heroPrev.addEventListener('click', () => { showHeroSlide(currentHeroSlide - 1); resetHeroAutoplay(); });
+  if (heroNext) heroNext.addEventListener('click', () => { showHeroSlide(currentHeroSlide + 1); resetHeroAutoplay(); });
 }
 
 // ---- Navbar scroll effect ----

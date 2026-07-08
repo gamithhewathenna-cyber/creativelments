@@ -55,7 +55,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
       <li><a href="/blog.php" class="<?= $currentPage === 'blog' ? 'active' : '' ?>">Blog</a></li>
       <li><a href="/about.php" class="<?= $currentPage === 'about' ? 'active' : '' ?>">About</a></li>
       <li><a href="/contact.php" class="<?= $currentPage === 'contact' ? 'active' : '' ?>">Contact</a></li>
-      <li><a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn-nav" target="_blank">Free Quote</a></li>
     </ul>
   </div>
 </nav>

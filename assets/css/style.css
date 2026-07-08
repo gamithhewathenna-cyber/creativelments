@@ -179,12 +179,6 @@ h3 { font-size: 1.35rem; }
   transition: var(--trans);
 }
 .nav-menu a:hover, .nav-menu a.active { color: var(--orange); background: rgba(255,146,67,.08); }
-.btn-nav {
-  background: var(--primary) !important;
-  color: var(--white) !important;
-  padding: .55rem 1.25rem !important;
-}
-.btn-nav:hover { background: var(--orange) !important; }
 
 .nav-toggle {
   display: none;
@@ -251,6 +245,24 @@ body.page-index .navbar.scrolled {
   background-position: center;
 }
 .hero-slide.active { display: flex; }
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.4);
+  background: rgba(10,15,30,.35);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: var(--trans);
+}
+.hero-arrow:hover { background: var(--primary); border-color: var(--primary); }
+.hero-arrow-prev { left: 24px; }
+.hero-arrow-next { right: 24px; }
 .hero-slide .container {
   position: relative;
   z-index: 2;
