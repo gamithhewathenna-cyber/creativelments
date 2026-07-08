@@ -407,13 +407,7 @@ body.page-index .navbar.scrolled {
   text-align: center;
   padding: 2rem;
 }
-.unique-showcase-content h2 { color: var(--primary); margin-bottom: 1.25rem; }
-.unique-showcase-ring {
-  width: 40px; height: 40px;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  margin-bottom: 1.25rem;
-}
+.unique-showcase-content h2 { color: var(--primary); font-size: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: 1.25rem; }
 .unique-showcase-content p { color: var(--gray); font-size: .95rem; line-height: 1.8; }
 
 /* ---- Portfolio ---- */
@@ -765,7 +759,6 @@ body.page-index .navbar.scrolled {
   .why-grid { grid-template-columns: 1fr; }
   .services-showcase { grid-template-columns: 1fr; gap: 2.5rem; }
   .unique-showcase { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
-  .unique-showcase-ring { margin-left: auto; margin-right: auto; }
 }
 
 @media (max-width: 768px) {
