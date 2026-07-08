@@ -52,7 +52,7 @@ $about         = $settings['about_text'] ?? '';
     <div class="stats-grid">
       <?php foreach ($stats as $stat): ?>
       <div>
-        <div class="stat-num counter" data-target="<?= intval($stat['value']) ?>"><?= sanitize($stat['value']) ?><?= sanitize($stat['suffix']) ?></div>
+        <div class="stat-num counter" data-target="<?= intval($stat['value']) ?>" data-suffix="<?= sanitize($stat['suffix']) ?>"><?= sanitize($stat['value']) ?><?= sanitize($stat['suffix']) ?></div>
         <div class="stat-label"><span class="stat-dot"></span><?= sanitize($stat['label']) ?></div>
       </div>
       <?php endforeach; ?>

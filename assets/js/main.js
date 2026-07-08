@@ -68,12 +68,13 @@ if (navToggle && navMenu) {
 // ---- Animated counter ----
 function animateCounter(el) {
   const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || '';
   const duration = 1800;
   const start = performance.now();
   const update = (now) => {
     const progress = Math.min((now - start) / duration, 1);
     const ease = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(ease * target);
+    el.textContent = Math.round(ease * target) + suffix;
     if (progress < 1) requestAnimationFrame(update);
   };
   requestAnimationFrame(update);
