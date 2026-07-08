@@ -3,7 +3,7 @@ $adminTitle = 'Settings';
 require_once 'admin-header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','about_text'];
+    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','about_text','unique_section_text'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
@@ -127,8 +127,12 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
 </div>
 
 <div class="card" style="margin-bottom:1.5rem">
-  <div class="card-header"><h2>"What Makes Us Unique" Image</h2></div>
+  <div class="card-header"><h2>"What Makes Us Unique" Section</h2></div>
   <div class="card-body">
+    <div class="form-group">
+      <label>Paragraph Text</label>
+      <textarea name="unique_section_text" style="min-height:140px"><?= sanitize($settings['unique_section_text'] ?? '') ?></textarea>
+    </div>
     <div class="form-group">
       <label>Current Image</label>
       <?php if (!empty($settings['unique_section_image'])): ?>
