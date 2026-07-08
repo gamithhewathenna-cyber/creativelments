@@ -7,7 +7,6 @@ $projects      = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort
 $testimonials  = $db->query("SELECT * FROM testimonials WHERE active=1 ORDER BY sort_order")->fetchAll();
 $stats         = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
 $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY sort_order")->fetchAll();
-$about         = $settings['about_text'] ?? '';
 ?>
 
 <!-- ===== HERO ===== -->
@@ -141,16 +140,11 @@ $about         = $settings['about_text'] ?? '';
         </div>
       </div>
       <div class="why-visual">
-        <div class="why-card">
-          <h3><?= sanitize($settings['hero_title'] ?? 'About Creative Elements') ?></h3>
-          <p><?= sanitize(substr($about, 0, 280)) ?>…</p>
-          <a href="/about.php" class="btn btn-primary">Learn More About Us</a>
-          <div style="margin-top:1.5rem">
-            <?php foreach (['Web Design', 'SEO', 'Branding', 'Shopify', 'Google Ads', 'Social Media'] as $tag): ?>
-            <span class="why-badge"><?= htmlspecialchars($tag) ?></span>
-            <?php endforeach; ?>
-          </div>
-        </div>
+        <?php if (!empty($settings['why_us_image'])): ?>
+          <img src="/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Global Standards, Local Understanding" class="why-visual-image">
+        <?php else: ?>
+          <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
