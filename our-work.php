@@ -8,7 +8,7 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
 <section class="section">
   <div class="container">
     <!-- Filter Tabs -->
-    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center">
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:flex-start">
       <button class="filter-btn active" data-filter="all">All</button>
       <?php foreach ($categories as $cat): ?>
       <button class="filter-btn" data-filter="<?= sanitize($cat) ?>"><?= sanitize($cat) ?></button>
