@@ -55,6 +55,28 @@ if (portfolioScroll && portfolioPrev && portfolioNext) {
   portfolioNext.addEventListener('click', () => portfolioScroll.scrollBy({ left: scrollStep(), behavior: 'smooth' }));
 }
 
+// ---- Reviews arrow navigation ----
+const reviewsScroll = document.getElementById('reviewsScroll');
+const reviewsPrev   = document.querySelector('.review-arrow-prev');
+const reviewsNext   = document.querySelector('.review-arrow-next');
+if (reviewsScroll && reviewsPrev && reviewsNext) {
+  const reviewStep = () => {
+    const card = reviewsScroll.querySelector('.testimonial-card');
+    return card ? card.offsetWidth + 24 : 300;
+  };
+  reviewsPrev.addEventListener('click', () => reviewsScroll.scrollBy({ left: -reviewStep(), behavior: 'smooth' }));
+  reviewsNext.addEventListener('click', () => reviewsScroll.scrollBy({ left: reviewStep(), behavior: 'smooth' }));
+}
+
+// ---- Reviews "Read more" toggle ----
+document.querySelectorAll('.review-more').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const text = btn.previousElementSibling;
+    const expanded = text.classList.toggle('expanded');
+    btn.textContent = expanded ? 'Read less' : 'Read more';
+  });
+});
+
 // ---- Navbar scroll effect ----
 const navbar = document.getElementById('navbar');
 if (navbar) {
