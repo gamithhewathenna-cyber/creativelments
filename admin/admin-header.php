@@ -1,6 +1,11 @@
 <?php
 require_once '../includes/config.php';
 requireLogin();
+
+// Admin pages must always be fetched fresh — never served from browser/back-forward cache
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+
 $db = getDB();
 
 // Unread enquiries count
