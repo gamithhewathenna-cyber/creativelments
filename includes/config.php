@@ -3,9 +3,9 @@
 // DATABASE CONFIGURATION — Edit these before uploading
 // ============================================================
 define('DB_HOST', 'localhost');
-define('DB_USER', 'your_db_username');   // CPanel DB username
-define('DB_PASS', 'your_db_password');   // CPanel DB password
-define('DB_NAME', 'your_db_name');       // CPanel DB name
+define('DB_USER', 'creaeina_creativelementsadmin');   // CPanel DB username
+define('DB_PASS', 'n!GtNk)$#tG#Pl{+');                // CPanel DB password
+define('DB_NAME', 'creaeina_creativelements');        // CPanel DB name
 
 // ============================================================
 // SITE CONFIGURATION
