@@ -68,7 +68,7 @@ a{color:#804899;text-decoration:none;font-size:.82rem}
 <div class="login-box">
   <div class="logo">
     <?php if (!empty($siteLogo)): ?>
-      <img src="/uploads/branding/<?= htmlspecialchars($siteLogo) ?>" alt="Logo" style="max-height:48px;max-width:200px">
+      <img src="/uploads/branding/<?= htmlspecialchars($siteLogo) ?>" alt="Logo" style="width:280px;height:57px;object-fit:contain">
     <?php else: ?>
       <div class="logo-mark">CE</div>
       <div class="logo-text">Creative<br><em>Elements</em></div>

@@ -102,7 +102,7 @@ tr:hover td{background:#F8FAFC}
 <aside class="sidebar">
   <div class="sidebar-logo">
     <?php if (!empty($siteLogo)): ?>
-      <img src="/uploads/branding/<?= htmlspecialchars($siteLogo) ?>" alt="Logo" style="max-height:38px;max-width:170px">
+      <img src="/uploads/branding/<?= htmlspecialchars($siteLogo) ?>" alt="Logo" style="width:170px;height:35px;object-fit:contain">
     <?php else: ?>
       <div class="lm">CE</div>
       <div class="lt">Creative<br><em>Elements</em></div>
