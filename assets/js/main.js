@@ -1,14 +1,5 @@
 /* Creative Elements — Main JS */
 
-// ---- Page loader ----
-window.addEventListener('load', () => {
-  const loader = document.getElementById('pageLoader');
-  if (loader) {
-    loader.classList.add('loaded');
-    setTimeout(() => loader.remove(), 600);
-  }
-});
-
 // ---- Hero image slider (sliding transition) ----
 const heroSlides = document.querySelectorAll('.hero-slide');
 if (heroSlides.length > 1) {
@@ -190,4 +181,26 @@ document.querySelectorAll(
   el.classList.add('reveal');
   el.style.transitionDelay = (i % 4) * 80 + 'ms';
   observer.observe(el);
+});
+
+// ---- Section reveal animations (fade / pop / slide, cycling per section) ----
+const sectionStyle = document.createElement('style');
+sectionStyle.textContent = `
+  .section-reveal { opacity: 0; transition: opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
+  .section-reveal.visible { opacity: 1; transform: none !important; }
+  .section-reveal-up { transform: translateY(50px); }
+  .section-reveal-pop { transform: scale(.94); }
+  .section-reveal-left { transform: translateX(-60px); }
+  .section-reveal-right { transform: translateX(60px); }
+`;
+document.head.appendChild(sectionStyle);
+
+const sectionEffects = ['section-reveal-up', 'section-reveal-pop', 'section-reveal-left', 'section-reveal-right'];
+const noRevealSections = ['.hero', '.page-hero', '.cta-banner'];
+let sectionEffectIndex = 0;
+document.querySelectorAll('section').forEach((section) => {
+  if (noRevealSections.some((sel) => section.matches(sel))) return;
+  section.classList.add('section-reveal', sectionEffects[sectionEffectIndex % sectionEffects.length]);
+  sectionEffectIndex++;
+  observer.observe(section);
 });

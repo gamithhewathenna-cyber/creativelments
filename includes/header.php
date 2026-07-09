@@ -25,11 +25,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 </head>
 <body class="page-<?= sanitize($currentPage) ?>">
 
-<noscript><style>#pageLoader{display:none}</style></noscript>
-<div id="pageLoader" class="page-loader">
-  <div class="page-loader-mark">CE</div>
-</div>
-
 <header class="site-header">
 <!-- Top Bar -->
 <div class="topbar">
