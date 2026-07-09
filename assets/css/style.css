@@ -790,6 +790,12 @@ body.page-index .navbar.scrolled {
 }
 .page-hero p { color: rgba(255,255,255,.7); margin-top: .75rem; max-width: 560px; margin-left: auto; margin-right: auto; }
 
+.page-hero-light { background: var(--white); }
+.page-hero-light h1,
+.page-hero-light h2,
+.page-hero-light h3 { color: #000000; }
+.page-hero-light p { color: #000000; }
+
 /* ---- WhatsApp button ---- */
 .btn-whatsapp {
   display: inline-flex;

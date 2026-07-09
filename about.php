@@ -11,7 +11,7 @@ $reasonDefaults = [
 ];
 ?>
 
-<section class="page-hero">
+<section class="page-hero page-hero-light">
   <div class="container">
     <span class="section-label">Who We Are</span>
     <h1><?= sanitize($settings['about_hero_heading'] ?? 'The Digital Agency Melbourne & Sydney Businesses Trust to Grow Online') ?></h1>
