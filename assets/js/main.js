@@ -1,5 +1,14 @@
 /* Creative Elements — Main JS */
 
+// ---- Page loader ----
+window.addEventListener('load', () => {
+  const loader = document.getElementById('pageLoader');
+  if (loader) {
+    loader.classList.add('loaded');
+    setTimeout(() => loader.remove(), 600);
+  }
+});
+
 // ---- Hero image slider (sliding transition) ----
 const heroSlides = document.querySelectorAll('.hero-slide');
 if (heroSlides.length > 1) {
