@@ -953,13 +953,14 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .hero { height: 480px; }
   .hero-slide { background-image: var(--bg-mobile); align-items: flex-end; }
-  .hero-slide .container { padding-top: 0; padding-bottom: 50px; }
+  .hero-slide .container { padding-top: 0; padding-bottom: 90px; }
   .hero-content { text-align: center; margin-left: auto; margin-right: auto; max-width: 100%; }
-  .hero-badge { font-size: .6rem; padding: .25rem .7rem; margin-bottom: .6rem; }
-  .hero h1 { font-size: clamp(.9rem, 3.2vw, 1.1rem); margin-bottom: .4rem; }
-  .hero p { font-size: .62rem; margin-left: auto; margin-right: auto; margin-bottom: .6rem; }
+  .hero-badge { font-size: .68rem; padding: .3rem .8rem; margin-bottom: .7rem; }
+  /* !important so every slide is the same size on mobile, even ones with a custom desktop Heading Font Size set in admin */
+  .hero h1 { font-size: clamp(1.15rem, 4.2vw, 1.4rem) !important; margin-bottom: .5rem; }
+  .hero p { font-size: .78rem; margin-left: auto; margin-right: auto; margin-bottom: .7rem; }
   .hero-cta { justify-content: center; }
-  .hero-cta .btn { font-size: .58rem; padding: .38rem .75rem; }
+  .hero-cta .btn { font-size: .68rem; padding: .45rem .9rem; }
   .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
