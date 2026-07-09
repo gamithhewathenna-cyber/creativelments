@@ -41,6 +41,20 @@ CREATE TABLE IF NOT EXISTS `client_logos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
+-- Team Members
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `team_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `job_title` varchar(255) DEFAULT '',
+  `image` varchar(255) DEFAULT '',
+  `sort_order` int(11) DEFAULT 0,
+  `active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
 -- Services
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `services` (

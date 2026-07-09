@@ -367,6 +367,31 @@ body.page-index .navbar.scrolled {
 .service-card p { color: var(--text); font-size: .9rem; }
 .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 
+/* ---- Team ---- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+.team-photo {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1.25rem;
+}
+.team-photo-placeholder {
+  background: var(--off);
+  border: 2px dashed var(--light);
+  color: var(--gray);
+  font-size: .85rem;
+  display: grid;
+  place-items: center;
+}
+.team-card h4 { color: var(--navy2); font-size: 1.05rem; margin-bottom: .25rem; }
+.team-card span { color: var(--gray); font-size: .85rem; }
+
 /* ---- Homepage Services Showcase ---- */
 .services-showcase {
   display: grid;
@@ -896,6 +921,7 @@ body.page-index .navbar.scrolled {
   .services-showcase { grid-template-columns: 1fr; gap: 2.5rem; }
   .unique-showcase { grid-template-columns: 1fr; gap: 2.5rem; text-align: center; }
   .logos-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -921,6 +947,7 @@ body.page-index .navbar.scrolled {
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
   .reasons-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }

@@ -1,7 +1,8 @@
 <?php
 $pageTitle = 'About Us';
 require_once 'includes/header.php';
-$stats = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
+$stats       = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
+$teamMembers = $db->query("SELECT * FROM team_members WHERE active=1 ORDER BY sort_order")->fetchAll();
 
 $reasonDefaults = [
     1 => ['Global quality, local pricing', 'Melbourne and Sydney agency rates without Melbourne and Sydney overheads — you get more for your budget.'],
@@ -76,6 +77,40 @@ $reasonDefaults = [
         <?php endif; ?>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Meet the Team -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our People</span>
+      <h2>Meet the Team</h2>
+    </div>
+    <div class="team-grid">
+      <?php if ($teamMembers): foreach ($teamMembers as $m): ?>
+      <div class="team-card">
+        <?php if ($m['image']): ?>
+          <img class="team-photo" src="/uploads/team/<?= sanitize($m['image']) ?>" alt="<?= sanitize($m['name']) ?>">
+        <?php else: ?>
+          <div class="team-photo team-photo-placeholder">Photo</div>
+        <?php endif; ?>
+        <h4><?= sanitize($m['name']) ?></h4>
+        <span><?= sanitize($m['job_title']) ?></span>
+      </div>
+      <?php endforeach; else: ?>
+      <?php for ($i = 0; $i < 4; $i++): ?>
+      <div class="team-card">
+        <div class="team-photo team-photo-placeholder">Photo</div>
+        <h4>Team Member</h4>
+        <span>Job Title</span>
+      </div>
+      <?php endfor; ?>
+      <?php endif; ?>
+    </div>
+    <?php if (!$teamMembers): ?>
+    <p style="text-align:center;color:#313131;margin-top:1.5rem;font-size:.85rem">Add real team members from Admin → Team.</p>
+    <?php endif; ?>
   </div>
 </section>
 
