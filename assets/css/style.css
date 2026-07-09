@@ -367,6 +367,23 @@ body.page-index .navbar.scrolled {
 .service-card p { color: var(--text); font-size: .9rem; }
 .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 
+/* ---- Process Steps ---- */
+.process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.process-number {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.process-step h3 { font-size: 1.05rem; margin-bottom: .6rem; color: var(--navy2); }
+.process-step p { color: var(--gray); font-size: .88rem; line-height: 1.65; }
+
 /* ---- Team ---- */
 .team-grid {
   display: grid;
@@ -913,6 +930,7 @@ body.page-index .navbar.scrolled {
 /* ---- Responsive ---- */
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-grid { grid-template-columns: repeat(2, 1fr); }
   .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -947,6 +965,7 @@ body.page-index .navbar.scrolled {
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
   .reasons-grid { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
