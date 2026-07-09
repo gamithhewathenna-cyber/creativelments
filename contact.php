@@ -106,4 +106,14 @@ require_once 'includes/header.php';
   </div>
 </section>
 
+<!-- Location Map -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <iframe
+      src="https://www.google.com/maps?q=<?= urlencode($settings['address'] ?? 'Creative Elements, Boralesgamuwa, Sri Lanka') ?>&output=embed"
+      width="100%" height="420" style="border:0;border-radius:12px;display:block"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Our location"></iframe>
+  </div>
+</section>
+
 <?php require_once 'includes/footer.php'; ?>
