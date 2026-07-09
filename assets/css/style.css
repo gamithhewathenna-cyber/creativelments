@@ -224,6 +224,7 @@ body.page-index .navbar.scrolled {
   inset: 0;
   display: flex;
   align-items: flex-start;
+  background-image: var(--bg-desktop);
   background-size: cover;
   background-position: center;
   transform: translateX(100%);
@@ -951,6 +952,7 @@ body.page-index .navbar.scrolled {
   .nav-inner { position: relative; }
   .navbar { position: sticky; }
   .hero { height: 480px; }
+  .hero-slide { background-image: var(--bg-mobile); }
   .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }

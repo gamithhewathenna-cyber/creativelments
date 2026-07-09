@@ -14,8 +14,10 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
 <?php if ($heroSlides): ?>
 <section class="hero">
   <div class="hero-slider">
-    <?php foreach ($heroSlides as $i => $slide): ?>
-    <div class="hero-slide <?= $i === 0 ? 'active' : '' ?>" style="background-image:url('/uploads/hero/<?= sanitize($slide['image']) ?>')">
+    <?php foreach ($heroSlides as $i => $slide):
+      $mobileImg = !empty($slide['image_mobile']) ? $slide['image_mobile'] : $slide['image'];
+    ?>
+    <div class="hero-slide <?= $i === 0 ? 'active' : '' ?>" style="--bg-desktop:url('/uploads/hero/<?= sanitize($slide['image']) ?>');--bg-mobile:url('/uploads/hero/<?= sanitize($mobileImg) ?>')">
       <div class="container">
         <div class="hero-content">
           <?php if (!empty($slide['badge'])): ?>

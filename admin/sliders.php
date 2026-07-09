@@ -24,6 +24,10 @@ const SLIDER_WIDTH  = 1920;
 const SLIDER_HEIGHT = 600;
 const SLIDER_EXT    = 'jpg';
 
+// Separate, portrait-friendly image for mobile screens
+const SLIDER_MOBILE_WIDTH  = 1740;
+const SLIDER_MOBILE_HEIGHT = 966;
+
 $formError = '';
 $editSlide = null;
 
@@ -38,39 +42,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $buttonLink  = trim($_POST['button_link'] ?? '');
     $sort        = intval($_POST['sort_order'] ?? 0);
     $image       = '';
+    $imageMobile = '';
 
-    // Handle file upload — every slide must match the same size & format
+    // Handle desktop image upload — every slide must match the same size & format
     if (!empty($_FILES['image']['name'])) {
         $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
         if (!in_array($ext, ['jpg','jpeg'])) {
-            $formError = 'Image must be a ' . strtoupper(SLIDER_EXT) . ' file (all slides must use the same format).';
+            $formError = 'Desktop image must be a ' . strtoupper(SLIDER_EXT) . ' file (all slides must use the same format).';
         } else {
             $dimensions = @getimagesize($_FILES['image']['tmp_name']);
             if (!$dimensions) {
-                $formError = 'Could not read the uploaded image.';
+                $formError = 'Could not read the uploaded desktop image.';
             } elseif ($dimensions[0] !== SLIDER_WIDTH || $dimensions[1] !== SLIDER_HEIGHT) {
-                $formError = "Image must be exactly " . SLIDER_WIDTH . "×" . SLIDER_HEIGHT . "px (yours was {$dimensions[0]}×{$dimensions[1]}px). All slides must be the same dimensions.";
+                $formError = "Desktop image must be exactly " . SLIDER_WIDTH . "×" . SLIDER_HEIGHT . "px (yours was {$dimensions[0]}×{$dimensions[1]}px). All slides must be the same dimensions.";
             } else {
                 $newName = uniqid('slide_') . '.' . SLIDER_EXT;
                 $dest    = '../uploads/hero/' . $newName;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $dest)) {
                     $image = $newName;
                 } else {
-                    $formError = 'Image upload failed. Please try again.';
+                    $formError = 'Desktop image upload failed. Please try again.';
                 }
             }
         }
     } elseif (!$id) {
-        $formError = 'Please choose a slide image.';
+        $formError = 'Please choose a desktop slide image.';
+    }
+
+    // Handle mobile image upload (optional — falls back to the desktop image if not set)
+    if (!$formError && !empty($_FILES['image_mobile']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['image_mobile']['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, ['jpg','jpeg'])) {
+            $formError = 'Mobile image must be a ' . strtoupper(SLIDER_EXT) . ' file.';
+        } else {
+            $dimensions = @getimagesize($_FILES['image_mobile']['tmp_name']);
+            if (!$dimensions) {
+                $formError = 'Could not read the uploaded mobile image.';
+            } elseif ($dimensions[0] !== SLIDER_MOBILE_WIDTH || $dimensions[1] !== SLIDER_MOBILE_HEIGHT) {
+                $formError = "Mobile image must be exactly " . SLIDER_MOBILE_WIDTH . "×" . SLIDER_MOBILE_HEIGHT . "px (yours was {$dimensions[0]}×{$dimensions[1]}px).";
+            } else {
+                $newName = uniqid('slide_mobile_') . '.' . SLIDER_EXT;
+                $dest    = '../uploads/hero/' . $newName;
+                if (move_uploaded_file($_FILES['image_mobile']['tmp_name'], $dest)) {
+                    $imageMobile = $newName;
+                } else {
+                    $formError = 'Mobile image upload failed. Please try again.';
+                }
+            }
+        }
     }
 
     if (!$formError) {
         if ($id) {
-            $sql = "UPDATE hero_slides SET badge=?,title=?,title_font_size=?,description=?,button_text=?,button_link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
-            $params = $image ? [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$image,$id] : [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$id];
+            $sql = "UPDATE hero_slides SET badge=?,title=?,title_font_size=?,description=?,button_text=?,button_link=?,sort_order=?"
+                 . ($image ? ",image=?" : "") . ($imageMobile ? ",image_mobile=?" : "") . " WHERE id=?";
+            $params = [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort];
+            if ($image) $params[] = $image;
+            if ($imageMobile) $params[] = $imageMobile;
+            $params[] = $id;
         } else {
-            $sql = "INSERT INTO hero_slides (badge,title,title_font_size,description,button_text,button_link,sort_order,image) VALUES (?,?,?,?,?,?,?,?)";
-            $params = [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$image];
+            $sql = "INSERT INTO hero_slides (badge,title,title_font_size,description,button_text,button_link,sort_order,image,image_mobile) VALUES (?,?,?,?,?,?,?,?,?)";
+            $params = [$badge,$title,$titleSize,$desc,$buttonText,$buttonLink,$sort,$image,$imageMobile];
         }
         try {
             $db->prepare($sql)->execute($params);
@@ -125,10 +157,16 @@ if (isset($_GET['msg'])): ?>
       </div>
       <div class="form-group"><label>Sort Order</label><input name="sort_order" type="number" value="<?= $editSlide['sort_order'] ?? 0 ?>" style="width:100px"></div>
       <div class="form-group">
-        <label>Slide Image <?= $editSlide['id'] ?? 0 ? '' : '*' ?></label>
+        <label>Desktop Slide Image <?= $editSlide['id'] ?? 0 ? '' : '*' ?></label>
         <input type="file" name="image" accept=".jpg,.jpeg">
         <small style="color:#8892A4;display:block;margin-top:.4rem">Must be exactly 1920&times;600px, JPG format &mdash; every slide must match so the slider displays consistently.</small>
         <?php if (!empty($editSlide['image'])): ?><br><small>Current: <?= sanitize($editSlide['image']) ?></small><?php endif; ?>
+      </div>
+      <div class="form-group">
+        <label>Mobile Slide Image (optional)</label>
+        <input type="file" name="image_mobile" accept=".jpg,.jpeg">
+        <small style="color:#8892A4;display:block;margin-top:.4rem">Must be exactly 1740&times;966px, JPG format. Shown on phones/tablets instead of the desktop image. Leave blank to reuse the desktop image on mobile.</small>
+        <?php if (!empty($editSlide['image_mobile'])): ?><br><small>Current: <?= sanitize($editSlide['image_mobile']) ?></small><?php endif; ?>
       </div>
       <button type="submit" class="btn btn-primary">Save Slide</button>
       <?php if ($editSlide): ?><a href="/admin/sliders.php" class="btn btn-outline" style="margin-left:.5rem">Cancel</a><?php endif; ?>

@@ -12,6 +12,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE IF NOT EXISTS `hero_slides` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) DEFAULT '',
+  `image_mobile` varchar(255) DEFAULT '',
   `badge` varchar(255) DEFAULT '',
   `title` varchar(255) NOT NULL,
   `title_font_size` int(11) DEFAULT NULL,
