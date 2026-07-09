@@ -667,6 +667,12 @@ body.page-index .navbar.scrolled {
 .cta-section p { color: rgba(255,255,255,.8); max-width: 520px; margin: 0 auto 2rem; }
 .cta-section .btn-outline { border-color: rgba(255,255,255,.5); }
 
+.cta-section-light { background: var(--white); }
+.cta-section-light h2 { color: #000000; }
+.cta-section-light p { color: #000000; }
+.cta-section-light .btn-outline { color: var(--navy2); border-color: var(--light); }
+.cta-section-light .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: transparent; }
+
 /* ---- Growth CTA Banner (full-width photo band) ---- */
 .cta-banner {
   position: relative;
