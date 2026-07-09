@@ -29,17 +29,54 @@ $icons = [
   </div>
 </section>
 
+<!-- Section 1 -->
 <section class="section">
-  <div class="container" style="max-width:760px">
-    <div class="service-icon" style="margin-bottom:1.5rem"><?= $icons[$service['icon']] ?? $icons['star'] ?></div>
-    <div style="line-height:1.85;font-size:.97rem;color:#313131">
-      <?= nl2br(sanitize($service['content'] ?: $service['description'])) ?>
+  <div class="container">
+    <div class="why-grid">
+      <div>
+        <div class="service-icon" style="margin-bottom:1.25rem"><?= $icons[$service['icon']] ?? $icons['star'] ?></div>
+        <div style="line-height:1.85;font-size:.97rem;color:#313131">
+          <?= nl2br(sanitize($service['content'] ?: $service['description'])) ?>
+        </div>
+      </div>
+      <div class="why-visual">
+        <?php if (!empty($service['detail_image1'])): ?>
+          <img src="/uploads/services/<?= sanitize($service['detail_image1']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
+        <?php else: ?>
+          <div class="why-visual-placeholder">Upload an image from<br>Admin → Services</div>
+        <?php endif; ?>
+      </div>
     </div>
-    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid #E2E8F0;display:flex;gap:1rem;flex-wrap:wrap">
-      <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary" target="_blank">Get Pricing</a>
-      <a href="/contact.php" class="btn btn-outline" style="color:#0A0F1E;border-color:#E2E8F0">Contact Us</a>
-      <a href="/services.php" class="btn btn-dark">← Back to Services</a>
+  </div>
+</section>
+
+<!-- Section 2 -->
+<?php if (!empty($service['content2']) || !empty($service['detail_image2'])): ?>
+<section class="section section-alt">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-visual" style="order:-1">
+        <?php if (!empty($service['detail_image2'])): ?>
+          <img src="/uploads/services/<?= sanitize($service['detail_image2']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
+        <?php else: ?>
+          <div class="why-visual-placeholder">Upload an image from<br>Admin → Services</div>
+        <?php endif; ?>
+      </div>
+      <div>
+        <div style="line-height:1.85;font-size:.97rem;color:#313131">
+          <?= nl2br(sanitize($service['content2'])) ?>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<section class="section" style="text-align:center;padding-top:0">
+  <div class="container" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary" target="_blank">Get Pricing</a>
+    <a href="/contact.php" class="btn btn-outline" style="color:#0A0F1E;border-color:#E2E8F0">Contact Us</a>
+    <a href="/services.php" class="btn btn-dark">← Back to Services</a>
   </div>
 </section>
 <?php else: ?>
