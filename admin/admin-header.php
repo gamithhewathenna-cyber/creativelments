@@ -8,10 +8,19 @@ header('Pragma: no-cache');
 
 $db = getDB();
 
+// Load all settings so every admin page can read $settings['key'] — this must happen
+// on every request (not just after a POST save), otherwise fields show blank/default
+// the next time you visit the page even though the database has the saved value.
+$settingsRaw = $db->query("SELECT setting_key, setting_value FROM settings")->fetchAll();
+$settings = [];
+foreach ($settingsRaw as $row) {
+    $settings[$row['setting_key']] = $row['setting_value'];
+}
+
 // Unread enquiries count
 $newEnquiries = $db->query("SELECT COUNT(*) FROM enquiries WHERE status='new'")->fetchColumn();
 $currentPage  = basename($_SERVER['PHP_SELF'], '.php');
-$siteLogo     = $db->query("SELECT setting_value FROM settings WHERE setting_key='logo'")->fetchColumn();
+$siteLogo     = $settings['logo'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
