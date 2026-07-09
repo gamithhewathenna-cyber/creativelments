@@ -982,4 +982,41 @@ body.page-index .navbar.scrolled {
   .footer-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .footer-bottom .container { flex-direction: column; text-align: center; }
+
+  /* Tighter section rhythm on small screens */
+  .section { padding: 3.25rem 0; }
+  .stats-band { padding: 2.5rem 0; }
+  .cta-section, .cta-section-light { padding: 3.5rem 0; }
+  .cta-banner { padding: 3rem 0; }
+  .cta-banner-content p { font-size: 1rem; }
+  .page-hero, .page-hero-light { padding: 3.5rem 0 3rem; }
+
+  /* Hero slider arrows — smaller and inset so they don't crowd the text */
+  .hero-arrow { width: 38px; height: 38px; }
+  .hero-arrow-prev { left: 10px; }
+  .hero-arrow-next { right: 10px; }
+
+  /* Recent Projects row — the fixed 320px tile left almost no margin on a phone,
+     so the arrow buttons were sitting on top of the image itself */
+  .portfolio-scroll { padding: 0 16px 1rem; gap: 1rem; }
+  .portfolio-slide { width: 74vw; max-width: 260px; }
+  .portfolio-arrow { width: 38px; height: 38px; }
+  .portfolio-arrow-prev { left: 4px; }
+  .portfolio-arrow-next { right: 4px; }
+
+  /* Reviews row — same fixed-width issue as the projects row */
+  .reviews-scroll { gap: 1rem; }
+  .testimonial-card { width: 78vw; max-width: 270px; padding: 1.25rem; }
+  .review-arrow { width: 36px; height: 36px; }
+  .review-arrow-prev { left: -6px; }
+  .review-arrow-next { right: -6px; }
+
+  /* Dark info cards feel cramped at full desktop padding on a narrow screen */
+  .why-card, .contact-card { padding: 1.5rem; }
+  .service-card { padding: 1.5rem; }
+}
+
+@media (max-width: 400px) {
+  .portfolio-slide { width: 82vw; }
+  .testimonial-card { width: 84vw; }
 }
