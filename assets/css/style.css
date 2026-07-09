@@ -953,13 +953,13 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .hero { height: 480px; }
   .hero-slide { background-image: var(--bg-mobile); align-items: flex-end; }
-  .hero-slide .container { padding-top: 0; padding-bottom: 16px; }
+  .hero-slide .container { padding-top: 0; padding-bottom: 6px; }
   .hero-content { text-align: center; margin-left: auto; margin-right: auto; max-width: 100%; }
-  .hero-badge { font-size: .68rem; padding: .3rem .8rem; margin-bottom: .85rem; }
-  .hero h1 { font-size: clamp(1.05rem, 4vw, 1.35rem); margin-bottom: .6rem; }
-  .hero p { font-size: .72rem; margin-left: auto; margin-right: auto; margin-bottom: .85rem; }
+  .hero-badge { font-size: .6rem; padding: .25rem .7rem; margin-bottom: .6rem; }
+  .hero h1 { font-size: clamp(.9rem, 3.2vw, 1.1rem); margin-bottom: .4rem; }
+  .hero p { font-size: .62rem; margin-left: auto; margin-right: auto; margin-bottom: .6rem; }
   .hero-cta { justify-content: center; }
-  .hero-cta .btn { font-size: .65rem; padding: .45rem .9rem; }
+  .hero-cta .btn { font-size: .58rem; padding: .38rem .75rem; }
   .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
