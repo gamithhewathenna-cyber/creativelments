@@ -1,4 +1,9 @@
 <?php
+// TEMPORARY DEBUG — remove once the blank-page issue is found and fixed.
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // ============================================================
 // DATABASE CONFIGURATION — Edit these before uploading
 // ============================================================
