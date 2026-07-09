@@ -949,7 +949,8 @@ body.page-index .navbar.scrolled {
     box-shadow: 0 8px 24px rgba(0,0,0,.1);
   }
   .nav-menu.open { display: flex; }
-  .nav-inner { position: relative; }
+  .nav-inner { position: relative; padding: 1rem 20px; justify-content: space-between; }
+  .logo-img { width: 160px; height: 33px; }
   .navbar { position: sticky; }
   .hero { height: 480px; }
   .hero-slide { background-image: var(--bg-mobile); align-items: flex-end; }
