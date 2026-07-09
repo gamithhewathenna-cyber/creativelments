@@ -78,12 +78,42 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const filter = btn.dataset.filter;
-    document.querySelectorAll('.portfolio-item').forEach(item => {
-      if (filter === 'all' || item.dataset.category === filter) {
-        item.style.display = '';
+    const items = Array.from(document.querySelectorAll('.portfolio-item'));
+
+    // FIRST — record where every currently-visible tile sits on screen
+    const firstRects = new Map();
+    items.forEach(item => {
+      if (item.style.display !== 'none') firstRects.set(item, item.getBoundingClientRect());
+    });
+
+    // Apply the filter — this is what actually changes the grid layout
+    items.forEach(item => {
+      const show = filter === 'all' || item.dataset.category === filter;
+      item.style.display = show ? '' : 'none';
+    });
+
+    // LAST + INVERT + PLAY — animate each visible tile from its old spot to its new one
+    items.forEach(item => {
+      if (item.style.display === 'none') return;
+      const last = item.getBoundingClientRect();
+      const first = firstRects.get(item);
+
+      item.style.transition = 'none';
+      if (first) {
+        const dx = first.left - last.left;
+        const dy = first.top - last.top;
+        item.style.transform = `translate(${dx}px, ${dy}px)`;
+        item.style.opacity = '1';
       } else {
-        item.style.display = 'none';
+        // tile is newly appearing — start it slightly scaled down and faded out
+        item.style.transform = 'scale(.9)';
+        item.style.opacity = '0';
       }
+
+      void item.offsetWidth; // force reflow so the browser registers the starting position
+      item.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1), opacity .4s ease';
+      item.style.transform = '';
+      item.style.opacity = '';
     });
   });
 });
