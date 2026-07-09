@@ -1,21 +1,31 @@
 <?php
 $adminTitle = 'Enquiries';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
-// View single
+// Handle actions that may redirect — must run before any HTML is printed
+$enq = null;
 if (isset($_GET['id'])) {
-    $enq = $db->prepare("SELECT * FROM enquiries WHERE id=?")->execute([$_GET['id']]) ? null : null;
     $stmt = $db->prepare("SELECT * FROM enquiries WHERE id=?");
     $stmt->execute([$_GET['id']]);
     $enq = $stmt->fetch();
     if ($enq && $enq['status'] === 'new') {
         $db->prepare("UPDATE enquiries SET status='read' WHERE id=?")->execute([$enq['id']]);
     }
-    if (isset($_POST['mark_replied'])) {
+    if ($enq && isset($_POST['mark_replied'])) {
         $db->prepare("UPDATE enquiries SET status='replied' WHERE id=?")->execute([$enq['id']]);
         header('Location: /admin/enquiries.php');
         exit;
     }
+} elseif (isset($_GET['delete'])) {
+    $db->prepare("DELETE FROM enquiries WHERE id=?")->execute([$_GET['delete']]);
+    header('Location: /admin/enquiries.php?deleted=1');
+    exit;
+}
+
+require_once 'admin-header.php';
+
+// View single
+if (isset($_GET['id'])) {
     if ($enq): ?>
     <a href="/admin/enquiries.php" class="btn btn-outline btn-sm" style="margin-bottom:1.5rem">← Back</a>
     <div class="card">
@@ -50,12 +60,6 @@ if (isset($_GET['id'])) {
     <p>Enquiry not found.</p>
     <?php endif;
 } else {
-    // Delete
-    if (isset($_GET['delete'])) {
-        $db->prepare("DELETE FROM enquiries WHERE id=?")->execute([$_GET['delete']]);
-        header('Location: /admin/enquiries.php?deleted=1');
-        exit;
-    }
     $enquiries = $db->query("SELECT * FROM enquiries ORDER BY created_at DESC")->fetchAll();
     if (isset($_GET['deleted'])): ?><div class="alert alert-success">Enquiry deleted.</div><?php endif; ?>
     <div class="card">

@@ -1,7 +1,7 @@
 <?php
 $adminTitle = 'Users';
 $requireAdminRole = true;
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 $formError = '';
 $msg = '';
@@ -82,6 +82,7 @@ if (isset($_GET['edit'])) {
 
 $users = $db->query("SELECT * FROM admin_users ORDER BY created_at")->fetchAll();
 
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?>
 <div class="alert alert-success"><?= $_GET['msg'] === 'saved' ? 'User saved successfully.' : 'User deleted.' ?></div>
 <?php endif; ?>

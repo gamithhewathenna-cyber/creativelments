@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'About Page';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 $formError = '';
 
@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($rows as $r) { $settings[$r['setting_key']] = $r['setting_value']; }
 }
 
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?>
 <div class="alert alert-success">About page saved successfully.</div>
 <?php endif; ?>
