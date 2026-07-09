@@ -68,20 +68,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$formError) {
-        if ($id) {
-            $sql = "UPDATE services SET title=?,slug=?,description=?,content_heading=?,content=?,content2_heading=?,content2=?,icon=?,sort_order=?"
-                 . ($image1 ? ",detail_image1=?" : "") . ($image2 ? ",detail_image2=?" : "") . " WHERE id=?";
-            $params = [$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort];
-            if ($image1) $params[] = $image1;
-            if ($image2) $params[] = $image2;
-            $params[] = $id;
-            $db->prepare($sql)->execute($params);
-        } else {
-            $db->prepare("INSERT INTO services (title,slug,description,content_heading,content,content2_heading,content2,icon,sort_order,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?,?,?)")
-               ->execute([$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$image1,$image2]);
+        try {
+            if ($id) {
+                $sql = "UPDATE services SET title=?,slug=?,description=?,content_heading=?,content=?,content2_heading=?,content2=?,icon=?,sort_order=?"
+                     . ($image1 ? ",detail_image1=?" : "") . ($image2 ? ",detail_image2=?" : "") . " WHERE id=?";
+                $params = [$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort];
+                if ($image1) $params[] = $image1;
+                if ($image2) $params[] = $image2;
+                $params[] = $id;
+                $db->prepare($sql)->execute($params);
+            } else {
+                $db->prepare("INSERT INTO services (title,slug,description,content_heading,content,content2_heading,content2,icon,sort_order,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?,?,?)")
+                   ->execute([$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$image1,$image2]);
+            }
+            header('Location: /admin/services.php?msg=saved');
+            exit;
+        } catch (PDOException $e) {
+            $formError = 'Database error: ' . $e->getMessage();
         }
-        header('Location: /admin/services.php?msg=saved');
-        exit;
     }
 
     // Validation failed — redisplay the form with what was typed
