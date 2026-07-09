@@ -26,7 +26,7 @@ const SLIDER_EXT    = 'jpg';
 
 // Separate, portrait-friendly image for mobile screens
 const SLIDER_MOBILE_WIDTH  = 1740;
-const SLIDER_MOBILE_HEIGHT = 966;
+const SLIDER_MOBILE_HEIGHT = 1262;
 
 $formError = '';
 $editSlide = null;
@@ -165,7 +165,7 @@ if (isset($_GET['msg'])): ?>
       <div class="form-group">
         <label>Mobile Slide Image (optional)</label>
         <input type="file" name="image_mobile" accept=".jpg,.jpeg">
-        <small style="color:#8892A4;display:block;margin-top:.4rem">Must be exactly 1740&times;966px, JPG format. Shown on phones/tablets instead of the desktop image. Leave blank to reuse the desktop image on mobile.</small>
+        <small style="color:#8892A4;display:block;margin-top:.4rem">Must be exactly 1740&times;1262px, JPG format. Shown on phones/tablets instead of the desktop image. Leave blank to reuse the desktop image on mobile.</small>
         <?php if (!empty($editSlide['image_mobile'])): ?><br><small>Current: <?= sanitize($editSlide['image_mobile']) ?></small><?php endif; ?>
       </div>
       <button type="submit" class="btn btn-primary">Save Slide</button>
