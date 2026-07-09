@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'Projects';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 // Delete project
 if (isset($_GET['delete'])) {
@@ -102,6 +102,7 @@ if (isset($_GET['edit']) && !$editProject) {
 
 $projects   = $db->query("SELECT * FROM projects ORDER BY sort_order")->fetchAll();
 $categories = $db->query("SELECT * FROM project_categories ORDER BY sort_order")->fetchAll();
+require_once 'admin-header.php';
 
 $messages = [
     'saved'       => 'Project saved successfully.',

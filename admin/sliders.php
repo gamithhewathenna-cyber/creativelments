@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'Hero Slider';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 // Delete
 if (isset($_GET['delete'])) {
@@ -124,6 +124,7 @@ if (isset($_GET['edit']) && !$editSlide) {
 }
 
 $slides = $db->query("SELECT * FROM hero_slides ORDER BY sort_order")->fetchAll();
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?>
 <div class="alert alert-success"><?= $_GET['msg'] === 'saved' ? 'Slide saved successfully.' : 'Slide deleted.' ?></div>
 <?php endif; ?>

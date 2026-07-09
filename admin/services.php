@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'Services';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 if (isset($_GET['delete'])) {
     $db->prepare("DELETE FROM services WHERE id=?")->execute([$_GET['delete']]);
@@ -98,6 +98,7 @@ if (isset($_GET['edit']) && !$editSvc) {
     $editSvc = $stmt->fetch();
 }
 $services = $db->query("SELECT * FROM services ORDER BY sort_order")->fetchAll();
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php endif; ?>
 <?php if ($formError): ?><div class="alert alert-error"><?= htmlspecialchars($formError) ?></div><?php endif; ?>
 

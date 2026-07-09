@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'Blog Posts';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 if (isset($_GET['delete'])) { $db->prepare("DELETE FROM posts WHERE id=?")->execute([$_GET['delete']]); header('Location: /admin/posts.php?msg=deleted'); exit; }
 
@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $ep = null;
 if (isset($_GET['edit'])) { $s = $db->prepare("SELECT * FROM posts WHERE id=?"); $s->execute([$_GET['edit']]); $ep = $s->fetch(); }
 $posts = $db->query("SELECT * FROM posts ORDER BY created_at DESC")->fetchAll();
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php endif; ?>
 
 <div class="card" style="margin-bottom:1.5rem">

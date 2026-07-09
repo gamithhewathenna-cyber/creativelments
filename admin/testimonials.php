@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'Testimonials';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 if (isset($_GET['delete'])) { $db->prepare("DELETE FROM testimonials WHERE id=?")->execute([$_GET['delete']]); header('Location: /admin/testimonials.php?msg=deleted'); exit; }
 if (isset($_GET['toggle'])) { $s = $db->prepare("SELECT active FROM testimonials WHERE id=?"); $s->execute([$_GET['toggle']]); $c = $s->fetchColumn(); $db->prepare("UPDATE testimonials SET active=? WHERE id=?")->execute([!$c,$_GET['toggle']]); header('Location: /admin/testimonials.php'); exit; }
@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $et = null;
 if (isset($_GET['edit'])) { $s = $db->prepare("SELECT * FROM testimonials WHERE id=?"); $s->execute([$_GET['edit']]); $et = $s->fetch(); }
 $tms = $db->query("SELECT * FROM testimonials ORDER BY sort_order")->fetchAll();
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php endif; ?>
 
 <div class="card" style="margin-bottom:1.5rem">

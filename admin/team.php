@@ -1,6 +1,6 @@
 <?php
 $adminTitle = 'Team';
-require_once 'admin-header.php';
+require_once 'admin-auth.php';
 
 // Delete
 if (isset($_GET['delete'])) {
@@ -72,6 +72,7 @@ if (isset($_GET['edit']) && !$editMember) {
 }
 
 $members = $db->query("SELECT * FROM team_members ORDER BY sort_order")->fetchAll();
+require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?>
 <div class="alert alert-success"><?= $_GET['msg'] === 'saved' ? 'Team member saved successfully.' : 'Team member deleted.' ?></div>
 <?php endif; ?>
