@@ -126,3 +126,12 @@ function requireAdmin() {
 }
 
 session_start();
+
+// Show a readable error instead of a silent blank page when something fails
+// (production PHP normally has display_errors off, which hides fatal errors entirely).
+set_exception_handler(function ($e) {
+    http_response_code(500);
+    echo '<div style="font-family:sans-serif;max-width:800px;margin:2rem auto;padding:1.5rem;background:#FEE2E2;color:#991B1B;border-radius:8px;border:1px solid #FCA5A5">'
+       . '<strong>Something went wrong:</strong><br>' . htmlspecialchars($e->getMessage())
+       . '<br><small>' . htmlspecialchars($e->getFile()) . ':' . $e->getLine() . '</small></div>';
+});
