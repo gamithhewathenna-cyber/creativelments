@@ -3,7 +3,7 @@ $adminTitle = 'Settings';
 require_once 'admin-header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','about_text','unique_section_text'];
+    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','unique_section_text'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
@@ -254,7 +254,6 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
   <div class="card-body">
     <div class="form-group"><label>Hero Title</label><input name="hero_title" value="<?= sanitize($settings['hero_title'] ?? '') ?>"></div>
     <div class="form-group"><label>Hero Subtitle</label><input name="hero_subtitle" value="<?= sanitize($settings['hero_subtitle'] ?? '') ?>"></div>
-    <div class="form-group"><label>About Text</label><textarea name="about_text"><?= sanitize($settings['about_text'] ?? '') ?></textarea></div>
   </div>
 </div>
 

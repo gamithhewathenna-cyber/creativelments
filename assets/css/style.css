@@ -365,6 +365,7 @@ body.page-index .navbar.scrolled {
 }
 .service-card h3 { margin-bottom: .6rem; font-size: 1.1rem; }
 .service-card p { color: var(--text); font-size: .9rem; }
+.reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 
 /* ---- Homepage Services Showcase ---- */
 .services-showcase {
@@ -913,6 +914,7 @@ body.page-index .navbar.scrolled {
   .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
+  .reasons-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
