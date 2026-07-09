@@ -25,6 +25,9 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 </head>
 <body class="page-<?= sanitize($currentPage) ?>">
 
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <header class="site-header">
 <!-- Navigation -->
 <nav class="navbar" id="navbar">

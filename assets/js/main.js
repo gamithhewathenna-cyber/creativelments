@@ -1,5 +1,36 @@
 /* Creative Elements — Main JS */
 
+// ---- Custom cursor (desktop with a real mouse only) ----
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const cursorDot  = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  if (cursorDot && cursorRing) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+    });
+
+    const animateCursorRing = () => {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+      requestAnimationFrame(animateCursorRing);
+    };
+    animateCursorRing();
+
+    document.querySelectorAll('a, button, .filter-btn').forEach((el) => {
+      el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
+    });
+  }
+}
+
 // ---- Hero image slider (sliding transition) ----
 const heroSlides = document.querySelectorAll('.hero-slide');
 if (heroSlides.length > 1) {

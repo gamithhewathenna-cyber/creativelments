@@ -23,6 +23,32 @@
 
 html { scroll-behavior: smooth; }
 
+/* ---- Custom Cursor (desktop with a real mouse only) ---- */
+@media (hover: hover) and (pointer: fine) {
+  body, a, button, .filter-btn { cursor: none; }
+  .cursor-dot, .cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+  }
+  .cursor-dot {
+    width: 8px; height: 8px;
+    background: var(--primary);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--primary);
+    transition: width .2s ease, height .2s ease, background .2s ease;
+  }
+  .cursor-ring.cursor-hover {
+    width: 52px; height: 52px;
+    background: rgba(128,72,153,.08);
+  }
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   background: var(--white);
