@@ -97,22 +97,6 @@ h3 { font-size: 1.35rem; }
 }
 .btn-dark:hover { background: var(--navy3); transform: translateY(-2px); }
 
-/* ---- Top Bar ---- */
-.topbar {
-  background: var(--navy);
-  color: var(--gray);
-  font-size: .8rem;
-  padding: .6rem 0;
-}
-.topbar .container {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-.topbar a { color: var(--gray); transition: color .2s; }
-.topbar a:hover { color: var(--primary); }
-
 /* ---- Navbar ---- */
 .navbar {
   position: sticky;
@@ -204,7 +188,6 @@ body.page-index .site-header {
   top: 0; left: 0; right: 0;
   z-index: 1000;
 }
-body.page-index .topbar { background: transparent; }
 body.page-index .navbar {
   background: transparent;
   border-bottom-color: transparent;
@@ -967,7 +950,6 @@ body.page-index .navbar.scrolled {
   .nav-menu.open { display: flex; }
   .nav-inner { position: relative; }
   .navbar { position: sticky; }
-  .topbar { display: none; }
   .hero { height: 480px; }
   .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .logos-grid { grid-template-columns: repeat(2, 1fr); }

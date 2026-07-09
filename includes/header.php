@@ -26,14 +26,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <body class="page-<?= sanitize($currentPage) ?>">
 
 <header class="site-header">
-<!-- Top Bar -->
-<div class="topbar">
-  <div class="container">
-    <span><a href="tel:<?= sanitize($settings['phone'] ?? '') ?>"><?= sanitize($settings['phone'] ?? '') ?></a></span>
-    <span><a href="mailto:<?= sanitize($settings['email'] ?? '') ?>"><?= sanitize($settings['email'] ?? '') ?></a></span>
-  </div>
-</div>
-
 <!-- Navigation -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
