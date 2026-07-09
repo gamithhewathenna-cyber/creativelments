@@ -63,8 +63,8 @@ $reasonDefaults = [
   <div class="container">
     <div class="why-grid">
       <div>
-        <span class="section-label">Founder Story</span>
-        <p style="color:#313131;margin-top:1rem;font-size:1.1rem;line-height:1.85">
+        <span class="section-label" style="font-size:1.3rem;letter-spacing:normal;text-transform:none;font-weight:700">Founder Story</span>
+        <p style="color:#313131;margin-top:1rem;font-size:.95rem;line-height:1.8">
           <?= nl2br(sanitize($settings['about_founder_text'] ?? "Creative Elements was founded in 2022 by Gamith Hewathenna — a multimedia specialist with over 15 years of experience across web design, branding, and digital marketing. What started as a passion for design became a full-service agency now trusted by businesses in Melbourne, Sydney, and beyond.\nGamith holds a BSc in Multimedia from Buckinghamshire New University, UK, giving him both the technical rigour and creative foundation to lead projects that perform. He built Creative Elements on the belief that businesses deserve agency-quality work at honest prices — regardless of where they're based.\nUnder Gamith's leadership, Creative Elements has delivered projects for clients across Australia — from Shopify stores for Melbourne retailers to full brand identities for Sydney hospitality groups. His hands-on approach means every client gets a senior creative mind on their project, not just a junior account manager.\nGamith's expertise spans branding, SEO, web and mobile development, digital marketing, and social media strategy. He's known for blending creative instinct with data-driven strategy — the combination that separates campaigns that look good from campaigns that actually grow revenue for Australian businesses.\nFor Gamith, every client project is personal. His dedication to craft, transparency, and measurable results continues to drive Creative Elements forward — making it the go-to digital partner for ambitious businesses in Melbourne, Sydney, Sri Lanka, and around the world.")) ?>
         </p>
       </div>
