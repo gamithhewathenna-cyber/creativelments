@@ -56,7 +56,7 @@
   <div class="footer-bottom">
     <div class="container">
       <p>Creative Elements &copy; <?= date('Y') ?> — All Rights Reserved</p>
-      <p>Built with PHP &amp; MySQL | Hosted on CPanel</p>
+      <p>Developed by Creative Elements</p>
     </div>
   </div>
 </footer>
