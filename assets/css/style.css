@@ -950,7 +950,7 @@ body.page-index .navbar.scrolled {
   }
   .nav-menu.open { display: flex; }
   .nav-inner { position: relative; padding: 1rem 20px; justify-content: space-between; }
-  .logo-img { width: 160px; height: 33px; }
+  .logo-img { width: 110px; height: 22px; }
   .navbar { position: sticky; }
   .hero { height: 480px; }
   .hero-slide { background-image: var(--bg-mobile); align-items: flex-end; }
