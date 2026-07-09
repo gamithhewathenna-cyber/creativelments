@@ -1,5 +1,25 @@
 /* Creative Elements — Main JS */
 
+// ---- Page transition (fade out on navigate; arrival fade-in is pure CSS) ----
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a');
+  if (!link) return;
+
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+  if (link.target === '_blank' || link.hasAttribute('download')) return;
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+
+  let url;
+  try { url = new URL(href, window.location.href); } catch { return; }
+  if (url.origin !== window.location.origin) return;
+  if (url.href === window.location.href) return;
+
+  e.preventDefault();
+  document.body.classList.add('page-exiting');
+  setTimeout(() => { window.location.href = url.href; }, 280);
+});
+
 // ---- Custom cursor (desktop with a real mouse only) ----
 if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   const cursorDot  = document.getElementById('cursorDot');
