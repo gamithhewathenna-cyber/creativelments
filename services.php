@@ -44,12 +44,12 @@ $services = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort_orde
 </section>
 
 <!-- How We Deliver Results -->
-<section class="section section-alt">
+<section class="section">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header process-header">
       <h2>How We Deliver Results for Australian Businesses</h2>
     </div>
-    <div class="process-grid">
+    <div class="process-flow">
       <?php
       $steps = [
         ['Discovery & Strategy', 'We deep-dive into your business, your Australian market, and your competitors — then build a clear strategy before a single pixel is designed.'],
@@ -58,8 +58,9 @@ $services = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort_orde
         ['Launch & Ongoing Support', "We test across every device and browser, launch with confidence, and stay on hand after go-live — because your success doesn't stop at launch day."],
       ];
       foreach ($steps as $i => $step): ?>
+      <?php if ($i > 0): ?><div class="process-arrow">→</div><?php endif; ?>
       <div class="process-step">
-        <div class="process-number"><?= $i + 1 ?></div>
+        <div class="process-num"><?= sprintf('%02d', $i + 1) ?></div>
         <h3><?= htmlspecialchars($step[0]) ?></h3>
         <p><?= htmlspecialchars($step[1]) ?></p>
       </div>
