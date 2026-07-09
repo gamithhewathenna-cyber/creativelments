@@ -31,7 +31,11 @@ $services = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort_orde
         <h3><?= sanitize($svc['title']) ?></h3>
         <p><?= sanitize($svc['description']) ?></p>
         <div style="margin-top:1.25rem">
+          <?php if (!empty($svc['slug'])): ?>
+          <a href="/service.php?slug=<?= urlencode($svc['slug']) ?>" class="btn btn-primary btn-sm" style="font-size:.82rem;padding:.6rem 1.2rem">Get Pricing</a>
+          <?php else: ?>
           <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary btn-sm" target="_blank" style="font-size:.82rem;padding:.6rem 1.2rem">Get Pricing</a>
+          <?php endif; ?>
         </div>
       </div>
       <?php endforeach; ?>

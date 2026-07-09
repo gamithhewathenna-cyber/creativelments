@@ -16,15 +16,18 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id   = intval($_POST['id'] ?? 0);
-    $t    = trim($_POST['title'] ?? '');
-    $desc = trim($_POST['description'] ?? '');
-    $icon = trim($_POST['icon'] ?? 'star');
-    $sort = intval($_POST['sort_order'] ?? 0);
+    $id      = intval($_POST['id'] ?? 0);
+    $t       = trim($_POST['title'] ?? '');
+    $slug    = trim($_POST['slug'] ?? preg_replace('/[^a-z0-9]+/', '-', strtolower($t)));
+    $slug    = trim($slug, '-');
+    $desc    = trim($_POST['description'] ?? '');
+    $content = trim($_POST['content'] ?? '');
+    $icon    = trim($_POST['icon'] ?? 'star');
+    $sort    = intval($_POST['sort_order'] ?? 0);
     if ($id) {
-        $db->prepare("UPDATE services SET title=?,description=?,icon=?,sort_order=? WHERE id=?")->execute([$t,$desc,$icon,$sort,$id]);
+        $db->prepare("UPDATE services SET title=?,slug=?,description=?,content=?,icon=?,sort_order=? WHERE id=?")->execute([$t,$slug,$desc,$content,$icon,$sort,$id]);
     } else {
-        $db->prepare("INSERT INTO services (title,description,icon,sort_order) VALUES (?,?,?,?)")->execute([$t,$desc,$icon,$sort]);
+        $db->prepare("INSERT INTO services (title,slug,description,content,icon,sort_order) VALUES (?,?,?,?,?,?)")->execute([$t,$slug,$desc,$content,$icon,$sort]);
     }
     header('Location: /admin/services.php?msg=saved');
     exit;
@@ -44,7 +47,7 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
     <form method="POST">
       <input type="hidden" name="id" value="<?= $editSvc['id'] ?? 0 ?>">
       <div class="form-row">
-        <div class="form-group"><label>Title *</label><input name="title" required value="<?= sanitize($editSvc['title'] ?? '') ?>"></div>
+        <div class="form-group"><label>Title *</label><input name="title" required value="<?= sanitize($editSvc['title'] ?? '') ?>" oninput="autoSlug(this)"></div>
         <div class="form-group">
           <label>Icon</label>
           <select name="icon">
@@ -54,11 +57,30 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
           </select>
         </div>
       </div>
-      <div class="form-group"><label>Description</label><textarea name="description"><?= sanitize($editSvc['description'] ?? '') ?></textarea></div>
+      <div class="form-group">
+        <label>URL Slug</label>
+        <input name="slug" id="slug" value="<?= sanitize($editSvc['slug'] ?? '') ?>">
+        <small style="color:#8892A4;display:block;margin-top:.4rem">The page will be at /service.php?slug=your-slug</small>
+      </div>
+      <div class="form-group"><label>Short Description (shown on the Services grid card)</label><textarea name="description"><?= sanitize($editSvc['description'] ?? '') ?></textarea></div>
+      <div class="form-group">
+        <label>Full Details (shown on the service's own page)</label>
+        <textarea name="content" style="min-height:200px"><?= sanitize($editSvc['content'] ?? '') ?></textarea>
+        <small style="color:#8892A4;display:block;margin-top:.4rem">Press Enter for a new paragraph. Leave blank to just reuse the short description.</small>
+      </div>
       <div class="form-group"><label>Sort Order</label><input name="sort_order" type="number" value="<?= $editSvc['sort_order'] ?? 0 ?>" style="width:100px"></div>
       <button type="submit" class="btn btn-primary">Save Service</button>
       <?php if ($editSvc): ?><a href="/admin/services.php" class="btn btn-outline" style="margin-left:.5rem">Cancel</a><?php endif; ?>
     </form>
+    <script>
+    function autoSlug(input) {
+      const slugEl = document.getElementById('slug');
+      if (!slugEl.dataset.edited) {
+        slugEl.value = input.value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+      }
+    }
+    document.getElementById('slug')?.addEventListener('input', function() { this.dataset.edited = 'true'; });
+    </script>
   </div>
 </div>
 
@@ -73,6 +95,7 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
       <td><span class="pill <?= $s['active'] ? 'pill-green' : 'pill-red' ?>"><?= $s['active'] ? 'Active' : 'Hidden' ?></span></td>
       <td style="display:flex;gap:.5rem">
         <a href="?edit=<?= $s['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
+        <?php if (!empty($s['slug'])): ?><a href="/service.php?slug=<?= urlencode($s['slug']) ?>" class="btn btn-outline btn-sm" target="_blank">View</a><?php endif; ?>
         <a href="?toggle=<?= $s['id'] ?>" class="btn btn-outline btn-sm"><?= $s['active'] ? 'Hide' : 'Show' ?></a>
         <a href="?delete=<?= $s['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Del</a>
       </td>

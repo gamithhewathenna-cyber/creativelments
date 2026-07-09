@@ -60,7 +60,9 @@ CREATE TABLE IF NOT EXISTS `team_members` (
 CREATE TABLE IF NOT EXISTS `services` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
+  `slug` varchar(255) DEFAULT '',
   `description` text NOT NULL,
+  `content` longtext,
   `icon` varchar(100) DEFAULT 'star',
   `sort_order` int(11) DEFAULT 0,
   `active` tinyint(1) DEFAULT 1,
@@ -68,13 +70,13 @@ CREATE TABLE IF NOT EXISTS `services` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `services` (`title`, `description`, `icon`, `sort_order`) VALUES
-('Web Design & Development', 'High-performance websites built for Australian businesses – fast-loading, mobile-first, and optimised to rank on Google in Melbourne & Sydney.', 'monitor', 1),
-('Graphic Design Subscriptions', 'On-demand creative for Australian brands – fresh social graphics, ads, and print assets delivered monthly. No briefs, no delays.', 'pen-tool', 2),
-('Digital Marketing', 'SEO, Google Ads, and social media strategies tailored for Melbourne and Sydney markets – more leads, more sales.', 'trending-up', 3),
-('Shopify Store Setup', 'Launch your Australian Shopify store ready to sell – design, payments, shipping & SEO all done for you from day one.', 'shopping-bag', 4),
-('Social Media Management', 'Grow your Australian audience with content that converts. Strategy, creation and scheduling handled for you.', 'share-2', 5),
-('Digital Menu Boards', 'Eye-catching digital menus for Melbourne & Sydney hospitality businesses. Easy to update, beautiful to display.', 'tablet', 6);
+INSERT INTO `services` (`title`, `slug`, `description`, `icon`, `sort_order`) VALUES
+('Web Design & Development', 'web-design-development', 'High-performance websites built for Australian businesses – fast-loading, mobile-first, and optimised to rank on Google in Melbourne & Sydney.', 'monitor', 1),
+('Graphic Design Subscriptions', 'graphic-design-subscriptions', 'On-demand creative for Australian brands – fresh social graphics, ads, and print assets delivered monthly. No briefs, no delays.', 'pen-tool', 2),
+('Digital Marketing', 'digital-marketing', 'SEO, Google Ads, and social media strategies tailored for Melbourne and Sydney markets – more leads, more sales.', 'trending-up', 3),
+('Shopify Store Setup', 'shopify-store-setup', 'Launch your Australian Shopify store ready to sell – design, payments, shipping & SEO all done for you from day one.', 'shopping-bag', 4),
+('Social Media Management', 'social-media-management', 'Grow your Australian audience with content that converts. Strategy, creation and scheduling handled for you.', 'share-2', 5),
+('Digital Menu Boards', 'digital-menu-boards', 'Eye-catching digital menus for Melbourne & Sydney hospitality businesses. Easy to update, beautiful to display.', 'tablet', 6);
 
 -- ----------------------------
 -- Projects / Portfolio
