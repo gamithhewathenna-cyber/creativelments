@@ -2,9 +2,7 @@
 $adminTitle = 'Projects';
 require_once 'admin-header.php';
 
-$msg = '';
-
-// Delete
+// Delete project
 if (isset($_GET['delete'])) {
     $db->prepare("DELETE FROM projects WHERE id=?")->execute([$_GET['delete']]);
     header('Location: /admin/projects.php?msg=deleted');
@@ -13,7 +11,6 @@ if (isset($_GET['delete'])) {
 
 // Toggle active
 if (isset($_GET['toggle'])) {
-    $row = $db->prepare("SELECT active FROM projects WHERE id=?")->execute([$_GET['toggle']]);
     $stmt = $db->prepare("SELECT active FROM projects WHERE id=?");
     $stmt->execute([$_GET['toggle']]);
     $cur = $stmt->fetchColumn();
@@ -22,11 +19,33 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 
+// Delete category
+if (isset($_GET['delete_cat'])) {
+    $db->prepare("DELETE FROM project_categories WHERE id=?")->execute([$_GET['delete_cat']]);
+    header('Location: /admin/projects.php?msg=cat_deleted');
+    exit;
+}
+
 $formError = '';
 $editProject = null;
 
-// Save (add or edit)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Add a new category
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_category'])) {
+    $catName = trim($_POST['new_category']);
+    if ($catName !== '') {
+        $exists = $db->prepare("SELECT id FROM project_categories WHERE name=?");
+        $exists->execute([$catName]);
+        if (!$exists->fetch()) {
+            $maxSort = (int) $db->query("SELECT COALESCE(MAX(sort_order),0) FROM project_categories")->fetchColumn();
+            $db->prepare("INSERT INTO project_categories (name,sort_order) VALUES (?,?)")->execute([$catName, $maxSort + 1]);
+        }
+    }
+    header('Location: /admin/projects.php?msg=cat_saved');
+    exit;
+}
+
+// Save (add or edit) project
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['new_category'])) {
     $id       = intval($_POST['id'] ?? 0);
     $title    = trim($_POST['title'] ?? '');
     $category = trim($_POST['category'] ?? '');
@@ -81,13 +100,47 @@ if (isset($_GET['edit']) && !$editProject) {
     $editProject = $stmt->fetch();
 }
 
-$projects = $db->query("SELECT * FROM projects ORDER BY sort_order")->fetchAll();
-if (isset($_GET['msg'])): ?>
-<div class="alert alert-success"><?= $_GET['msg'] === 'saved' ? 'Project saved successfully.' : 'Project deleted.' ?></div>
+$projects   = $db->query("SELECT * FROM projects ORDER BY sort_order")->fetchAll();
+$categories = $db->query("SELECT * FROM project_categories ORDER BY sort_order")->fetchAll();
+
+$messages = [
+    'saved'       => 'Project saved successfully.',
+    'deleted'     => 'Project deleted.',
+    'cat_saved'   => 'Category saved.',
+    'cat_deleted' => 'Category deleted.',
+];
+if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
+<div class="alert alert-success"><?= $messages[$_GET['msg']] ?></div>
 <?php endif; ?>
 <?php if ($formError): ?>
 <div class="alert alert-error"><?= htmlspecialchars($formError) ?></div>
 <?php endif; ?>
+
+<!-- Manage Categories -->
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Project Categories</h2></div>
+  <div class="card-body">
+    <form method="POST" style="display:flex;gap:.75rem;align-items:flex-end;margin-bottom:1.25rem;flex-wrap:wrap">
+      <div class="form-group" style="margin-bottom:0;flex:1;min-width:200px">
+        <label>New Category Name</label>
+        <input name="new_category" placeholder="e.g. E-commerce">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Category</button>
+    </form>
+    <?php if ($categories): ?>
+    <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+      <?php foreach ($categories as $cat): ?>
+      <span class="pill pill-blue" style="display:inline-flex;align-items:center;gap:.5rem">
+        <?= sanitize($cat['name']) ?>
+        <a href="?delete_cat=<?= $cat['id'] ?>" onclick="return confirm('Delete category &quot;<?= sanitize($cat['name']) ?>&quot;? Projects already using it will keep the text but it won\'t be selectable anymore.')" style="color:#991B1B;font-weight:700;text-decoration:none">&times;</a>
+      </span>
+      <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+    <p style="color:#313131;font-size:.85rem">No categories yet — add one above before creating projects.</p>
+    <?php endif; ?>
+  </div>
+</div>
 
 <!-- Add/Edit Form -->
 <div class="card" style="margin-bottom:1.5rem">
@@ -97,7 +150,16 @@ if (isset($_GET['msg'])): ?>
       <input type="hidden" name="id" value="<?= $editProject['id'] ?? 0 ?>">
       <div class="form-row">
         <div class="form-group"><label>Project Title *</label><input name="title" required value="<?= sanitize($editProject['title'] ?? '') ?>"></div>
-        <div class="form-group"><label>Category</label><input name="category" value="<?= sanitize($editProject['category'] ?? '') ?>" placeholder="e.g. Web Design"></div>
+        <div class="form-group">
+          <label>Category</label>
+          <select name="category">
+            <option value="">Select a category…</option>
+            <?php foreach ($categories as $cat): ?>
+            <option value="<?= sanitize($cat['name']) ?>" <?= ($editProject['category'] ?? '') === $cat['name'] ? 'selected' : '' ?>><?= sanitize($cat['name']) ?></option>
+            <?php endforeach; ?>
+          </select>
+          <?php if (!$categories): ?><small style="color:#8892A4;display:block;margin-top:.4rem">Add a category above first.</small><?php endif; ?>
+        </div>
       </div>
       <div class="form-group"><label>Description</label><textarea name="description"><?= sanitize($editProject['description'] ?? '') ?></textarea></div>
       <div class="form-row">

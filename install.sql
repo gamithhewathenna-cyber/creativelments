@@ -84,6 +84,21 @@ INSERT INTO `services` (`title`, `slug`, `description`, `icon`, `sort_order`) VA
 ('Digital Menu Boards', 'digital-menu-boards', 'Eye-catching digital menus for Melbourne & Sydney hospitality businesses. Easy to update, beautiful to display.', 'tablet', 6);
 
 -- ----------------------------
+-- Project Categories
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `project_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `sort_order` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `project_categories` (`name`, `sort_order`) VALUES
+('Web Design', 1),
+('Branding', 2),
+('Graphic Design', 3);
+
+-- ----------------------------
 -- Projects / Portfolio
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `projects` (
