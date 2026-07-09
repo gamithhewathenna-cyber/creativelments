@@ -1,5 +1,6 @@
 <?php
 $adminTitle = 'Settings';
+$requireAdminRole = true;
 require_once 'admin-header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($password, $user['password_hash'])) {
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_user']      = $user['username'];
+            $_SESSION['admin_role']      = $user['role'] ?? 'admin';
             // update last login
             $db->prepare("UPDATE admin_users SET last_login=NOW() WHERE id=?")->execute([$user['id']]);
             header('Location: /admin/dashboard.php');

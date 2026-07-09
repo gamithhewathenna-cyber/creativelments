@@ -9,6 +9,10 @@ $totalPosts      = $db->query("SELECT COUNT(*) FROM posts WHERE status='publishe
 $recentEnquiries = $db->query("SELECT * FROM enquiries ORDER BY created_at DESC LIMIT 8")->fetchAll();
 ?>
 
+<?php if (($_GET['error'] ?? '') === 'forbidden'): ?>
+<div class="alert alert-error">Your account doesn't have permission to access that page.</div>
+<?php endif; ?>
+
 <div class="stat-cards">
   <div class="stat-card">
     <div class="num"><?= $newEnq ?></div>

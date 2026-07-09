@@ -225,13 +225,14 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
   `username` varchar(100) NOT NULL UNIQUE,
   `password_hash` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT '',
+  `role` enum('admin','editor') NOT NULL DEFAULT 'editor',
   `last_login` timestamp NULL,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Default admin: username=admin  password=Admin@1234  (CHANGE AFTER FIRST LOGIN)
-INSERT INTO `admin_users` (`username`, `password_hash`, `email`) VALUES
-('admin', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'reach@creativelements.co');
+INSERT INTO `admin_users` (`username`, `password_hash`, `email`, `role`) VALUES
+('admin', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'reach@creativelements.co', 'admin');
 
 SET FOREIGN_KEY_CHECKS = 1;

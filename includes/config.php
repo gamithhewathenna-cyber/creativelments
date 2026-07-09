@@ -113,4 +113,16 @@ function requireLogin() {
     }
 }
 
+// 'admin' has full access; 'editor' is a content-only role (no Settings/Users pages).
+function isAdmin() {
+    return ($_SESSION['admin_role'] ?? 'admin') === 'admin';
+}
+
+function requireAdmin() {
+    if (!isAdmin()) {
+        header('Location: /admin/dashboard.php?error=forbidden');
+        exit;
+    }
+}
+
 session_start();
