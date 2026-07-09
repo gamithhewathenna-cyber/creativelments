@@ -42,8 +42,11 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
 <section class="cta-section">
   <div class="container">
     <h2>Like What You See?</h2>
-    <p>Let's create something exceptional for your business. Get a free quote today.</p>
-    <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank">Start a Project</a>
+    <p>We'd be interested in learning more about your project.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank">Start a Project</a>
+      <a href="/contact.php" class="btn btn-outline">Contact Us</a>
+    </div>
   </div>
 </section>
 
