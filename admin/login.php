@@ -8,7 +8,10 @@ if (isLoggedIn()) {
 
 $error = '';
 $db = getDB();
-$siteLogo = $db->query("SELECT setting_value FROM settings WHERE setting_key='logo'")->fetchColumn();
+$logoRows = $db->query("SELECT setting_key, setting_value FROM settings WHERE setting_key IN ('footer_logo','logo')")->fetchAll();
+$logoMap  = [];
+foreach ($logoRows as $row) { $logoMap[$row['setting_key']] = $row['setting_value']; }
+$siteLogo = $logoMap['footer_logo'] ?? $logoMap['logo'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');

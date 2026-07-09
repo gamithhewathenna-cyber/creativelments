@@ -6,7 +6,7 @@ if (empty($adminAuthLoaded)) require_once 'admin-auth.php';
 // Unread enquiries count
 $newEnquiries = $db->query("SELECT COUNT(*) FROM enquiries WHERE status='new'")->fetchColumn();
 $currentPage  = basename($_SERVER['PHP_SELF'], '.php');
-$siteLogo     = $settings['logo'] ?? '';
+$siteLogo     = $settings['footer_logo'] ?? $settings['logo'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
