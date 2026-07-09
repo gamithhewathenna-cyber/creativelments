@@ -953,12 +953,13 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .hero { height: 480px; }
   .hero-slide { background-image: var(--bg-mobile); align-items: flex-end; }
-  .hero-slide .container { padding-top: 0; padding-bottom: 32px; }
+  .hero-slide .container { padding-top: 0; padding-bottom: 16px; }
   .hero-content { text-align: center; margin-left: auto; margin-right: auto; max-width: 100%; }
-  .hero h1 { font-size: clamp(1.3rem, 5vw, 1.7rem); }
-  .hero p { font-size: .82rem; margin-left: auto; margin-right: auto; }
+  .hero-badge { font-size: .68rem; padding: .3rem .8rem; margin-bottom: .85rem; }
+  .hero h1 { font-size: clamp(1.05rem, 4vw, 1.35rem); margin-bottom: .6rem; }
+  .hero p { font-size: .72rem; margin-left: auto; margin-right: auto; margin-bottom: .85rem; }
   .hero-cta { justify-content: center; }
-  .hero-cta .btn { font-size: .72rem; padding: .55rem 1.1rem; }
+  .hero-cta .btn { font-size: .65rem; padding: .45rem .9rem; }
   .services-showcase-grid { grid-template-columns: 1fr; gap: 2rem; }
   .logos-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
