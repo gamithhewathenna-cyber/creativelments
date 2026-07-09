@@ -18,6 +18,20 @@ $reasonDefaults = [
   </div>
 </section>
 
+<!-- Stats -->
+<section class="stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      <?php foreach ($stats as $s): ?>
+      <div>
+        <div class="stat-num"><?= sanitize($s['value']) ?><?= sanitize($s['suffix']) ?></div>
+        <div class="stat-label"><span class="stat-dot"></span><?= sanitize($s['label']) ?></div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+
 <!-- Our Agency Story -->
 <section class="section">
   <div class="container">
@@ -40,20 +54,6 @@ $reasonDefaults = [
           <div class="why-visual-placeholder">Upload an image from<br>Admin → About Page</div>
         <?php endif; ?>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Stats -->
-<section class="stats-band">
-  <div class="container">
-    <div class="stats-grid">
-      <?php foreach ($stats as $s): ?>
-      <div>
-        <div class="stat-num"><?= sanitize($s['value']) ?><?= sanitize($s['suffix']) ?></div>
-        <div class="stat-label"><span class="stat-dot"></span><?= sanitize($s['label']) ?></div>
-      </div>
-      <?php endforeach; ?>
     </div>
   </div>
 </section>
