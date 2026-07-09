@@ -953,7 +953,7 @@ body.page-index .navbar.scrolled {
   .navbar { position: sticky; }
   .hero { height: 480px; }
   .hero-slide { background-image: var(--bg-mobile); align-items: flex-end; }
-  .hero-slide .container { padding-top: 0; padding-bottom: 90px; }
+  .hero-slide .container { padding-top: 0; padding-bottom: 55px; }
   .hero-content { text-align: center; margin-left: auto; margin-right: auto; max-width: 100%; }
   .hero-badge { font-size: .68rem; padding: .3rem .8rem; margin-bottom: .7rem; }
   /* !important so every slide is the same size on mobile, even ones with a custom desktop Heading Font Size set in admin */
