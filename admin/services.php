@@ -20,17 +20,19 @@ $formError = '';
 $editSvc = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id       = intval($_POST['id'] ?? 0);
-    $t        = trim($_POST['title'] ?? '');
-    $slug     = trim($_POST['slug'] ?? preg_replace('/[^a-z0-9]+/', '-', strtolower($t)));
-    $slug     = trim($slug, '-');
-    $desc     = trim($_POST['description'] ?? '');
-    $content  = trim($_POST['content'] ?? '');
-    $content2 = trim($_POST['content2'] ?? '');
-    $icon     = trim($_POST['icon'] ?? 'star');
-    $sort     = intval($_POST['sort_order'] ?? 0);
-    $image1   = '';
-    $image2   = '';
+    $id        = intval($_POST['id'] ?? 0);
+    $t         = trim($_POST['title'] ?? '');
+    $slug      = trim($_POST['slug'] ?? preg_replace('/[^a-z0-9]+/', '-', strtolower($t)));
+    $slug      = trim($slug, '-');
+    $desc      = trim($_POST['description'] ?? '');
+    $heading1  = trim($_POST['content_heading'] ?? '');
+    $content   = trim($_POST['content'] ?? '');
+    $heading2  = trim($_POST['content2_heading'] ?? '');
+    $content2  = trim($_POST['content2'] ?? '');
+    $icon      = trim($_POST['icon'] ?? 'star');
+    $sort      = intval($_POST['sort_order'] ?? 0);
+    $image1    = '';
+    $image2    = '';
 
     // Handle the two detail image uploads
     if (!empty($_FILES['detail_image1']['name']) || !empty($_FILES['detail_image2']['name'])) {
@@ -67,23 +69,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$formError) {
         if ($id) {
-            $sql = "UPDATE services SET title=?,slug=?,description=?,content=?,content2=?,icon=?,sort_order=?"
+            $sql = "UPDATE services SET title=?,slug=?,description=?,content_heading=?,content=?,content2_heading=?,content2=?,icon=?,sort_order=?"
                  . ($image1 ? ",detail_image1=?" : "") . ($image2 ? ",detail_image2=?" : "") . " WHERE id=?";
-            $params = [$t,$slug,$desc,$content,$content2,$icon,$sort];
+            $params = [$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort];
             if ($image1) $params[] = $image1;
             if ($image2) $params[] = $image2;
             $params[] = $id;
             $db->prepare($sql)->execute($params);
         } else {
-            $db->prepare("INSERT INTO services (title,slug,description,content,content2,icon,sort_order,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?)")
-               ->execute([$t,$slug,$desc,$content,$content2,$icon,$sort,$image1,$image2]);
+            $db->prepare("INSERT INTO services (title,slug,description,content_heading,content,content2_heading,content2,icon,sort_order,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?,?,?)")
+               ->execute([$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$image1,$image2]);
         }
         header('Location: /admin/services.php?msg=saved');
         exit;
     }
 
     // Validation failed — redisplay the form with what was typed
-    $editSvc = ['id' => $id, 'title' => $t, 'slug' => $slug, 'description' => $desc, 'content' => $content, 'content2' => $content2, 'icon' => $icon, 'sort_order' => $sort];
+    $editSvc = ['id' => $id, 'title' => $t, 'slug' => $slug, 'description' => $desc, 'content_heading' => $heading1, 'content' => $content, 'content2_heading' => $heading2, 'content2' => $content2, 'icon' => $icon, 'sort_order' => $sort];
 }
 
 if (isset($_GET['edit']) && !$editSvc) {
@@ -122,6 +124,10 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
       <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
       <h3 style="font-size:.95rem;margin-bottom:1rem">Full Details Page — Section 1</h3>
       <div class="form-group">
+        <label>Section 1 Heading</label>
+        <input name="content_heading" value="<?= sanitize($editSvc['content_heading'] ?? '') ?>">
+      </div>
+      <div class="form-group">
         <label>Section 1 Text</label>
         <textarea name="content" style="min-height:160px"><?= sanitize($editSvc['content'] ?? '') ?></textarea>
         <small style="color:#8892A4;display:block;margin-top:.4rem">Press Enter for a new paragraph. Leave blank to just reuse the short description.</small>
@@ -138,6 +144,10 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
 
       <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
       <h3 style="font-size:.95rem;margin-bottom:1rem">Full Details Page — Section 2</h3>
+      <div class="form-group">
+        <label>Section 2 Heading</label>
+        <input name="content2_heading" value="<?= sanitize($editSvc['content2_heading'] ?? '') ?>">
+      </div>
       <div class="form-group">
         <label>Section 2 Text</label>
         <textarea name="content2" style="min-height:160px"><?= sanitize($editSvc['content2'] ?? '') ?></textarea>

@@ -35,7 +35,8 @@ $icons = [
     <div class="why-grid">
       <div>
         <div class="service-icon" style="margin-bottom:1.25rem"><?= $icons[$service['icon']] ?? $icons['star'] ?></div>
-        <div style="line-height:1.85;font-size:.97rem;color:#313131">
+        <?php if (!empty($service['content_heading'])): ?><h2><?= sanitize($service['content_heading']) ?></h2><?php endif; ?>
+        <div style="line-height:1.85;font-size:.97rem;color:#313131;margin-top:<?= !empty($service['content_heading']) ? '1rem' : '0' ?>">
           <?= nl2br(sanitize($service['content'] ?: $service['description'])) ?>
         </div>
       </div>
@@ -63,7 +64,8 @@ $icons = [
         <?php endif; ?>
       </div>
       <div>
-        <div style="line-height:1.85;font-size:.97rem;color:#313131">
+        <?php if (!empty($service['content2_heading'])): ?><h2><?= sanitize($service['content2_heading']) ?></h2><?php endif; ?>
+        <div style="line-height:1.85;font-size:.97rem;color:#313131;margin-top:<?= !empty($service['content2_heading']) ? '1rem' : '0' ?>">
           <?= nl2br(sanitize($service['content2'])) ?>
         </div>
       </div>
