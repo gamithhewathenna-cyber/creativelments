@@ -1119,7 +1119,7 @@ body.page-index .navbar.scrolled {
   align-items: center;
   justify-content: center;
 }
-.project-modal-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+.project-modal-img-wrap img { width: 100%; height: 100%; border-radius: 18px; object-fit: contain; }
 .project-modal-gallery.single-image { display: flex; justify-content: flex-start; }
 .project-modal-gallery.single-image .project-modal-img-wrap { width: auto; max-width: 100%; height: 50vh; }
 .project-modal-gallery.single-image .project-modal-img-wrap img { width: auto; max-width: 100%; height: 100%; }
