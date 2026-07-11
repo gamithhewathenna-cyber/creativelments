@@ -159,6 +159,27 @@ if (projectModal) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProjectModal(); });
 }
 
+// ---- Floating Contact button popup ----
+const contactModal    = document.getElementById('contactModal');
+const contactFloatBtn = document.getElementById('contactFloatBtn');
+if (contactModal && contactFloatBtn) {
+  const contactModalClose = document.getElementById('contactModalClose');
+
+  const openContactModal = () => {
+    contactModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeContactModal = () => {
+    contactModal.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  contactFloatBtn.addEventListener('click', openContactModal);
+  contactModalClose.addEventListener('click', closeContactModal);
+  contactModal.addEventListener('click', (e) => { if (e.target === contactModal) closeContactModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContactModal(); });
+}
+
 // ---- Reviews arrow navigation ----
 const reviewsScroll = document.getElementById('reviewsScroll');
 const reviewsPrev   = document.querySelector('.review-arrow-prev');
