@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test_email'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) {
-    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','unique_section_text',
+    $keys = ['phone','email','address','facebook','instagram','linkedin','google_business','whatsapp','hero_title','hero_subtitle','unique_section_text',
               'enquiry_email','smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
@@ -307,7 +307,15 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
       <div class="form-group"><label>WhatsApp Number (digits only)</label><input name="whatsapp" value="<?= sanitize($settings['whatsapp'] ?? '') ?>"></div>
       <div class="form-group"><label>Facebook URL</label><input name="facebook" value="<?= sanitize($settings['facebook'] ?? '') ?>"></div>
     </div>
-    <div class="form-group"><label>Instagram URL</label><input name="instagram" value="<?= sanitize($settings['instagram'] ?? '') ?>"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Instagram URL</label><input name="instagram" value="<?= sanitize($settings['instagram'] ?? '') ?>"></div>
+      <div class="form-group"><label>LinkedIn URL</label><input name="linkedin" value="<?= sanitize($settings['linkedin'] ?? '') ?>" placeholder="https://linkedin.com/company/..."></div>
+    </div>
+    <div class="form-group">
+      <label>Google Business Profile URL</label>
+      <input name="google_business" value="<?= sanitize($settings['google_business'] ?? '') ?>" placeholder="https://g.page/...">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">Link to your Google Business Profile (find it in Google Business Profile → Share profile).</small>
+    </div>
   </div>
 </div>
 
