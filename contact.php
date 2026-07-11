@@ -84,18 +84,27 @@ echo renderBreadcrumbs([
 <!-- Service Locations -->
 <section class="section section-alt">
   <div class="container">
-    <div class="section-header">
-      <span class="section-label">Global Reach</span>
-      <h2>Where We Serve</h2>
-      <p>Proudly delivering digital agency services to clients across these countries.</p>
-    </div>
-    <div class="locations-grid">
-      <div class="location-item"><span class="location-flag">🇦🇺</span><span>Australia</span></div>
-      <div class="location-item"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div>
-      <div class="location-item"><span class="location-flag">🇺🇸</span><span>United States</span></div>
-      <div class="location-item"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div>
-      <div class="location-item"><span class="location-flag">🇦🇪</span><span>United Arab Emirates (Dubai)</span></div>
-      <div class="location-item"><span class="location-flag">🇱🇰</span><span>Sri Lanka</span></div>
+    <div class="why-grid">
+      <div>
+        <span class="section-label">Global Reach</span>
+        <h2>Where We Serve</h2>
+        <p style="color:#313131;margin-top:.75rem;margin-bottom:1.75rem">Proudly delivering digital agency services to clients across these countries.</p>
+        <div class="locations-grid">
+          <div class="location-item"><span class="location-flag">🇦🇺</span><span>Australia</span></div>
+          <div class="location-item"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div>
+          <div class="location-item"><span class="location-flag">🇺🇸</span><span>United States</span></div>
+          <div class="location-item"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div>
+          <div class="location-item"><span class="location-flag">🇦🇪</span><span>United Arab Emirates (Dubai)</span></div>
+          <div class="location-item"><span class="location-flag">🇱🇰</span><span>Sri Lanka</span></div>
+        </div>
+      </div>
+      <div class="why-visual">
+        <?php if (!empty($settings['locations_image'])): ?>
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['locations_image']) ?>" alt="Where We Serve" class="why-visual-image" loading="lazy">
+        <?php else: ?>
+          <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
 </section>
