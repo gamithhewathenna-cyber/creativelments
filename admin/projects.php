@@ -184,7 +184,7 @@ if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
     <tbody>
     <?php foreach ($projects as $p): ?>
     <tr>
-      <td><?php if ($p['image']): $thumb = preg_replace('/(\.[^.]+)$/', '_thumb$1', $p['image']); ?><img src="/uploads/projects/<?= sanitize($thumb) ?>" alt="" style="width:60px;height:75px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
+      <td><?php if ($p['image']): $thumb = preg_replace('/(\.[^.]+)$/', '_thumb$1', $p['image']); ?><img src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($thumb) ?>" alt="" style="width:60px;height:75px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($p['title']) ?></strong></td>
       <td><?= sanitize($p['category']) ?></td>
       <td><span class="pill <?= $p['active'] ? 'pill-green' : 'pill-red' ?>"><?= $p['active'] ? 'Active' : 'Hidden' ?></span></td>

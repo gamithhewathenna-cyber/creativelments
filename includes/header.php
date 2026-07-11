@@ -33,7 +33,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
   <div class="nav-inner">
     <a href="/" class="logo">
       <?php if (!empty($settings['logo'])): ?>
-        <img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">
+        <img src="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="<?= sanitize(SITE_NAME) ?>" class="logo-img">
       <?php else: ?>
         <span class="logo-mark">CE</span>
         <span class="logo-text">Creative<br><em>Elements</em></span>

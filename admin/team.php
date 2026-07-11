@@ -111,7 +111,7 @@ if (isset($_GET['msg'])): ?>
     <tbody>
     <?php foreach ($members as $m): ?>
     <tr>
-      <td><?php if ($m['image']): ?><img src="/uploads/team/<?= sanitize($m['image']) ?>" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:50%"><?php else: ?>&mdash;<?php endif; ?></td>
+      <td><?php if ($m['image']): ?><img src="<?= SITE_URL ?>/uploads/team/<?= sanitize($m['image']) ?>" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:50%"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($m['name']) ?></strong></td>
       <td><?= sanitize($m['job_title']) ?></td>
       <td><span class="pill <?= $m['active'] ? 'pill-green' : 'pill-red' ?>"><?= $m['active'] ? 'Active' : 'Hidden' ?></span></td>

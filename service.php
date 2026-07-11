@@ -42,7 +42,7 @@ $icons = [
       </div>
       <div class="why-visual">
         <?php if (!empty($service['detail_image1'])): ?>
-          <img src="/uploads/services/<?= sanitize($service['detail_image1']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($service['detail_image1']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Services</div>
         <?php endif; ?>
@@ -58,7 +58,7 @@ $icons = [
     <div class="why-grid">
       <div class="why-visual" style="order:-1">
         <?php if (!empty($service['detail_image2'])): ?>
-          <img src="/uploads/services/<?= sanitize($service['detail_image2']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($service['detail_image2']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Services</div>
         <?php endif; ?>

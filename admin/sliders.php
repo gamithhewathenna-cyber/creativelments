@@ -183,7 +183,7 @@ if (isset($_GET['msg'])): ?>
     <tbody>
     <?php foreach ($slides as $s): ?>
     <tr>
-      <td><?php if ($s['image']): ?><img src="/uploads/hero/<?= sanitize($s['image']) ?>" alt="" style="width:80px;height:32px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
+      <td><?php if ($s['image']): ?><img src="<?= SITE_URL ?>/uploads/hero/<?= sanitize($s['image']) ?>" alt="" style="width:80px;height:32px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($s['title']) ?></strong></td>
       <td><span class="pill <?= $s['active'] ? 'pill-green' : 'pill-red' ?>"><?= $s['active'] ? 'Active' : 'Hidden' ?></span></td>
       <td style="display:flex;gap:.5rem">

@@ -19,7 +19,7 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
       <?php foreach ($projects as $proj): ?>
       <div class="portfolio-item" data-category="<?= sanitize($proj['category']) ?>">
         <?php if ($proj['image']): ?>
-          <img class="portfolio-img" src="/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
+          <img class="portfolio-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
         <?php else: ?>
           <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
         <?php endif; ?>

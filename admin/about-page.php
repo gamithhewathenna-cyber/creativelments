@@ -102,7 +102,7 @@ if (isset($_GET['msg'])): ?>
     <div class="form-group">
       <label>Section Image</label>
       <?php if (!empty($settings['about_story_image'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="/uploads/sections/<?= sanitize($settings['about_story_image']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['about_story_image']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — a placeholder box shows on the page until you add one.</p>
       <?php endif; ?>
@@ -127,7 +127,7 @@ if (isset($_GET['msg'])): ?>
     <div class="form-group">
       <label>Section Image</label>
       <?php if (!empty($settings['about_founder_image'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="/uploads/sections/<?= sanitize($settings['about_founder_image']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['about_founder_image']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — a placeholder box shows on the page until you add one.</p>
       <?php endif; ?>

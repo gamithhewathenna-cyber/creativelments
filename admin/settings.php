@@ -109,7 +109,7 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group">
       <label>Current Logo</label>
       <?php if (!empty($settings['logo'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="Current logo" style="max-height:60px;max-width:220px"></div>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['logo']) ?>" alt="Current logo" style="max-height:60px;max-width:220px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No logo uploaded yet — the site is currently using the default "CE" text logo.</p>
       <?php endif; ?>
@@ -132,7 +132,7 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group">
       <label>Current Footer Logo (White Version)</label>
       <?php if (!empty($settings['footer_logo'])): ?>
-        <div style="background:#0A0F1E;padding:1rem;border-radius:8px;margin:.5rem 0 1rem;display:inline-block"><img src="/uploads/branding/<?= sanitize($settings['footer_logo']) ?>" alt="Current footer logo" style="max-height:60px;max-width:220px"></div>
+        <div style="background:#0A0F1E;padding:1rem;border-radius:8px;margin:.5rem 0 1rem;display:inline-block"><img src="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['footer_logo']) ?>" alt="Current footer logo" style="max-height:60px;max-width:220px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No footer logo uploaded yet — the footer is currently using the default white "CE" text logo.</p>
       <?php endif; ?>
@@ -158,7 +158,7 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group">
       <label>Current Banner Image</label>
       <?php if (!empty($settings['cta_banner_image'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="/uploads/banners/<?= sanitize($settings['cta_banner_image']) ?>" alt="Current banner" style="max-height:100px;max-width:100%;border-radius:8px"></div>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/banners/<?= sanitize($settings['cta_banner_image']) ?>" alt="Current banner" style="max-height:100px;max-width:100%;border-radius:8px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No banner uploaded yet — the "Ready to grow?" section will show a plain dark background until you add one.</p>
       <?php endif; ?>
@@ -188,7 +188,7 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group">
       <label>Current Image</label>
       <?php if (!empty($settings['unique_section_image'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="/uploads/sections/<?= sanitize($settings['unique_section_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['unique_section_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — the homepage section will show a placeholder box until you add one.</p>
       <?php endif; ?>
@@ -214,7 +214,7 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group">
       <label>Current Image</label>
       <?php if (!empty($settings['why_us_image'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
       <?php else: ?>
         <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — the homepage section will show a placeholder box until you add one.</p>
       <?php endif; ?>

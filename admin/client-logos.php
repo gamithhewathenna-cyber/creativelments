@@ -111,7 +111,7 @@ if (isset($_GET['msg'])): ?>
     <tbody>
     <?php foreach ($logos as $l): ?>
     <tr>
-      <td><?php if ($l['image']): ?><img src="/uploads/logos/<?= sanitize($l['image']) ?>" alt="" style="max-width:100px;max-height:40px;object-fit:contain"><?php else: ?>&mdash;<?php endif; ?></td>
+      <td><?php if ($l['image']): ?><img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($l['image']) ?>" alt="" style="max-width:100px;max-height:40px;object-fit:contain"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($l['name']) ?></strong></td>
       <td><span class="pill <?= $l['active'] ? 'pill-green' : 'pill-red' ?>"><?= $l['active'] ? 'Active' : 'Hidden' ?></span></td>
       <td style="display:flex;gap:.5rem">

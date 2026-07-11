@@ -140,7 +140,7 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
       <div class="form-group">
         <label>Section 1 Image</label>
         <?php if (!empty($editSvc['detail_image1'])): ?>
-          <div style="margin:.5rem 0 1rem"><img src="/uploads/services/<?= sanitize($editSvc['detail_image1']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
+          <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($editSvc['detail_image1']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
         <?php else: ?>
           <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — a placeholder box shows on the page until you add one.</p>
         <?php endif; ?>
@@ -161,7 +161,7 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
       <div class="form-group">
         <label>Section 2 Image</label>
         <?php if (!empty($editSvc['detail_image2'])): ?>
-          <div style="margin:.5rem 0 1rem"><img src="/uploads/services/<?= sanitize($editSvc['detail_image2']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
+          <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($editSvc['detail_image2']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
         <?php else: ?>
           <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — a placeholder box shows on the page until you add one.</p>
         <?php endif; ?>
