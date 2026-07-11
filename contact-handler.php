@@ -39,9 +39,15 @@ try {
     $notifyRow->execute();
     $adminEmail = trim($notifyRow->fetchColumn() ?: '') ?: ADMIN_EMAIL;
     $subject = "New Enquiry from $name — Creative Elements";
-    $body  = "Name: $name\nEmail: $email\nPhone: $phone\nService: $service\n\nMessage:\n$message";
+    $body = buildEnquiryEmailHtml([
+        'Name'    => $name,
+        'Email'   => $email,
+        'Phone'   => $phone,
+        'Service' => $service,
+        'Message' => $message,
+    ]);
     $mailError = null;
-    if (!sendAppEmail($db, $adminEmail, $subject, $body, $email, $mailError)) {
+    if (!sendAppEmail($db, $adminEmail, $subject, $body, $email, $mailError, true)) {
         error_log('Contact form email failed: ' . $mailError);
     }
 
