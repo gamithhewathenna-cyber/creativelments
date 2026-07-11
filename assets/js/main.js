@@ -112,6 +112,7 @@ if (projectModal) {
   const modalTitle   = document.getElementById('projectModalTitle');
   const modalDesc    = document.getElementById('projectModalDesc');
   const modalGallery = document.getElementById('projectModalGallery');
+  const modalLink    = document.getElementById('projectModalLink');
   const modalClose   = document.getElementById('projectModalClose');
 
   const openProjectModal = (trigger) => {
@@ -129,6 +130,14 @@ if (projectModal) {
       imageCount++;
     });
     modalGallery.classList.toggle('single-image', imageCount === 1);
+
+    if (trigger.dataset.link) {
+      modalLink.href = trigger.dataset.link;
+      modalLink.style.display = 'inline-flex';
+    } else {
+      modalLink.style.display = 'none';
+    }
+
     projectModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   };

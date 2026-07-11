@@ -68,6 +68,19 @@
     <h2 id="projectModalTitle"></h2>
     <p id="projectModalDesc"></p>
     <div class="project-modal-gallery" id="projectModalGallery"></div>
+    <a href="#" id="projectModalLink" class="project-modal-link" target="_blank" rel="noopener" style="display:none">Visit Live Project ↗</a>
+
+    <div class="project-modal-footer">
+      <div class="project-modal-social">
+        <a href="<?= sanitize($settings['facebook'] ?? '#') ?>" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="<?= sanitize($settings['instagram'] ?? '#') ?>" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+      <a href="/contact.php" class="btn btn-primary">Start Your Project</a>
+    </div>
   </div>
 </div>
 

@@ -1108,13 +1108,49 @@ body.page-index .navbar.scrolled {
 .project-modal.open .project-modal-inner { transform: translateY(0) scale(1); opacity: 1; }
 .project-modal-inner h2 { color: var(--navy); font-size: 1.9rem; margin-bottom: 1rem; }
 .project-modal-inner p { color: var(--navy); font-size: .95rem; line-height: 1.85; margin-bottom: 2.5rem; max-width: 1200px; }
-.project-modal-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
-.project-modal-gallery img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
+.project-modal-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; }
+.project-modal-gallery img { width: 100%; height: 100%; max-height: 340px; border-radius: 10px; object-fit: cover; }
 .project-modal-gallery.single-image { display: flex; justify-content: flex-start; }
-.project-modal-gallery.single-image img { width: auto; max-width: 100%; height: auto; max-height: 75vh; object-fit: contain; }
+.project-modal-gallery.single-image img { width: auto; max-width: 100%; height: auto; max-height: 50vh; object-fit: contain; }
+
+.project-modal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-top: 1.75rem;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: .92rem;
+}
+.project-modal-link:hover { color: var(--orange); }
+
+.project-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid #E2E8F0;
+}
+.project-modal-social { display: flex; gap: .75rem; }
+.project-modal-social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid #E2E8F0;
+  color: var(--navy);
+  display: grid;
+  place-items: center;
+  transition: var(--trans);
+}
+.project-modal-social a:hover { background: var(--primary); border-color: var(--primary); color: var(--white); }
 
 @media (max-width: 640px) {
   .project-modal { padding: 4.5rem 1rem 2rem; }
   .project-modal-inner h2 { font-size: 1.35rem; }
   .project-modal-gallery { grid-template-columns: 1fr; }
+  .project-modal-gallery img { max-height: 260px; }
+  .project-modal-footer { justify-content: flex-start; }
 }

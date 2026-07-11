@@ -169,7 +169,8 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
            data-desc="<?= sanitize($proj['description'] ?? '') ?>"
            data-img1="<?= $proj['image'] ? SITE_URL . '/uploads/projects/' . sanitize($proj['image']) : '' ?>"
            data-img2="<?= !empty($proj['image2']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image2']) : '' ?>"
-           data-img3="<?= !empty($proj['image3']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image3']) : '' ?>">
+           data-img3="<?= !empty($proj['image3']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image3']) : '' ?>"
+           data-link="<?= sanitize($proj['link'] ?? '') ?>">
         <?php if ($proj['image']): ?>
           <img class="portfolio-slide-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>" loading="lazy">
         <?php else: ?>
