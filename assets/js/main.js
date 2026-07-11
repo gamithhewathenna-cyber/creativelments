@@ -118,6 +118,7 @@ if (projectModal) {
     modalTitle.textContent = trigger.dataset.title || '';
     modalDesc.textContent  = trigger.dataset.desc || '';
     modalGallery.innerHTML = '';
+    let imageCount = 0;
     ['img1', 'img2', 'img3'].forEach((key) => {
       const src = trigger.dataset[key];
       if (!src) return;
@@ -125,7 +126,9 @@ if (projectModal) {
       img.src = src;
       img.alt = trigger.dataset.title || '';
       modalGallery.appendChild(img);
+      imageCount++;
     });
+    modalGallery.classList.toggle('single-image', imageCount === 1);
     projectModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   };
