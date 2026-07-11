@@ -2,12 +2,28 @@
 $adminTitle = 'Settings';
 $requireAdminRole = true;
 require_once 'admin-header.php';
+require_once '../includes/smtp-mailer.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','unique_section_text'];
+// Send Test Email (separate action, doesn't touch the main settings form)
+$testEmailResult = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test_email'])) {
+    $testError = null;
+    $ok = sendAppEmail($db, ADMIN_EMAIL, 'Test Email — ' . SITE_NAME, "This is a test email from your SMTP settings.\n\nIf you're reading this, SMTP is working correctly.", '', $testError);
+    $testEmailResult = $ok ? ['ok' => true, 'message' => "Test email sent to " . ADMIN_EMAIL . " successfully."] : ['ok' => false, 'message' => $testError ?: 'Unknown error.'];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) {
+    $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','unique_section_text',
+              'smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
+    }
+    // Password is only overwritten if a new one was actually typed — the field is
+    // intentionally left blank on page load so we don't echo the secret back out.
+    if (trim($_POST['smtp_password'] ?? '') !== '') {
+        $val = trim($_POST['smtp_password']);
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('smtp_password',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$val,$val]);
     }
 
     // Logo upload
@@ -115,6 +131,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) ?></div><?php endif; ?>
+<?php if ($testEmailResult): ?>
+<div class="alert <?= $testEmailResult['ok'] ? 'alert-success' : 'alert-error' ?>"><?= htmlspecialchars($testEmailResult['message']) ?></div>
+<?php endif; ?>
 
 <form method="POST" enctype="multipart/form-data">
 <div class="card" style="margin-bottom:1.5rem">
@@ -292,6 +311,44 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
   <div class="card-body">
     <div class="form-group"><label>Hero Title</label><input name="hero_title" value="<?= sanitize($settings['hero_title'] ?? '') ?>"></div>
     <div class="form-group"><label>Hero Subtitle</label><input name="hero_subtitle" value="<?= sanitize($settings['hero_subtitle'] ?? '') ?>"></div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Email (SMTP)</h2></div>
+  <div class="card-body">
+    <p style="color:#313131;font-size:.85rem;margin-bottom:1.25rem">
+      Sends contact-form notifications through a real mailbox instead of the server's default mailer, which is often unreliable or flagged as spam.
+      Get these details from your email provider (e.g. Gmail, Zoho Mail, or your cPanel email account).
+    </p>
+    <div class="form-row">
+      <div class="form-group"><label>SMTP Host</label><input name="smtp_host" value="<?= sanitize($settings['smtp_host'] ?? '') ?>" placeholder="e.g. smtp.gmail.com"></div>
+      <div class="form-group"><label>SMTP Port</label><input name="smtp_port" type="number" value="<?= sanitize($settings['smtp_port'] ?? '587') ?>" style="width:120px" placeholder="587"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Encryption</label>
+        <select name="smtp_encryption">
+          <?php $enc = $settings['smtp_encryption'] ?? 'tls'; ?>
+          <option value="tls" <?= $enc === 'tls' ? 'selected' : '' ?>>TLS (STARTTLS — usually port 587)</option>
+          <option value="ssl" <?= $enc === 'ssl' ? 'selected' : '' ?>>SSL (usually port 465)</option>
+          <option value="" <?= $enc === '' ? 'selected' : '' ?>>None</option>
+        </select>
+      </div>
+      <div class="form-group"><label>SMTP Username</label><input name="smtp_username" value="<?= sanitize($settings['smtp_username'] ?? '') ?>" placeholder="usually your full email address"></div>
+    </div>
+    <div class="form-group">
+      <label>SMTP Password <?= !empty($settings['smtp_password']) ? '(leave blank to keep current)' : '' ?></label>
+      <input name="smtp_password" type="password" autocomplete="new-password" placeholder="<?= !empty($settings['smtp_password']) ? '••••••••' : '' ?>">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">For Gmail, this must be an "App Password", not your normal login password.</small>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>From Name</label><input name="smtp_from_name" value="<?= sanitize($settings['smtp_from_name'] ?? '') ?>" placeholder="<?= sanitize(SITE_NAME) ?>"></div>
+      <div class="form-group"><label>From Email</label><input name="smtp_from_email" type="email" value="<?= sanitize($settings['smtp_from_email'] ?? '') ?>" placeholder="Leave blank to use the SMTP username"></div>
+    </div>
+    <?php if (!empty($settings['smtp_host'])): ?>
+    <button type="submit" name="send_test_email" value="1" formnovalidate class="btn btn-outline">Send Test Email</button>
+    <small style="color:#8892A4;display:block;margin-top:.6rem">Sends a test email to <?= sanitize(ADMIN_EMAIL) ?> using the settings currently saved (save first if you just changed them).</small>
+    <?php endif; ?>
   </div>
 </div>
 

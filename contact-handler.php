@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/config.php';
+require_once 'includes/smtp-mailer.php';
 
 header('Content-Type: application/json');
 
@@ -33,12 +34,14 @@ try {
     );
     $stmt->execute([$name, $email, $phone, $service, $message, $_SERVER['REMOTE_ADDR'] ?? '']);
 
-    // Email notification (optional – configure in CPanel)
+    // Email notification via SMTP (configured in Admin → Settings), falls back to mail()
     $adminEmail = ADMIN_EMAIL;
     $subject = "New Enquiry from $name — Creative Elements";
     $body  = "Name: $name\nEmail: $email\nPhone: $phone\nService: $service\n\nMessage:\n$message";
-    $headers = "From: noreply@creativelements.co\r\nReply-To: $email";
-    @mail($adminEmail, $subject, $body, $headers);
+    $mailError = null;
+    if (!sendAppEmail($db, $adminEmail, $subject, $body, $email, $mailError)) {
+        error_log('Contact form email failed: ' . $mailError);
+    }
 
     echo json_encode(['ok' => true]);
 } catch (Exception $e) {
