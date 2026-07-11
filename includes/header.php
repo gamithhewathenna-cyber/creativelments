@@ -28,6 +28,9 @@ $descTag  = $seoDescription !== '' ? sanitize($seoDescription) : $defaultDesc;
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="TuumGSLz5nSDiOexD4lTLhz6tcXKetlXn8zIXviHrQI" />
+<?php if (!empty($settings['favicon'])): ?>
+<link rel="icon" href="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['favicon']) ?>">
+<?php endif; ?>
 <meta name="description" content="<?= $descTag ?>">
 <title><?= $titleTag ?></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

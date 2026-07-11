@@ -38,6 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('footer_logo','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
+    // Favicon upload
+    if (!empty($_FILES['favicon']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['favicon']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['ico','png','svg'])) {
+            $newName = 'favicon_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/branding/' . $newName;
+            if (move_uploaded_file($_FILES['favicon']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('favicon',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_favicon'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('favicon','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
     // Growth CTA banner image upload
     if (!empty($_FILES['cta_banner']['name'])) {
         $ext = strtolower(pathinfo($_FILES['cta_banner']['name'], PATHINFO_EXTENSION));
@@ -143,9 +157,32 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
       <small style="color:#8892A4;display:block;margin-top:.4rem">Use a white or light-colored version of your logo — the footer background is dark navy. Transparent PNG or SVG recommended.</small>
     </div>
     <?php if (!empty($settings['footer_logo'])): ?>
-    <div class="form-group" style="margin-bottom:0">
+    <div class="form-group">
       <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
         <input type="checkbox" name="remove_footer_logo" value="1" style="width:auto"> Remove footer logo and use the default text logo instead
+      </label>
+    </div>
+    <?php endif; ?>
+
+    <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
+
+    <div class="form-group">
+      <label>Current Favicon</label>
+      <?php if (!empty($settings['favicon'])): ?>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['favicon']) ?>" alt="Current favicon" style="width:32px;height:32px;object-fit:contain;border:1px solid #E2E8F0;border-radius:4px;padding:2px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No favicon uploaded yet — browsers will show their default icon for this site.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group" style="margin-bottom:0">
+      <label>Upload New Favicon</label>
+      <input type="file" name="favicon" accept=".ico,.png,.svg,image/png,image/svg+xml,image/x-icon">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">ICO, PNG or SVG. A square image (e.g. 32&times;32 or 512&times;512px) works best.</small>
+    </div>
+    <?php if (!empty($settings['favicon'])): ?>
+    <div class="form-group" style="margin-bottom:0;margin-top:1.25rem">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_favicon" value="1" style="width:auto"> Remove favicon and use the browser default instead
       </label>
     </div>
     <?php endif; ?>

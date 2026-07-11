@@ -8,10 +8,11 @@ if (isLoggedIn()) {
 
 $error = '';
 $db = getDB();
-$logoRows = $db->query("SELECT setting_key, setting_value FROM settings WHERE setting_key IN ('footer_logo','logo')")->fetchAll();
+$logoRows = $db->query("SELECT setting_key, setting_value FROM settings WHERE setting_key IN ('footer_logo','logo','favicon')")->fetchAll();
 $logoMap  = [];
 foreach ($logoRows as $row) { $logoMap[$row['setting_key']] = $row['setting_value']; }
 $siteLogo = $logoMap['footer_logo'] ?? $logoMap['logo'] ?? '';
+$favicon  = $logoMap['favicon'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
@@ -44,6 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
+<?php if (!empty($favicon)): ?>
+<link rel="icon" href="<?= SITE_URL ?>/uploads/branding/<?= htmlspecialchars($favicon) ?>">
+<?php endif; ?>
 <title>Admin Login — Creative Elements</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
