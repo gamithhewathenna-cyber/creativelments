@@ -75,7 +75,8 @@ if ($sameAs) $orgSchema['sameAs'] = $sameAs;
 <?php if ($ogImage): ?><meta name="twitter:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8') ?>"><?php endif; ?>
 <script type="application/ld+json"><?= json_encode($orgSchema, JSON_UNESCAPED_SLASHES) ?></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body class="page-<?= sanitize($currentPage) ?>">
