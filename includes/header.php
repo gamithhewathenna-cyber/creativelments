@@ -10,6 +10,17 @@ foreach ($settingsRaw as $row) {
 }
 
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
+
+// Per-page SEO overrides. Pages with a single item (service.php, blog-post.php) set
+// $seoTitle/$seoDescription themselves before including this file; static pages fall
+// back to whatever's saved in Admin → SEO for their page key.
+if (empty($seoTitle))       $seoTitle       = $settings["seo_title_{$currentPage}"] ?? '';
+if (empty($seoDescription)) $seoDescription = $settings["seo_meta_{$currentPage}"] ?? '';
+
+$defaultTitle = 'Creative Elements | Digital Marketing Agency';
+$defaultDesc  = 'Creative Elements helps Melbourne &amp; Sydney businesses dominate Google. Expert web design, SEO, and branding — global standards, transparent pricing.';
+$titleTag = $seoTitle !== '' ? sanitize($seoTitle) : (isset($pageTitle) ? sanitize($pageTitle) . ' — ' . $defaultTitle : $defaultTitle);
+$descTag  = $seoDescription !== '' ? sanitize($seoDescription) : $defaultDesc;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +28,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="TuumGSLz5nSDiOexD4lTLhz6tcXKetlXn8zIXviHrQI" />
-<meta name="description" content="Creative Elements helps Melbourne &amp; Sydney businesses dominate Google. Expert web design, SEO, and branding — global standards, transparent pricing.">
-<title><?= isset($pageTitle) ? sanitize($pageTitle) . ' — ' : '' ?>Creative Elements | Digital Marketing Agency</title>
+<meta name="description" content="<?= $descTag ?>">
+<title><?= $titleTag ?></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">

@@ -17,10 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = trim($_POST['content'] ?? '');
     $cat     = trim($_POST['category'] ?? 'General');
     $status  = $_POST['status'] ?? 'draft';
+    $keyphrase = trim($_POST['focus_keyphrase'] ?? '');
+    $seoTitle  = trim($_POST['seo_title'] ?? '');
+    $metaDesc  = trim($_POST['meta_description'] ?? '');
     if ($id) {
-        $db->prepare("UPDATE posts SET title=?,slug=?,excerpt=?,content=?,category=?,status=? WHERE id=?")->execute([$title,$slug,$excerpt,$content,$cat,$status,$id]);
+        $db->prepare("UPDATE posts SET title=?,slug=?,excerpt=?,content=?,category=?,status=?,focus_keyphrase=?,seo_title=?,meta_description=? WHERE id=?")->execute([$title,$slug,$excerpt,$content,$cat,$status,$keyphrase,$seoTitle,$metaDesc,$id]);
     } else {
-        $db->prepare("INSERT INTO posts (title,slug,excerpt,content,category,status) VALUES (?,?,?,?,?,?)")->execute([$title,$slug,$excerpt,$content,$cat,$status]);
+        $db->prepare("INSERT INTO posts (title,slug,excerpt,content,category,status,focus_keyphrase,seo_title,meta_description) VALUES (?,?,?,?,?,?,?,?,?)")->execute([$title,$slug,$excerpt,$content,$cat,$status,$keyphrase,$seoTitle,$metaDesc]);
     }
     regenerateSitemap($db);
     header('Location: /admin/posts.php?msg=saved');
@@ -50,6 +53,23 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
       </div>
       <div class="form-group"><label>Excerpt</label><textarea name="excerpt" style="min-height:80px"><?= sanitize($ep['excerpt'] ?? '') ?></textarea></div>
       <div class="form-group"><label>Content</label><textarea name="content" style="min-height:300px"><?= sanitize($ep['content'] ?? '') ?></textarea></div>
+
+      <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
+      <h3 style="font-size:.95rem;margin-bottom:1rem">SEO</h3>
+      <div class="form-group">
+        <label>Focus Keyphrase</label>
+        <input name="focus_keyphrase" value="<?= sanitize($ep['focus_keyphrase'] ?? '') ?>" placeholder="e.g. website design tips">
+        <small style="color:#8892A4;display:block;margin-top:.4rem">For your own reference when writing the content above — not shown on the page.</small>
+      </div>
+      <div class="form-group">
+        <label>SEO Title</label>
+        <input name="seo_title" value="<?= sanitize($ep['seo_title'] ?? '') ?>" placeholder="Leave blank to use the post title">
+      </div>
+      <div class="form-group">
+        <label>Meta Description</label>
+        <textarea name="meta_description" style="min-height:80px" placeholder="Leave blank to use the site default"><?= sanitize($ep['meta_description'] ?? '') ?></textarea>
+      </div>
+
       <button type="submit" class="btn btn-primary">Save Post</button>
       <?php if ($ep): ?><a href="/admin/posts.php" class="btn btn-outline" style="margin-left:.5rem">Cancel</a><?php endif; ?>
     </form>

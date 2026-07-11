@@ -1,15 +1,19 @@
 <?php
 require_once 'includes/config.php';
+$db = getDB();
 $slug = $_GET['slug'] ?? '';
 $stmt = $db->prepare("SELECT * FROM posts WHERE slug=? AND status='published'");
 $stmt->execute([$slug]);
 $post = $stmt->fetch();
-if (!$post) { header('HTTP/1.0 404 Not Found'); $pageTitle = '404'; } else { $pageTitle = $post['title']; }
+if (!$post) {
+    header('HTTP/1.0 404 Not Found');
+    $pageTitle = '404';
+} else {
+    $pageTitle      = $post['title'];
+    $seoTitle       = $post['seo_title'] ?? '';
+    $seoDescription = $post['meta_description'] ?? '';
+}
 
-// Load settings
-$rows = $db->query("SELECT setting_key, setting_value FROM settings")->fetchAll();
-$settings = [];
-foreach ($rows as $r) { $settings[$r['setting_key']] = $r['setting_value']; }
 require_once 'includes/header.php';
 ?>
 

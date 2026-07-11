@@ -33,6 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content2  = trim($_POST['content2'] ?? '');
     $icon      = trim($_POST['icon'] ?? 'star');
     $sort      = intval($_POST['sort_order'] ?? 0);
+    $keyphrase = trim($_POST['focus_keyphrase'] ?? '');
+    $seoTitle  = trim($_POST['seo_title'] ?? '');
+    $metaDesc  = trim($_POST['meta_description'] ?? '');
     $image1    = '';
     $image2    = '';
 
@@ -72,16 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$formError) {
         try {
             if ($id) {
-                $sql = "UPDATE services SET title=?,slug=?,description=?,content_heading=?,content=?,content2_heading=?,content2=?,icon=?,sort_order=?"
+                $sql = "UPDATE services SET title=?,slug=?,description=?,content_heading=?,content=?,content2_heading=?,content2=?,icon=?,sort_order=?,focus_keyphrase=?,seo_title=?,meta_description=?"
                      . ($image1 ? ",detail_image1=?" : "") . ($image2 ? ",detail_image2=?" : "") . " WHERE id=?";
-                $params = [$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort];
+                $params = [$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$keyphrase,$seoTitle,$metaDesc];
                 if ($image1) $params[] = $image1;
                 if ($image2) $params[] = $image2;
                 $params[] = $id;
                 $db->prepare($sql)->execute($params);
             } else {
-                $db->prepare("INSERT INTO services (title,slug,description,content_heading,content,content2_heading,content2,icon,sort_order,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?,?,?)")
-                   ->execute([$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$image1,$image2]);
+                $db->prepare("INSERT INTO services (title,slug,description,content_heading,content,content2_heading,content2,icon,sort_order,focus_keyphrase,seo_title,meta_description,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+                   ->execute([$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$keyphrase,$seoTitle,$metaDesc,$image1,$image2]);
             }
             regenerateSitemap($db);
             header('Location: /admin/services.php?msg=saved');
@@ -92,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validation failed — redisplay the form with what was typed
-    $editSvc = ['id' => $id, 'title' => $t, 'slug' => $slug, 'description' => $desc, 'content_heading' => $heading1, 'content' => $content, 'content2_heading' => $heading2, 'content2' => $content2, 'icon' => $icon, 'sort_order' => $sort];
+    $editSvc = ['id' => $id, 'title' => $t, 'slug' => $slug, 'description' => $desc, 'content_heading' => $heading1, 'content' => $content, 'content2_heading' => $heading2, 'content2' => $content2, 'icon' => $icon, 'sort_order' => $sort, 'focus_keyphrase' => $keyphrase, 'seo_title' => $seoTitle, 'meta_description' => $metaDesc];
 }
 
 if (isset($_GET['edit']) && !$editSvc) {
@@ -169,6 +172,22 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
           <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — a placeholder box shows on the page until you add one.</p>
         <?php endif; ?>
         <input type="file" name="detail_image2" accept="image/png,image/jpeg,image/webp">
+      </div>
+
+      <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
+      <h3 style="font-size:.95rem;margin-bottom:1rem">SEO</h3>
+      <div class="form-group">
+        <label>Focus Keyphrase</label>
+        <input name="focus_keyphrase" value="<?= sanitize($editSvc['focus_keyphrase'] ?? '') ?>" placeholder="e.g. web design melbourne">
+        <small style="color:#8892A4;display:block;margin-top:.4rem">For your own reference when writing the content above — not shown on the page.</small>
+      </div>
+      <div class="form-group">
+        <label>SEO Title</label>
+        <input name="seo_title" value="<?= sanitize($editSvc['seo_title'] ?? '') ?>" placeholder="Leave blank to use the service title">
+      </div>
+      <div class="form-group">
+        <label>Meta Description</label>
+        <textarea name="meta_description" style="min-height:80px" placeholder="Leave blank to use the site default"><?= sanitize($editSvc['meta_description'] ?? '') ?></textarea>
       </div>
 
       <button type="submit" class="btn btn-primary" style="margin-top:1rem">Save Service</button>

@@ -5,7 +5,14 @@ $slug = $_GET['slug'] ?? '';
 $stmt = $db->prepare("SELECT * FROM services WHERE slug=? AND active=1");
 $stmt->execute([$slug]);
 $service = $stmt->fetch();
-if (!$service) { header('HTTP/1.0 404 Not Found'); $pageTitle = '404'; } else { $pageTitle = $service['title']; }
+if (!$service) {
+    header('HTTP/1.0 404 Not Found');
+    $pageTitle = '404';
+} else {
+    $pageTitle      = $service['title'];
+    $seoTitle       = $service['seo_title'] ?? '';
+    $seoDescription = $service['meta_description'] ?? '';
+}
 
 require_once 'includes/header.php';
 

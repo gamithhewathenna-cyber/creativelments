@@ -72,6 +72,9 @@ CREATE TABLE IF NOT EXISTS `services` (
   `icon` varchar(100) DEFAULT 'star',
   `sort_order` int(11) DEFAULT 0,
   `active` tinyint(1) DEFAULT 1,
+  `focus_keyphrase` varchar(255) DEFAULT '',
+  `seo_title` varchar(255) DEFAULT '',
+  `meta_description` varchar(500) DEFAULT '',
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -191,6 +194,9 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `category` varchar(100) DEFAULT 'General',
   `tags` varchar(500) DEFAULT '',
   `status` enum('draft','published') DEFAULT 'draft',
+  `focus_keyphrase` varchar(255) DEFAULT '',
+  `seo_title` varchar(255) DEFAULT '',
+  `meta_description` varchar(500) DEFAULT '',
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
