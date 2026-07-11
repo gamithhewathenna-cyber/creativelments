@@ -16,7 +16,6 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="description" content="Creative Elements helps Melbourne &amp; Sydney businesses dominate Google. Expert web design, SEO, and branding — global standards, transparent pricing.">
 <title><?= isset($pageTitle) ? sanitize($pageTitle) . ' — ' : '' ?>Creative Elements | Digital Marketing Agency</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

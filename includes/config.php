@@ -8,14 +8,14 @@ error_reporting(E_ALL);
 // DATABASE CONFIGURATION — Edit these before uploading
 // ============================================================
 define('DB_HOST', 'localhost');
-define('DB_USER', 'creaeina_creativelementsadmin');   // CPanel DB username
-define('DB_PASS', 'n!GtNk)$#tG#Pl{+');                // CPanel DB password
-define('DB_NAME', 'creaeina_creativelements');        // CPanel DB name
+define('DB_USER', 'matsaqyg_creativelementsadmin26');   // CPanel DB username
+define('DB_PASS', 'Pldo^?rJlY-;,&N%');                  // CPanel DB password
+define('DB_NAME', 'matsaqyg_creativelements2026');      // CPanel DB name
 
 // ============================================================
 // SITE CONFIGURATION
 // ============================================================
-define('SITE_URL', 'http://creative.creativelements-dev.info');   // Your domain
+define('SITE_URL', 'https://creativelements.co');   // Your domain
 define('SITE_NAME', 'Creative Elements');
 define('ADMIN_EMAIL', 'reach@creativelements.co');
 define('WHATSAPP_NUMBER', '94777130597');
