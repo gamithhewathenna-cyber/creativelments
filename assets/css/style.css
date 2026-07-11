@@ -802,6 +802,59 @@ body.page-index .navbar.scrolled {
 .form-success { background: #D1FAE5; color: #065F46; }
 .form-error { background: #FEE2E2; color: #991B1B; }
 
+/* ---- Contact Card (info panel + form) ---- */
+.contact-card-wrap {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(10,15,30,.08);
+  overflow: hidden;
+}
+.contact-card-info { position: relative; background: var(--teal); color: var(--white); padding: 2.5rem 2rem; overflow: hidden; }
+.contact-card-info-inner { position: relative; z-index: 2; }
+.contact-card-info h3 { font-size: 1.3rem; margin-bottom: .75rem; color: var(--white); }
+.contact-card-info p { font-size: .88rem; color: rgba(255,255,255,.85); margin-bottom: 2rem; line-height: 1.6; }
+.contact-info-item { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; font-size: .88rem; }
+.contact-info-item svg { flex-shrink: 0; }
+.contact-info-item a, .contact-info-item span { color: var(--white); }
+.contact-info-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-top: .5rem;
+  color: var(--white);
+  font-size: .85rem;
+  font-weight: 600;
+  background: rgba(255,255,255,.15);
+  padding: .6rem 1rem;
+  border-radius: 100px;
+  transition: var(--trans);
+}
+.contact-info-whatsapp:hover { background: rgba(255,255,255,.3); }
+.contact-card-circle { position: absolute; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,.08); bottom: -100px; right: -80px; z-index: 1; }
+.contact-card-form { padding: 2.5rem; }
+
+.contact-form-underline .form-group input,
+.contact-form-underline .form-group select,
+.contact-form-underline .form-group textarea {
+  border: none;
+  border-bottom: 1.5px solid #E2E8F0;
+  border-radius: 0;
+  padding: .6rem 0;
+  background: transparent;
+}
+.contact-form-underline .form-group input:focus,
+.contact-form-underline .form-group select:focus,
+.contact-form-underline .form-group textarea:focus { border-bottom-color: var(--teal); box-shadow: none; }
+.contact-form-underline .form-group textarea { min-height: 80px; }
+.contact-form-underline .btn { margin-top: .5rem; align-self: flex-start; }
+
+@media (max-width: 860px) {
+  .contact-card-wrap { grid-template-columns: 1fr; border-radius: 16px; }
+  .contact-card-info, .contact-card-form { padding: 2rem 1.5rem; }
+}
+
 .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
 .contact-card {
   background: var(--navy);
