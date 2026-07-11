@@ -123,10 +123,13 @@ if (projectModal) {
     ['img1', 'img2', 'img3'].forEach((key) => {
       const src = trigger.dataset[key];
       if (!src) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'project-modal-img-wrap';
       const img = document.createElement('img');
       img.src = src;
       img.alt = trigger.dataset.title || '';
-      modalGallery.appendChild(img);
+      wrap.appendChild(img);
+      modalGallery.appendChild(wrap);
       imageCount++;
     });
     modalGallery.classList.toggle('single-image', imageCount === 1);
