@@ -81,6 +81,25 @@ echo renderBreadcrumbs([
   </div>
 </section>
 
+<!-- Service Locations -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Global Reach</span>
+      <h2>Where We Serve</h2>
+      <p>Proudly delivering digital agency services to clients across these countries.</p>
+    </div>
+    <div class="locations-grid">
+      <div class="location-item"><span class="location-flag">🇦🇺</span><span>Australia</span></div>
+      <div class="location-item"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div>
+      <div class="location-item"><span class="location-flag">🇺🇸</span><span>United States</span></div>
+      <div class="location-item"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div>
+      <div class="location-item"><span class="location-flag">🇦🇪</span><span>United Arab Emirates (Dubai)</span></div>
+      <div class="location-item"><span class="location-flag">🇱🇰</span><span>Sri Lanka</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- Location Map -->
 <section class="section" style="padding-top:0">
   <div class="container">
