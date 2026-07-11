@@ -35,7 +35,9 @@ try {
     $stmt->execute([$name, $email, $phone, $service, $message, $_SERVER['REMOTE_ADDR'] ?? '']);
 
     // Email notification via SMTP (configured in Admin → Settings), falls back to mail()
-    $adminEmail = ADMIN_EMAIL;
+    $notifyRow  = $db->prepare("SELECT setting_value FROM settings WHERE setting_key='enquiry_email'");
+    $notifyRow->execute();
+    $adminEmail = trim($notifyRow->fetchColumn() ?: '') ?: ADMIN_EMAIL;
     $subject = "New Enquiry from $name — Creative Elements";
     $body  = "Name: $name\nEmail: $email\nPhone: $phone\nService: $service\n\nMessage:\n$message";
     $mailError = null;

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test_email'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) {
     $keys = ['phone','email','address','facebook','instagram','whatsapp','hero_title','hero_subtitle','unique_section_text',
-              'smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
+              'enquiry_email','smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
@@ -326,6 +326,12 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
       Sends contact-form notifications through a real mailbox instead of the server's default mailer, which is often unreliable or flagged as spam.
       Get these details from your email provider (e.g. Gmail, Zoho Mail, or your cPanel email account).
     </p>
+    <div class="form-group">
+      <label>Enquiry Notification Email</label>
+      <input name="enquiry_email" type="email" value="<?= sanitize($settings['enquiry_email'] ?? '') ?>" placeholder="<?= sanitize(ADMIN_EMAIL) ?>">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">Where new contact-form enquiries are sent. Leave blank to use the default (<?= sanitize(ADMIN_EMAIL) ?>).</small>
+    </div>
+    <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
     <div class="form-row">
       <div class="form-group"><label>SMTP Host</label><input name="smtp_host" value="<?= sanitize($settings['smtp_host'] ?? '') ?>" placeholder="e.g. smtp.gmail.com"></div>
       <div class="form-group"><label>SMTP Port</label><input name="smtp_port" type="number" value="<?= sanitize($settings['smtp_port'] ?? '587') ?>" style="width:120px" placeholder="587"></div>
