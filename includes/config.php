@@ -148,6 +148,34 @@ function regenerateSitemap($db) {
     file_put_contents(__DIR__ . '/../sitemap.xml', buildSitemapXml($db));
 }
 
+// Renders a breadcrumb trail (visible nav + BreadcrumbList schema for SEO).
+// $items: [['label' => 'Home', 'url' => '/'], ..., ['label' => 'Current Page', 'url' => null]]
+function renderBreadcrumbs($items) {
+    $html = '<div class="breadcrumbs"><div class="container"><ol>';
+    $last = count($items) - 1;
+    foreach ($items as $i => $item) {
+        if ($i > 0) $html .= '<li class="breadcrumb-sep">/</li>';
+        if (!empty($item['url']) && $i !== $last) {
+            $html .= '<li><a href="' . htmlspecialchars($item['url'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') . '</a></li>';
+        } else {
+            $html .= '<li aria-current="page">' . htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') . '</li>';
+        }
+    }
+    $html .= '</ol></div></div>';
+
+    $ld = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => []];
+    foreach ($items as $i => $item) {
+        $ld['itemListElement'][] = [
+            '@type'    => 'ListItem',
+            'position' => $i + 1,
+            'name'     => $item['label'],
+            'item'     => rtrim(SITE_URL, '/') . ($item['url'] ?? $_SERVER['REQUEST_URI']),
+        ];
+    }
+    $html .= '<script type="application/ld+json">' . json_encode($ld, JSON_UNESCAPED_SLASHES) . '</script>';
+    return $html;
+}
+
 function isLoggedIn() {
     return isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
 }

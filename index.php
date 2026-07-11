@@ -74,7 +74,13 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
       <div class="services-showcase-grid">
         <?php foreach (array_slice($services, 0, 4) as $svc): ?>
         <div class="services-showcase-item">
-          <h3><?= sanitize($svc['title']) ?></h3>
+          <h3>
+            <?php if (!empty($svc['slug'])): ?>
+            <a href="/service.php?slug=<?= urlencode($svc['slug']) ?>" style="color:inherit"><?= sanitize($svc['title']) ?></a>
+            <?php else: ?>
+            <?= sanitize($svc['title']) ?>
+            <?php endif; ?>
+          </h3>
           <p><?= sanitize($svc['description']) ?></p>
         </div>
         <?php endforeach; ?>

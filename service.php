@@ -19,6 +19,17 @@ if (!$service) {
 
 require_once 'includes/header.php';
 
+if ($service) {
+    echo renderBreadcrumbs([
+        ['label' => 'Home', 'url' => '/'],
+        ['label' => 'Services', 'url' => '/services.php'],
+        ['label' => $service['title'], 'url' => null],
+    ]);
+    $relatedServices = $db->prepare("SELECT * FROM services WHERE active=1 AND id != ? ORDER BY RAND() LIMIT 3");
+    $relatedServices->execute([$service['id']]);
+    $relatedServices = $relatedServices->fetchAll();
+}
+
 if ($service):
     $serviceSchema = [
         '@context'    => 'https://schema.org',
@@ -91,6 +102,28 @@ $icons = [
           <?= nl2br(sanitize($service['content2'])) ?>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<?php if ($relatedServices): ?>
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header"><h2>Other Services You Might Need</h2></div>
+    <div class="services-grid">
+      <?php foreach ($relatedServices as $rs): ?>
+      <div class="service-card">
+        <div class="service-icon"><?= $icons[$rs['icon']] ?? $icons['star'] ?></div>
+        <h3><?= sanitize($rs['title']) ?></h3>
+        <p><?= sanitize($rs['description']) ?></p>
+        <div style="margin-top:1.25rem">
+          <?php if (!empty($rs['slug'])): ?>
+          <a href="/service.php?slug=<?= urlencode($rs['slug']) ?>" class="btn btn-primary btn-sm" style="font-size:.82rem;padding:.6rem 1.2rem">Learn More</a>
+          <?php endif; ?>
+        </div>
+      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

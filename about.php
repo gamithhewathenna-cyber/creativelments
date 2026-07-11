@@ -10,6 +10,10 @@ $reasonDefaults = [
     3 => ['Senior team on every project', 'No juniors, no outsourcing. Gamith and the core team handle your work personally from start to finish.'],
     4 => ['We stay after launch', "After-sale support is built into how we work — not an upsell. We're your long-term partner, not a one-project shop."],
 ];
+echo renderBreadcrumbs([
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'About', 'url' => null],
+]);
 ?>
 
 <section class="page-hero page-hero-light">

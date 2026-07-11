@@ -2,6 +2,10 @@
 $pageTitle = 'Blog';
 require_once 'includes/header.php';
 $posts = $db->query("SELECT id,title,slug,excerpt,image,category,created_at FROM posts WHERE status='published' ORDER BY created_at DESC")->fetchAll();
+echo renderBreadcrumbs([
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'Blog', 'url' => null],
+]);
 ?>
 
 <section class="page-hero">

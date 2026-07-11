@@ -34,12 +34,13 @@
     <div class="footer-services">
       <h4>Services</h4>
       <ul>
-        <li><a href="/services.php">Web Design & Development</a></li>
-        <li><a href="/services.php">SEO & Digital Marketing</a></li>
-        <li><a href="/services.php">Graphic Design</a></li>
-        <li><a href="/services.php">Shopify Store Setup</a></li>
-        <li><a href="/services.php">Social Media Management</a></li>
-        <li><a href="/services.php">Digital Menu Boards</a></li>
+        <?php
+        $footerServices = $db->query("SELECT title, slug FROM services WHERE active=1 ORDER BY sort_order LIMIT 6")->fetchAll();
+        foreach ($footerServices as $fs):
+          $fsUrl = !empty($fs['slug']) ? '/service.php?slug=' . urlencode($fs['slug']) : '/services.php';
+        ?>
+        <li><a href="<?= $fsUrl ?>"><?= sanitize($fs['title']) ?></a></li>
+        <?php endforeach; ?>
       </ul>
     </div>
     <div class="footer-contact">

@@ -1,6 +1,10 @@
 <?php
 $pageTitle = 'Contact Us';
 require_once 'includes/header.php';
+echo renderBreadcrumbs([
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'Contact', 'url' => null],
+]);
 ?>
 
 <section class="page-hero">

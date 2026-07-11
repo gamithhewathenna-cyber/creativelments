@@ -871,6 +871,15 @@ body.page-index .navbar.scrolled {
 .page-hero-light h3 { color: #000000; }
 .page-hero-light p { color: #000000; }
 
+/* ---- Breadcrumbs ---- */
+.breadcrumbs { background: var(--off); border-bottom: 1px solid #E2E8F0; }
+.breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; list-style: none; padding: .85rem 0; margin: 0; font-size: .82rem; }
+.breadcrumbs li { color: #8892A4; }
+.breadcrumbs a { color: #8892A4; transition: var(--trans); }
+.breadcrumbs a:hover { color: var(--primary); }
+.breadcrumbs li[aria-current="page"] { color: var(--navy); font-weight: 600; }
+.breadcrumbs .breadcrumb-sep { color: #C4CCD8; }
+
 /* ---- WhatsApp button ---- */
 .btn-whatsapp {
   display: inline-flex;

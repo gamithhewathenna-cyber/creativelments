@@ -3,6 +3,10 @@ $pageTitle = 'Our Work';
 require_once 'includes/header.php';
 $projects = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort_order")->fetchAll();
 $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 ORDER BY category")->fetchAll(PDO::FETCH_COLUMN);
+echo renderBreadcrumbs([
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'Our Work', 'url' => null],
+]);
 ?>
 
 <section class="section">

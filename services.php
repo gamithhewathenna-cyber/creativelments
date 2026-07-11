@@ -2,6 +2,10 @@
 $pageTitle = 'Services';
 require_once 'includes/header.php';
 $services = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort_order")->fetchAll();
+echo renderBreadcrumbs([
+    ['label' => 'Home', 'url' => '/'],
+    ['label' => 'Services', 'url' => null],
+]);
 ?>
 
 <section class="page-hero">
