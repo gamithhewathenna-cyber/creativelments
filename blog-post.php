@@ -12,9 +12,28 @@ if (!$post) {
     $pageTitle      = $post['title'];
     $seoTitle       = $post['seo_title'] ?? '';
     $seoDescription = $post['meta_description'] ?? '';
+    if (!empty($post['image'])) {
+        $ogImage = rtrim(SITE_URL, '/') . '/uploads/' . $post['image'];
+    }
 }
 
 require_once 'includes/header.php';
+
+if ($post):
+    $articleSchema = [
+        '@context'      => 'https://schema.org',
+        '@type'         => 'Article',
+        'headline'      => $post['title'],
+        'description'   => $post['excerpt'] ?: $post['meta_description'],
+        'datePublished' => date('c', strtotime($post['created_at'])),
+        'dateModified'  => date('c', strtotime($post['updated_at'] ?? $post['created_at'])),
+        'author'        => ['@type' => 'Organization', 'name' => SITE_NAME],
+        'publisher'     => ['@type' => 'Organization', 'name' => SITE_NAME],
+        'mainEntityOfPage' => $canonicalUrl,
+    ];
+    if (!empty($ogImage)) $articleSchema['image'] = $ogImage;
+    echo '<script type="application/ld+json">' . json_encode($articleSchema, JSON_UNESCAPED_SLASHES) . '</script>';
+endif;
 ?>
 
 <?php if ($post): ?>

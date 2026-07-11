@@ -100,7 +100,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
     <div class="unique-showcase">
       <div class="unique-showcase-image">
         <?php if (!empty($settings['unique_section_image'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['unique_section_image']) ?>" alt="What Makes Us Unique">
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['unique_section_image']) ?>" alt="What Makes Us Unique" loading="lazy">
         <?php else: ?>
           <div class="unique-showcase-placeholder">Upload an image from<br>Admin → Settings</div>
         <?php endif; ?>
@@ -144,7 +144,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
       </div>
       <div class="why-visual">
         <?php if (!empty($settings['why_us_image'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Global Standards, Local Understanding" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Global Standards, Local Understanding" class="why-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
         <?php endif; ?>
@@ -166,7 +166,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
       <?php foreach ($projects as $proj): ?>
       <div class="portfolio-slide">
         <?php if ($proj['image']): ?>
-          <img class="portfolio-slide-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
+          <img class="portfolio-slide-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>" loading="lazy">
         <?php else: ?>
           <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
         <?php endif; ?>
@@ -201,7 +201,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
     <div class="logos-grid">
       <?php foreach ($clientLogos as $logo): ?>
       <div class="logos-item">
-        <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>">
+        <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>" loading="lazy">
       </div>
       <?php endforeach; ?>
     </div>

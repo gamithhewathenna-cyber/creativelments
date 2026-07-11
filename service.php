@@ -12,9 +12,24 @@ if (!$service) {
     $pageTitle      = $service['title'];
     $seoTitle       = $service['seo_title'] ?? '';
     $seoDescription = $service['meta_description'] ?? '';
+    if (!empty($service['detail_image1'])) {
+        $ogImage = rtrim(SITE_URL, '/') . '/uploads/services/' . $service['detail_image1'];
+    }
 }
 
 require_once 'includes/header.php';
+
+if ($service):
+    $serviceSchema = [
+        '@context'    => 'https://schema.org',
+        '@type'       => 'Service',
+        'name'        => $service['title'],
+        'description' => $service['description'],
+        'provider'    => ['@type' => 'LocalBusiness', 'name' => SITE_NAME, 'url' => SITE_URL],
+        'url'         => $canonicalUrl,
+    ];
+    echo '<script type="application/ld+json">' . json_encode($serviceSchema, JSON_UNESCAPED_SLASHES) . '</script>';
+endif;
 
 $icons = [
     'monitor'      => '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
@@ -49,7 +64,7 @@ $icons = [
       </div>
       <div class="why-visual">
         <?php if (!empty($service['detail_image1'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($service['detail_image1']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($service['detail_image1']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Services</div>
         <?php endif; ?>
@@ -65,7 +80,7 @@ $icons = [
     <div class="why-grid">
       <div class="why-visual" style="order:-1">
         <?php if (!empty($service['detail_image2'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($service['detail_image2']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/services/<?= sanitize($service['detail_image2']) ?>" alt="<?= sanitize($service['title']) ?>" class="why-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Services</div>
         <?php endif; ?>

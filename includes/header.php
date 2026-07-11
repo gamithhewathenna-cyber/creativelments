@@ -21,6 +21,35 @@ $defaultTitle = 'Creative Elements | Digital Marketing Agency';
 $defaultDesc  = 'Creative Elements helps Melbourne &amp; Sydney businesses dominate Google. Expert web design, SEO, and branding — global standards, transparent pricing.';
 $titleTag = $seoTitle !== '' ? sanitize($seoTitle) : (isset($pageTitle) ? sanitize($pageTitle) . ' — ' . $defaultTitle : $defaultTitle);
 $descTag  = $seoDescription !== '' ? sanitize($seoDescription) : $defaultDesc;
+
+// Canonical URL — preserves ?slug= (the real content identifier for service.php/blog-post.php)
+// but strips any other query params (utm_source, etc.) so link equity isn't split.
+$reqPath = strtok($_SERVER['REQUEST_URI'], '?');
+if (basename($reqPath) === 'index.php') $reqPath = rtrim(dirname($reqPath), '/') . '/';
+$canonicalUrl = rtrim(SITE_URL, '/') . $reqPath;
+if (!empty($_GET['slug'])) $canonicalUrl .= '?slug=' . urlencode($_GET['slug']);
+
+// Social share image — service.php/blog-post.php set $ogImage themselves before including
+// this file (their own detail/featured image); everything else falls back to the site logo.
+if (empty($ogImage)) {
+    $ogImage = !empty($settings['logo']) ? rtrim(SITE_URL, '/') . '/uploads/branding/' . $settings['logo'] : '';
+}
+
+// Organization/LocalBusiness structured data — shown on every page.
+$orgSchema = [
+    '@context' => 'https://schema.org',
+    '@type'    => 'LocalBusiness',
+    'name'     => SITE_NAME,
+    'url'      => SITE_URL,
+];
+if (!empty($settings['logo']))   $orgSchema['logo']       = rtrim(SITE_URL, '/') . '/uploads/branding/' . $settings['logo'];
+if (!empty($settings['phone']))  $orgSchema['telephone']  = $settings['phone'];
+if (!empty($settings['email']))  $orgSchema['email']      = $settings['email'];
+if (!empty($settings['address'])) {
+    $orgSchema['address'] = ['@type' => 'PostalAddress', 'streetAddress' => $settings['address']];
+}
+$sameAs = array_values(array_filter([$settings['facebook'] ?? '', $settings['instagram'] ?? '']));
+if ($sameAs) $orgSchema['sameAs'] = $sameAs;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +61,19 @@ $descTag  = $seoDescription !== '' ? sanitize($seoDescription) : $defaultDesc;
 <link rel="icon" href="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['favicon']) ?>">
 <?php endif; ?>
 <meta name="description" content="<?= $descTag ?>">
+<link rel="canonical" href="<?= htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8') ?>">
 <title><?= $titleTag ?></title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="<?= sanitize(SITE_NAME) ?>">
+<meta property="og:title" content="<?= $titleTag ?>">
+<meta property="og:description" content="<?= $descTag ?>">
+<meta property="og:url" content="<?= htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8') ?>">
+<?php if ($ogImage): ?><meta property="og:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8') ?>"><?php endif; ?>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?= $titleTag ?>">
+<meta name="twitter:description" content="<?= $descTag ?>">
+<?php if ($ogImage): ?><meta name="twitter:image" content="<?= htmlspecialchars($ogImage, ENT_QUOTES, 'UTF-8') ?>"><?php endif; ?>
+<script type="application/ld+json"><?= json_encode($orgSchema, JSON_UNESCAPED_SLASHES) ?></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css">

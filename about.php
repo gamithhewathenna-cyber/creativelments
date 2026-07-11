@@ -50,7 +50,7 @@ $reasonDefaults = [
       </div>
       <div class="why-visual">
         <?php if (!empty($settings['about_story_image'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['about_story_image']) ?>" alt="Our Agency Story" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['about_story_image']) ?>" alt="Our Agency Story" class="why-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → About Page</div>
         <?php endif; ?>
@@ -71,7 +71,7 @@ $reasonDefaults = [
       </div>
       <div class="why-visual">
         <?php if (!empty($settings['about_founder_image'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['about_founder_image']) ?>" alt="Gamith Hewathenna — Founder, Creative Elements" class="why-visual-image">
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['about_founder_image']) ?>" alt="Gamith Hewathenna — Founder, Creative Elements" class="why-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → About Page</div>
         <?php endif; ?>
@@ -91,7 +91,7 @@ $reasonDefaults = [
       <?php if ($teamMembers): foreach ($teamMembers as $m): ?>
       <div class="team-card">
         <?php if ($m['image']): ?>
-          <img class="team-photo" src="<?= SITE_URL ?>/uploads/team/<?= sanitize($m['image']) ?>" alt="<?= sanitize($m['name']) ?>">
+          <img class="team-photo" src="<?= SITE_URL ?>/uploads/team/<?= sanitize($m['image']) ?>" alt="<?= sanitize($m['name']) ?>" loading="lazy">
         <?php else: ?>
           <div class="team-photo team-photo-placeholder">Photo</div>
         <?php endif; ?>

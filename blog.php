@@ -20,7 +20,7 @@ $posts = $db->query("SELECT id,title,slug,excerpt,image,category,created_at FROM
       <a href="/blog-post.php?slug=<?= urlencode($post['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
         <div class="blog-thumb">
           <?php if ($post['image']): ?>
-            <img src="<?= SITE_URL ?>/uploads/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>">
+            <img src="<?= SITE_URL ?>/uploads/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" loading="lazy">
           <?php else: ?>
             <?= sanitize($post['category']) ?>
           <?php endif; ?>

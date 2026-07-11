@@ -7,6 +7,7 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
 
 <section class="section">
   <div class="container">
+    <h1 class="sr-only">Our Work</h1>
     <!-- Filter Tabs -->
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:flex-start">
       <button class="filter-btn active" data-filter="all">All</button>
@@ -19,7 +20,7 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
       <?php foreach ($projects as $proj): ?>
       <div class="portfolio-item" data-category="<?= sanitize($proj['category']) ?>">
         <?php if ($proj['image']): ?>
-          <img class="portfolio-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>">
+          <img class="portfolio-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>" loading="lazy">
         <?php else: ?>
           <div class="portfolio-placeholder"><?= sanitize($proj['title']) ?></div>
         <?php endif; ?>
