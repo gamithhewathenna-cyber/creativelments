@@ -8,5 +8,5 @@ $db = getDB();
 
 regenerateSitemap($db);
 
-header('Content-Type: application/xml; charset=utf-8');
-readfile(__DIR__ . '/sitemap.xml');
+header('Location: /sitemap.xml');
+exit;
