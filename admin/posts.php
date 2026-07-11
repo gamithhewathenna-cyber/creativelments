@@ -2,7 +2,12 @@
 $adminTitle = 'Blog Posts';
 require_once 'admin-auth.php';
 
-if (isset($_GET['delete'])) { $db->prepare("DELETE FROM posts WHERE id=?")->execute([$_GET['delete']]); header('Location: /admin/posts.php?msg=deleted'); exit; }
+if (isset($_GET['delete'])) {
+    $db->prepare("DELETE FROM posts WHERE id=?")->execute([$_GET['delete']]);
+    regenerateSitemap($db);
+    header('Location: /admin/posts.php?msg=deleted');
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id      = intval($_POST['id'] ?? 0);
@@ -17,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $db->prepare("INSERT INTO posts (title,slug,excerpt,content,category,status) VALUES (?,?,?,?,?,?)")->execute([$title,$slug,$excerpt,$content,$cat,$status]);
     }
+    regenerateSitemap($db);
     header('Location: /admin/posts.php?msg=saved');
     exit;
 }

@@ -4,6 +4,7 @@ require_once 'admin-auth.php';
 
 if (isset($_GET['delete'])) {
     $db->prepare("DELETE FROM services WHERE id=?")->execute([$_GET['delete']]);
+    regenerateSitemap($db);
     header('Location: /admin/services.php?msg=deleted');
     exit;
 }
@@ -12,6 +13,7 @@ if (isset($_GET['toggle'])) {
     $stmt->execute([$_GET['toggle']]);
     $cur = $stmt->fetchColumn();
     $db->prepare("UPDATE services SET active=? WHERE id=?")->execute([!$cur, $_GET['toggle']]);
+    regenerateSitemap($db);
     header('Location: /admin/services.php');
     exit;
 }
@@ -81,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $db->prepare("INSERT INTO services (title,slug,description,content_heading,content,content2_heading,content2,icon,sort_order,detail_image1,detail_image2) VALUES (?,?,?,?,?,?,?,?,?,?,?)")
                    ->execute([$t,$slug,$desc,$heading1,$content,$heading2,$content2,$icon,$sort,$image1,$image2]);
             }
+            regenerateSitemap($db);
             header('Location: /admin/services.php?msg=saved');
             exit;
         } catch (PDOException $e) {

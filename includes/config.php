@@ -107,6 +107,47 @@ function resizeCoverCrop($srcPath, $destPath, $targetW, $targetH, $ext) {
     return $ok;
 }
 
+// Builds the sitemap XML from current DB content (static pages + active services + published posts).
+function buildSitemapXml($db) {
+    $urlFn = function ($loc, $lastmod = null, $changefreq = 'weekly', $priority = '0.7') {
+        $xml  = "  <url>\n";
+        $xml .= '    <loc>' . htmlspecialchars($loc, ENT_XML1, 'UTF-8') . "</loc>\n";
+        if ($lastmod) {
+            $xml .= '    <lastmod>' . date('Y-m-d', strtotime($lastmod)) . "</lastmod>\n";
+        }
+        $xml .= "    <changefreq>{$changefreq}</changefreq>\n";
+        $xml .= "    <priority>{$priority}</priority>\n";
+        $xml .= "  </url>\n";
+        return $xml;
+    };
+
+    $services = $db->query("SELECT slug, created_at FROM services WHERE active=1 AND slug IS NOT NULL AND slug != ''")->fetchAll();
+    $posts    = $db->query("SELECT slug, created_at FROM posts WHERE status='published'")->fetchAll();
+
+    $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    $xml .= $urlFn(SITE_URL . '/', null, 'weekly', '1.0');
+    $xml .= $urlFn(SITE_URL . '/about.php', null, 'monthly', '0.8');
+    $xml .= $urlFn(SITE_URL . '/services.php', null, 'monthly', '0.9');
+    $xml .= $urlFn(SITE_URL . '/our-work.php', null, 'weekly', '0.8');
+    $xml .= $urlFn(SITE_URL . '/blog.php', null, 'weekly', '0.7');
+    $xml .= $urlFn(SITE_URL . '/contact.php', null, 'monthly', '0.6');
+    foreach ($services as $s) {
+        $xml .= $urlFn(SITE_URL . '/service.php?slug=' . urlencode($s['slug']), $s['created_at'] ?? null, 'monthly', '0.7');
+    }
+    foreach ($posts as $p) {
+        $xml .= $urlFn(SITE_URL . '/blog-post.php?slug=' . urlencode($p['slug']), $p['created_at'] ?? null, 'monthly', '0.6');
+    }
+    $xml .= "</urlset>\n";
+    return $xml;
+}
+
+// Regenerates the real, physical sitemap.xml file on disk — called after any content
+// change that affects it (services, blog posts), so no server rewrite rule is needed.
+function regenerateSitemap($db) {
+    file_put_contents(__DIR__ . '/../sitemap.xml', buildSitemapXml($db));
+}
+
 function isLoggedIn() {
     return isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
 }
