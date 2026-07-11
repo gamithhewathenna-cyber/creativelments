@@ -6,10 +6,15 @@ require_once '../includes/smtp-mailer.php';
 
 // Send Test Email (separate action, doesn't touch the main settings form)
 $testEmailResult = null;
+$testEmailTo = trim($_POST['test_email_to'] ?? '') ?: ADMIN_EMAIL;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test_email'])) {
-    $testError = null;
-    $ok = sendAppEmail($db, ADMIN_EMAIL, 'Test Email — ' . SITE_NAME, "This is a test email from your SMTP settings.\n\nIf you're reading this, SMTP is working correctly.", '', $testError);
-    $testEmailResult = $ok ? ['ok' => true, 'message' => "Test email sent to " . ADMIN_EMAIL . " successfully."] : ['ok' => false, 'message' => $testError ?: 'Unknown error.'];
+    if (!filter_var($testEmailTo, FILTER_VALIDATE_EMAIL)) {
+        $testEmailResult = ['ok' => false, 'message' => "\"$testEmailTo\" is not a valid email address."];
+    } else {
+        $testError = null;
+        $ok = sendAppEmail($db, $testEmailTo, 'Test Email — ' . SITE_NAME, "This is a test email from your SMTP settings.\n\nIf you're reading this, SMTP is working correctly.", '', $testError);
+        $testEmailResult = $ok ? ['ok' => true, 'message' => "Test email sent to $testEmailTo successfully."] : ['ok' => false, 'message' => $testError ?: 'Unknown error.'];
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) {
@@ -346,8 +351,13 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
       <div class="form-group"><label>From Email</label><input name="smtp_from_email" type="email" value="<?= sanitize($settings['smtp_from_email'] ?? '') ?>" placeholder="Leave blank to use the SMTP username"></div>
     </div>
     <?php if (!empty($settings['smtp_host'])): ?>
+    <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
+    <div class="form-group" style="margin-bottom:.75rem">
+      <label>Send Test Email To</label>
+      <input name="test_email_to" type="email" value="<?= sanitize($testEmailTo) ?>" placeholder="<?= sanitize(ADMIN_EMAIL) ?>" style="max-width:320px">
+    </div>
     <button type="submit" name="send_test_email" value="1" formnovalidate class="btn btn-outline">Send Test Email</button>
-    <small style="color:#8892A4;display:block;margin-top:.6rem">Sends a test email to <?= sanitize(ADMIN_EMAIL) ?> using the settings currently saved (save first if you just changed them).</small>
+    <small style="color:#8892A4;display:block;margin-top:.6rem">Uses the SMTP settings currently saved — save first if you just changed them above.</small>
     <?php endif; ?>
   </div>
 </div>
