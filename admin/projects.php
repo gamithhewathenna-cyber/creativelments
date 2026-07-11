@@ -53,16 +53,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['new_category'])) {
     $link     = trim($_POST['link'] ?? '');
     $sort     = intval($_POST['sort_order'] ?? 0);
     $image    = '';
+    $image2   = '';
+    $image3   = '';
 
-    // Handle file upload
-    if (!empty($_FILES['image']['name'])) {
-        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
-        if (!in_array($ext, ['jpg','jpeg','png','webp','gif'])) {
-            $formError = 'Image must be a JPG, PNG, WEBP or GIF file.';
-        } elseif (!is_dir('../uploads/projects') || !is_writable('../uploads/projects')) {
+    if (!empty($_FILES['image']['name']) || !empty($_FILES['image2']['name']) || !empty($_FILES['image3']['name'])) {
+        if (!is_dir('../uploads/projects') || !is_writable('../uploads/projects')) {
             $formError = 'Upload folder "uploads/projects" is missing or not writable on the server. Create it and set permissions to 755.';
         } elseif (!extension_loaded('gd')) {
             $formError = 'The GD image library is not enabled on this server, so images cannot be resized.';
+        }
+    }
+
+    // Handle main image upload (also generates the grid thumbnail)
+    if (!$formError && !empty($_FILES['image']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, ['jpg','jpeg','png','webp','gif'])) {
+            $formError = 'Image must be a JPG, PNG, WEBP or GIF file.';
         } else {
             $baseName  = uniqid('proj_');
             $fullName  = $baseName . '.' . $ext;
@@ -77,13 +83,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['new_category'])) {
         }
     }
 
+    // Handle the two extra gallery images shown in the project popup
+    foreach (['image2', 'image3'] as $field) {
+        if ($formError || empty($_FILES[$field]['name'])) continue;
+        $ext = strtolower(pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, ['jpg','jpeg','png','webp','gif'])) {
+            $formError = 'Gallery images must be a JPG, PNG, WEBP or GIF file.';
+            continue;
+        }
+        $newName = uniqid('proj_') . '.' . $ext;
+        if (resizeCoverCrop($_FILES[$field]['tmp_name'], '../uploads/projects/' . $newName, 1080, 1350, $ext)) {
+            $$field = $newName;
+        } else {
+            $formError = 'Gallery image processing failed. Please try again.';
+        }
+    }
+
     if (!$formError) {
         if ($id) {
-            $sql = "UPDATE projects SET title=?,category=?,description=?,link=?,sort_order=?" . ($image ? ",image=?" : "") . " WHERE id=?";
-            $params = $image ? [$title,$category,$desc,$link,$sort,$image,$id] : [$title,$category,$desc,$link,$sort,$id];
+            $sql = "UPDATE projects SET title=?,category=?,description=?,link=?,sort_order=?"
+                 . ($image ? ",image=?" : "") . ($image2 ? ",image2=?" : "") . ($image3 ? ",image3=?" : "") . " WHERE id=?";
+            $params = [$title,$category,$desc,$link,$sort];
+            if ($image) $params[] = $image;
+            if ($image2) $params[] = $image2;
+            if ($image3) $params[] = $image3;
+            $params[] = $id;
         } else {
-            $sql = "INSERT INTO projects (title,category,description,link,sort_order,image) VALUES (?,?,?,?,?,?)";
-            $params = [$title,$category,$desc,$link,$sort,$image];
+            $sql = "INSERT INTO projects (title,category,description,link,sort_order,image,image2,image3) VALUES (?,?,?,?,?,?,?,?)";
+            $params = [$title,$category,$desc,$link,$sort,$image,$image2,$image3];
         }
         $db->prepare($sql)->execute($params);
         header('Location: /admin/projects.php?msg=saved');
@@ -167,9 +194,18 @@ if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
         <div class="form-group"><label>Project Link (optional)</label><input name="link" type="url" value="<?= sanitize($editProject['link'] ?? '') ?>"></div>
         <div class="form-group"><label>Sort Order</label><input name="sort_order" type="number" value="<?= $editProject['sort_order'] ?? 0 ?>"></div>
       </div>
-      <div class="form-group"><label>Project Image</label><input type="file" name="image" accept="image/*">
+      <div class="form-group"><label>Project Image (main grid image)</label><input type="file" name="image" accept="image/*">
         <?php if (!empty($editProject['image'])): ?><br><small>Current: <?= sanitize($editProject['image']) ?></small><?php endif; ?>
       </div>
+      <div class="form-row">
+        <div class="form-group"><label>Gallery Image 2 (optional)</label><input type="file" name="image2" accept="image/*">
+          <?php if (!empty($editProject['image2'])): ?><br><small>Current: <?= sanitize($editProject['image2']) ?></small><?php endif; ?>
+        </div>
+        <div class="form-group"><label>Gallery Image 3 (optional)</label><input type="file" name="image3" accept="image/*">
+          <?php if (!empty($editProject['image3'])): ?><br><small>Current: <?= sanitize($editProject['image3']) ?></small><?php endif; ?>
+        </div>
+      </div>
+      <small style="color:#8892A4;display:block;margin-top:-.75rem;margin-bottom:1.25rem">All three images show together when a visitor clicks the project on the site.</small>
       <button type="submit" class="btn btn-primary">Save Project</button>
       <?php if ($editProject): ?><a href="/admin/projects.php" class="btn btn-outline" style="margin-left:.5rem">Cancel</a><?php endif; ?>
     </form>

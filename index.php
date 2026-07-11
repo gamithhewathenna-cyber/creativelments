@@ -164,7 +164,12 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
   <div class="portfolio-scroll-wrap">
     <div class="portfolio-scroll" id="portfolioScroll">
       <?php foreach ($projects as $proj): ?>
-      <div class="portfolio-slide">
+      <div class="portfolio-slide project-trigger"
+           data-title="<?= sanitize($proj['title']) ?>"
+           data-desc="<?= sanitize($proj['description'] ?? '') ?>"
+           data-img1="<?= $proj['image'] ? SITE_URL . '/uploads/projects/' . sanitize($proj['image']) : '' ?>"
+           data-img2="<?= !empty($proj['image2']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image2']) : '' ?>"
+           data-img3="<?= !empty($proj['image3']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image3']) : '' ?>">
         <?php if ($proj['image']): ?>
           <img class="portfolio-slide-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>" loading="lazy">
         <?php else: ?>

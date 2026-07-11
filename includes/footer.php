@@ -61,6 +61,16 @@
   </div>
 </footer>
 
+<!-- Project Detail Popup -->
+<div class="project-modal" id="projectModal">
+  <button class="project-modal-close" id="projectModalClose" aria-label="Close">&times;</button>
+  <div class="project-modal-inner">
+    <h2 id="projectModalTitle"></h2>
+    <p id="projectModalDesc"></p>
+    <div class="project-modal-gallery" id="projectModalGallery"></div>
+  </div>
+</div>
+
 <script src="/assets/js/main.js"></script>
 </body>
 </html>

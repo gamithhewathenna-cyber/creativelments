@@ -111,6 +111,8 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `category` varchar(100) DEFAULT '',
   `description` text,
   `image` varchar(255) DEFAULT '',
+  `image2` varchar(255) DEFAULT '',
+  `image3` varchar(255) DEFAULT '',
   `link` varchar(500) DEFAULT '',
   `sort_order` int(11) DEFAULT 0,
   `active` tinyint(1) DEFAULT 1,

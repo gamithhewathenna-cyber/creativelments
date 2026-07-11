@@ -106,6 +106,44 @@ if (portfolioScroll && portfolioPrev && portfolioNext) {
   portfolioNext.addEventListener('click', () => portfolioScroll.scrollBy({ left: scrollStep(), behavior: 'smooth' }));
 }
 
+// ---- Project detail popup ----
+const projectModal = document.getElementById('projectModal');
+if (projectModal) {
+  const modalTitle   = document.getElementById('projectModalTitle');
+  const modalDesc    = document.getElementById('projectModalDesc');
+  const modalGallery = document.getElementById('projectModalGallery');
+  const modalClose   = document.getElementById('projectModalClose');
+
+  const openProjectModal = (trigger) => {
+    modalTitle.textContent = trigger.dataset.title || '';
+    modalDesc.textContent  = trigger.dataset.desc || '';
+    modalGallery.innerHTML = '';
+    ['img1', 'img2', 'img3'].forEach((key) => {
+      const src = trigger.dataset[key];
+      if (!src) return;
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = trigger.dataset.title || '';
+      modalGallery.appendChild(img);
+    });
+    projectModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeProjectModal = () => {
+    projectModal.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  document.querySelectorAll('.project-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => openProjectModal(trigger));
+  });
+
+  modalClose.addEventListener('click', closeProjectModal);
+  projectModal.addEventListener('click', (e) => { if (e.target === projectModal) closeProjectModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProjectModal(); });
+}
+
 // ---- Reviews arrow navigation ----
 const reviewsScroll = document.getElementById('reviewsScroll');
 const reviewsPrev   = document.querySelector('.review-arrow-prev');

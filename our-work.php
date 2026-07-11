@@ -18,7 +18,12 @@ $categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 
 
     <div class="portfolio-grid" id="portfolioGrid">
       <?php foreach ($projects as $proj): ?>
-      <div class="portfolio-item" data-category="<?= sanitize($proj['category']) ?>">
+      <div class="portfolio-item project-trigger" data-category="<?= sanitize($proj['category']) ?>"
+           data-title="<?= sanitize($proj['title']) ?>"
+           data-desc="<?= sanitize($proj['description'] ?? '') ?>"
+           data-img1="<?= $proj['image'] ? SITE_URL . '/uploads/projects/' . sanitize($proj['image']) : '' ?>"
+           data-img2="<?= !empty($proj['image2']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image2']) : '' ?>"
+           data-img3="<?= !empty($proj['image3']) ? SITE_URL . '/uploads/projects/' . sanitize($proj['image3']) : '' ?>">
         <?php if ($proj['image']): ?>
           <img class="portfolio-img" src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($proj['image']) ?>" alt="<?= sanitize($proj['title']) ?>" loading="lazy">
         <?php else: ?>
