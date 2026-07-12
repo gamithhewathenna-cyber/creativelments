@@ -1165,7 +1165,8 @@ body.page-index .navbar.scrolled {
 
 @media (max-width: 860px) {
   .contact-float { bottom: 6rem; right: 1.25rem; width: 50px; height: 50px; }
-  .contact-modal { padding: 4.5rem 1rem 2rem; }
+  .contact-modal { padding: 4.5rem 1rem 2rem; align-items: flex-start; }
+  .contact-modal .contact-card-wrap { grid-template-columns: 1fr; }
 }
 
 /* ---- Responsive ---- */
