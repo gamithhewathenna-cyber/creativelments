@@ -115,13 +115,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) 
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('why_us_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
-    // "Where We Serve" (Contact page locations) section image upload
+    // "Where We Serve" (Contact page locations) section image upload — auto-resized/cropped to 700x500
     if (!empty($_FILES['locations_image']['name'])) {
         $ext = strtolower(pathinfo($_FILES['locations_image']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
+        if (!in_array($ext, ['jpg','jpeg','png','webp'])) {
+            $msg = 'Image must be a JPG, PNG or WEBP file. Other settings were not saved.';
+        } else {
             $newName = 'locations_' . uniqid() . '.' . $ext;
             $dest    = '../uploads/sections/' . $newName;
-            if (move_uploaded_file($_FILES['locations_image']['tmp_name'], $dest)) {
+            if (resizeCoverCrop($_FILES['locations_image']['tmp_name'], $dest, 700, 500, $ext)) {
                 $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('locations_image',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
             }
         }
@@ -323,7 +325,7 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group">
       <label>Upload New Image</label>
       <input type="file" name="locations_image" accept="image/png,image/jpeg,image/webp">
-      <small style="color:#8892A4;display:block;margin-top:.4rem">Shown next to the "Where We Serve" country list on the Contact page.</small>
+      <small style="color:#8892A4;display:block;margin-top:.4rem">Shown next to the "Where We Serve" country list on the Contact page. Automatically resized and cropped to 700&times;500px — any image size works.</small>
     </div>
     <?php if (!empty($settings['locations_image'])): ?>
     <div class="form-group" style="margin-bottom:0">
