@@ -367,8 +367,7 @@ body.page-index .navbar.scrolled {
 .locations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
 .location-item {
   display: flex;
-  align-items: center;
-  gap: .85rem;
+  flex-direction: column;
   background: var(--white);
   border: 1.5px solid #E2E8F0;
   border-radius: 12px;
@@ -379,14 +378,13 @@ body.page-index .navbar.scrolled {
   transition: var(--trans);
 }
 .location-item:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(10,15,30,.08); }
+.location-item-head { display: flex; align-items: center; gap: .85rem; }
 .location-flag { font-size: 1.7rem; line-height: 1; }
 
-/* ---- GEO City Links (Contact page) ---- */
-.city-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid #E2E8F0; }
-.city-links-col h3 { font-size: 1.05rem; margin-bottom: 1rem; color: var(--navy); }
-.city-links-list { display: flex; flex-direction: column; gap: .65rem; }
-.city-links-list a { color: var(--text); font-size: .92rem; transition: var(--trans); }
-.city-links-list a:hover { color: var(--primary); }
+/* ---- GEO City Links nested under a country (Contact page) ---- */
+.location-city-list { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid #F1F5F9; display: flex; flex-direction: column; gap: .5rem; }
+.location-city-list a { font-weight: 500; font-size: .85rem; color: var(--text); transition: var(--trans); }
+.location-city-list a:hover { color: var(--primary); }
 
 /* ---- Services Grid ---- */
 .services-grid {

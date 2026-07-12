@@ -94,38 +94,31 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
         <h2>Where We Serve</h2>
         <p style="color:#313131;margin-top:.75rem;margin-bottom:1.75rem">Proudly delivering digital agency services to clients across these countries.</p>
         <div class="locations-grid">
-          <div class="location-item"><span class="location-flag">🇦🇺</span><span>Australia</span></div>
-          <div class="location-item"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div>
-          <div class="location-item"><span class="location-flag">🇺🇸</span><span>United States</span></div>
-          <div class="location-item"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div>
-          <div class="location-item"><span class="location-flag">🇦🇪</span><span>United Arab Emirates (Dubai)</span></div>
-          <div class="location-item"><span class="location-flag">🇱🇰</span><span>Sri Lanka</span></div>
-        </div>
-
-        <?php if ($auCities || $usCities): ?>
-        <div class="city-links-grid">
-          <?php if ($auCities): ?>
-          <div class="city-links-col">
-            <h3>🇦🇺 Australia Cities</h3>
-            <ul class="city-links-list">
+          <div class="location-item">
+            <div class="location-item-head"><span class="location-flag">🇦🇺</span><span>Australia</span></div>
+            <?php if ($auCities): ?>
+            <ul class="location-city-list">
               <?php foreach ($auCities as $c): ?>
               <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
               <?php endforeach; ?>
             </ul>
+            <?php endif; ?>
           </div>
-          <?php endif; ?>
-          <?php if ($usCities): ?>
-          <div class="city-links-col">
-            <h3>🇺🇸 USA Cities</h3>
-            <ul class="city-links-list">
+          <div class="location-item"><div class="location-item-head"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div></div>
+          <div class="location-item">
+            <div class="location-item-head"><span class="location-flag">🇺🇸</span><span>United States</span></div>
+            <?php if ($usCities): ?>
+            <ul class="location-city-list">
               <?php foreach ($usCities as $c): ?>
               <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
               <?php endforeach; ?>
             </ul>
+            <?php endif; ?>
           </div>
-          <?php endif; ?>
+          <div class="location-item"><div class="location-item-head"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div></div>
+          <div class="location-item"><div class="location-item-head"><span class="location-flag">🇦🇪</span><span>United Arab Emirates (Dubai)</span></div></div>
+          <div class="location-item"><div class="location-item-head"><span class="location-flag">🇱🇰</span><span>Sri Lanka</span></div></div>
         </div>
-        <?php endif; ?>
       </div>
       <div class="why-visual">
         <?php if (!empty($settings['locations_image'])): ?>
