@@ -121,37 +121,54 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
         </div>
       </div>
       <div class="why-visual">
-        <div class="location-network">
-          <svg class="location-network-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-            <line x1="50" y1="50" x2="50" y2="12" class="network-line"></line>
-            <line x1="50" y1="50" x2="86.14" y2="38.26" class="network-line"></line>
-            <line x1="50" y1="50" x2="72.34" y2="80.74" class="network-line"></line>
-            <line x1="50" y1="50" x2="27.66" y2="80.74" class="network-line"></line>
-            <line x1="50" y1="50" x2="13.86" y2="38.26" class="network-line"></line>
-          </svg>
-          <div class="network-node network-node-hub" style="left:50%;top:50%">
-            <span class="network-flag">🇱🇰</span>
-            <span class="network-label">HQ</span>
+        <div class="location-worldmap">
+          <div class="worldmap-bg">
+            <svg class="worldmap-svg" viewBox="0 0 360 180" preserveAspectRatio="none">
+              <!-- graticule -->
+              <line x1="0" y1="30" x2="360" y2="30" class="worldmap-grid"></line>
+              <line x1="0" y1="60" x2="360" y2="60" class="worldmap-grid"></line>
+              <line x1="0" y1="90" x2="360" y2="90" class="worldmap-grid"></line>
+              <line x1="0" y1="120" x2="360" y2="120" class="worldmap-grid"></line>
+              <line x1="0" y1="150" x2="360" y2="150" class="worldmap-grid"></line>
+              <line x1="45" y1="0" x2="45" y2="180" class="worldmap-grid"></line>
+              <line x1="90" y1="0" x2="90" y2="180" class="worldmap-grid"></line>
+              <line x1="135" y1="0" x2="135" y2="180" class="worldmap-grid"></line>
+              <line x1="180" y1="0" x2="180" y2="180" class="worldmap-grid"></line>
+              <line x1="225" y1="0" x2="225" y2="180" class="worldmap-grid"></line>
+              <line x1="270" y1="0" x2="270" y2="180" class="worldmap-grid"></line>
+              <line x1="315" y1="0" x2="315" y2="180" class="worldmap-grid"></line>
+              <!-- connections from Colombo, Sri Lanka (HQ) -->
+              <line x1="259.9" y1="83.1" x2="331.2" y2="123.87" class="worldmap-line"></line>
+              <line x1="259.9" y1="83.1" x2="106" y2="49.3" class="worldmap-line"></line>
+              <line x1="259.9" y1="83.1" x2="179.87" y2="38.5" class="worldmap-line"></line>
+              <line x1="259.9" y1="83.1" x2="354.76" y2="126.85" class="worldmap-line"></line>
+              <line x1="259.9" y1="83.1" x2="235.27" y2="64.8" class="worldmap-line"></line>
+            </svg>
           </div>
-          <div class="network-node" style="left:50%;top:12%">
-            <span class="network-flag">🇦🇺</span>
-            <span class="network-label">Australia</span>
+
+          <div class="worldmap-node worldmap-node-hub" style="left:72.19%;top:46.17%">
+            <span class="worldmap-dot"></span>
+            <span class="worldmap-pill"><span class="worldmap-flag">🇱🇰</span> Sri Lanka (HQ)</span>
           </div>
-          <div class="network-node" style="left:86.14%;top:38.26%">
-            <span class="network-flag">🇺🇸</span>
-            <span class="network-label">United States</span>
+          <div class="worldmap-node" style="left:92%;top:68.82%">
+            <span class="worldmap-dot"></span>
+            <span class="worldmap-pill"><span class="worldmap-flag">🇦🇺</span> Australia</span>
           </div>
-          <div class="network-node" style="left:72.34%;top:80.74%">
-            <span class="network-flag">🇬🇧</span>
-            <span class="network-label">United Kingdom</span>
+          <div class="worldmap-node" style="left:29.44%;top:27.39%">
+            <span class="worldmap-dot"></span>
+            <span class="worldmap-pill"><span class="worldmap-flag">🇺🇸</span> United States</span>
           </div>
-          <div class="network-node" style="left:27.66%;top:80.74%">
-            <span class="network-flag">🇳🇿</span>
-            <span class="network-label">New Zealand</span>
+          <div class="worldmap-node" style="left:49.96%;top:21.39%">
+            <span class="worldmap-dot"></span>
+            <span class="worldmap-pill"><span class="worldmap-flag">🇬🇧</span> United Kingdom</span>
           </div>
-          <div class="network-node" style="left:13.86%;top:38.26%">
-            <span class="network-flag">🇦🇪</span>
-            <span class="network-label">UAE</span>
+          <div class="worldmap-node" style="left:98.54%;top:70.47%">
+            <span class="worldmap-dot"></span>
+            <span class="worldmap-pill"><span class="worldmap-flag">🇳🇿</span> New Zealand</span>
+          </div>
+          <div class="worldmap-node" style="left:65.35%;top:36%">
+            <span class="worldmap-dot"></span>
+            <span class="worldmap-pill"><span class="worldmap-flag">🇦🇪</span> UAE</span>
           </div>
         </div>
       </div>

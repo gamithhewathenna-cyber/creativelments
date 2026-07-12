@@ -757,47 +757,71 @@ body.page-index .navbar.scrolled {
   padding: 2rem;
 }
 
-/* ---- Location Network Graphic (Contact page) ---- */
-.location-network { position: relative; width: 100%; aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; }
-.location-network-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.network-line {
-  stroke: var(--primary);
-  stroke-width: .6;
+/* ---- Location World Map (Contact page) ---- */
+.location-worldmap { position: relative; width: 100%; aspect-ratio: 2 / 1; max-width: 620px; margin: 0 auto; }
+.worldmap-bg { position: absolute; inset: 0; border-radius: 20px; overflow: hidden; background: linear-gradient(160deg, #0A0F1E 0%, #16233a 55%, #1c3352 100%); }
+.worldmap-svg { width: 100%; height: 100%; display: block; }
+.worldmap-grid { stroke: rgba(255,255,255,.08); stroke-width: .6; }
+.worldmap-line {
+  stroke: var(--teal);
+  stroke-width: .9;
   stroke-dasharray: 3 2;
-  opacity: .5;
+  opacity: .8;
   animation: networkFlow 1.6s linear infinite;
 }
 @keyframes networkFlow { to { stroke-dashoffset: -10; } }
-.network-node {
+
+.worldmap-node {
   position: absolute;
   transform: translate(-50%, -50%);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: .2rem;
-  width: 78px; height: 78px;
-  background: var(--white);
-  border: 1.5px solid #E2E8F0;
-  border-radius: 50%;
-  box-shadow: 0 8px 20px rgba(10,15,30,.07);
-  z-index: 2;
-  transition: var(--trans);
+  gap: .4rem;
 }
-.network-node:hover { border-color: var(--primary); transform: translate(-50%, -50%) scale(1.06); }
-.network-node-hub { width: 96px; height: 96px; background: var(--navy); border-color: var(--navy); }
-.network-flag { font-size: 1.5rem; line-height: 1; }
-.network-node-hub .network-flag { font-size: 1.9rem; }
-.network-label { font-size: .68rem; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.15; }
-.network-node-hub .network-label { color: var(--white); }
+.worldmap-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 4px rgba(91,193,193,.25);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+.worldmap-node-hub .worldmap-dot {
+  width: 15px; height: 15px;
+  background: var(--orange);
+  box-shadow: 0 0 0 5px rgba(255,146,67,.3);
+}
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(91,193,193,.25); }
+  50% { box-shadow: 0 0 0 9px rgba(91,193,193,.08); }
+}
+.worldmap-node-hub .worldmap-dot { animation: dotPulseHub 2s ease-in-out infinite; }
+@keyframes dotPulseHub {
+  0%, 100% { box-shadow: 0 0 0 5px rgba(255,146,67,.3); }
+  50% { box-shadow: 0 0 0 10px rgba(255,146,67,.1); }
+}
+.worldmap-pill {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  background: rgba(255,255,255,.96);
+  border-radius: 100px;
+  padding: .3rem .7rem;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.worldmap-node-hub .worldmap-pill { background: var(--orange); color: var(--white); }
+.worldmap-flag { font-size: .95rem; line-height: 1; }
 
 @media (max-width: 640px) {
-  .location-network { max-width: 300px; }
-  .network-node { width: 56px; height: 56px; }
-  .network-node-hub { width: 70px; height: 70px; }
-  .network-flag { font-size: 1.1rem; }
-  .network-node-hub .network-flag { font-size: 1.4rem; }
-  .network-label { font-size: .55rem; }
+  .location-worldmap { max-width: 100%; }
+  .worldmap-pill { font-size: .6rem; padding: .22rem .5rem; }
+  .worldmap-dot { width: 9px; height: 9px; }
+  .worldmap-node-hub .worldmap-dot { width: 11px; height: 11px; }
 }
 
 .why-card {
