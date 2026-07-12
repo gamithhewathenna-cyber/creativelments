@@ -505,6 +505,27 @@ body.page-index .navbar.scrolled {
 .services-showcase-item h3 { color: var(--navy2); font-size: 1.2rem; margin-bottom: .6rem; }
 .services-showcase-item p { color: var(--gray); font-size: .92rem; line-height: 1.65; }
 
+/* ---- SEO Before / After ---- */
+.seo-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.seo-compare-item h3 { text-align: center; font-size: 1.15rem; margin-bottom: 1.25rem; color: var(--navy); }
+.seo-compare-image { width: 100%; border-radius: 16px; object-fit: cover; box-shadow: 0 10px 30px rgba(10,15,30,.1); border: 1px solid #E2E8F0; }
+.seo-compare-placeholder {
+  width: 100%;
+  min-height: 260px;
+  background: var(--white);
+  border: 2px dashed var(--light);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: var(--gray);
+  font-size: .88rem;
+  text-align: center;
+  padding: 2rem;
+}
+@media (max-width: 768px) {
+  .seo-compare-grid { grid-template-columns: 1fr; }
+}
+
 /* ---- What Makes Us Unique ---- */
 .unique-showcase {
   display: grid;

@@ -115,6 +115,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) 
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('why_us_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
+    // "See the Difference Real SEO Makes" — Before/After screenshots
+    if (!empty($_FILES['seo_before_image']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['seo_before_image']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
+            $newName = 'seobefore_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/sections/' . $newName;
+            if (move_uploaded_file($_FILES['seo_before_image']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('seo_before_image',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_seo_before_image'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('seo_before_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
+    if (!empty($_FILES['seo_after_image']['name'])) {
+        $ext = strtolower(pathinfo($_FILES['seo_after_image']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
+            $newName = 'seoafter_' . uniqid() . '.' . $ext;
+            $dest    = '../uploads/sections/' . $newName;
+            if (move_uploaded_file($_FILES['seo_after_image']['tmp_name'], $dest)) {
+                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('seo_after_image',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
+            }
+        }
+    } elseif (!empty($_POST['remove_seo_after_image'])) {
+        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('seo_after_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
+    }
+
     // "Where We Serve" (Contact page locations) section image upload — no forced crop,
     // shown at its natural aspect ratio (this is typically a wide map-style graphic).
     if (!empty($_FILES['locations_image']['name'])) {
@@ -304,6 +331,55 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group" style="margin-bottom:0">
       <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
         <input type="checkbox" name="remove_why_us_image" value="1" style="width:auto"> Remove image
+      </label>
+    </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>"See the Difference Real SEO Makes" Images</h2></div>
+  <div class="card-body">
+    <div class="form-group">
+      <label>Before SEO — Current Image</label>
+      <?php if (!empty($settings['seo_before_image'])): ?>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['seo_before_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — the homepage section will show a placeholder box until you add one.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group">
+      <label>Upload New "Before" Image</label>
+      <input type="file" name="seo_before_image" accept="image/png,image/jpeg,image/webp">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">A Search Console or Analytics screenshot showing low traffic, poor rankings, or low impressions.</small>
+    </div>
+    <?php if (!empty($settings['seo_before_image'])): ?>
+    <div class="form-group">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_seo_before_image" value="1" style="width:auto"> Remove image
+      </label>
+    </div>
+    <?php endif; ?>
+
+    <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
+
+    <div class="form-group">
+      <label>After SEO — Current Image</label>
+      <?php if (!empty($settings['seo_after_image'])): ?>
+        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['seo_after_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
+      <?php else: ?>
+        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — the homepage section will show a placeholder box until you add one.</p>
+      <?php endif; ?>
+    </div>
+    <div class="form-group">
+      <label>Upload New "After" Image</label>
+      <input type="file" name="seo_after_image" accept="image/png,image/jpeg,image/webp">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">A Search Console or Analytics screenshot showing improved rankings, visibility, or traffic.</small>
+    </div>
+    <?php if (!empty($settings['seo_after_image'])): ?>
+    <div class="form-group" style="margin-bottom:0">
+      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
+        <input type="checkbox" name="remove_seo_after_image" value="1" style="width:auto"> Remove image
       </label>
     </div>
     <?php endif; ?>

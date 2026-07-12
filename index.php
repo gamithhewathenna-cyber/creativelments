@@ -89,6 +89,35 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
   </div>
 </section>
 
+<!-- ===== SEO BEFORE / AFTER ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Real Results</span>
+      <h2>See the Difference Real SEO Makes</h2>
+      <p>From poor visibility to higher rankings and increased organic traffic. Our SEO strategies deliver measurable improvements that help businesses attract more customers and grow online.</p>
+    </div>
+    <div class="seo-compare-grid">
+      <div class="seo-compare-item">
+        <h3>Before SEO</h3>
+        <?php if (!empty($settings['seo_before_image'])): ?>
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['seo_before_image']) ?>" alt="Before SEO — low search visibility, poor rankings, and low impressions" class="seo-compare-image" loading="lazy">
+        <?php else: ?>
+          <div class="seo-compare-placeholder">Upload a Search Console / Analytics<br>screenshot from Admin → Settings</div>
+        <?php endif; ?>
+      </div>
+      <div class="seo-compare-item">
+        <h3>After SEO</h3>
+        <?php if (!empty($settings['seo_after_image'])): ?>
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['seo_after_image']) ?>" alt="After SEO — improved rankings, visibility, and organic traffic" class="seo-compare-image" loading="lazy">
+        <?php else: ?>
+          <div class="seo-compare-placeholder">Upload a Search Console / Analytics<br>screenshot from Admin → Settings</div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== GROWTH CTA BANNER ===== -->
 <section class="cta-banner"<?= !empty($settings['cta_banner_image']) ? ' style="background-image:url(\'' . SITE_URL . '/uploads/banners/' . sanitize($settings['cta_banner_image']) . '\')"' : '' ?>>
   <div class="cta-banner-overlay"></div>
