@@ -506,6 +506,13 @@ body.page-index .navbar.scrolled {
 .services-showcase-item p { color: var(--gray); font-size: .92rem; line-height: 1.65; }
 
 /* ---- SEO Before / After ---- */
+.seo-header-box {
+  max-width: 1200px;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 10px 40px rgba(10,15,30,.06);
+}
 .seo-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
 .seo-compare-item h3 { text-align: center; font-size: 1.15rem; margin-bottom: 1.25rem; color: var(--navy); }
 .seo-compare-image { width: 100%; border-radius: 16px; object-fit: cover; box-shadow: 0 10px 30px rgba(10,15,30,.1); border: 1px solid #E2E8F0; }
@@ -524,6 +531,7 @@ body.page-index .navbar.scrolled {
 }
 @media (max-width: 768px) {
   .seo-compare-grid { grid-template-columns: 1fr; }
+  .seo-header-box { padding: 2rem 1.5rem; border-radius: 16px; }
 }
 
 /* ---- What Makes Us Unique ---- */

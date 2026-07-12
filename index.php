@@ -92,7 +92,7 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
 <!-- ===== SEO BEFORE / AFTER ===== -->
 <section class="section section-alt">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header seo-header-box">
       <span class="section-label">Real Results</span>
       <h2>See the Difference Real SEO Makes</h2>
       <p>From poor visibility to higher rankings and increased organic traffic. Our SEO strategies deliver measurable improvements that help businesses attract more customers and grow online.</p>
