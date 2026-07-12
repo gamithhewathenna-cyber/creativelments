@@ -743,11 +743,6 @@ body.page-index .navbar.scrolled {
   padding: 1.5rem;
 }
 .why-visual-image { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; }
-/* Contact page "Where We Serve" image should fill the full height of the section, matching
-   the country list column next to it, rather than the default center-aligned grid behaviour. */
-.location-grid { align-items: stretch; }
-.location-grid .why-visual { display: flex; }
-.location-visual-image { width: 100%; height: 100%; object-fit: contain; }
 .why-visual-placeholder {
   width: 100%;
   min-height: 320px;
