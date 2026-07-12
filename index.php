@@ -115,6 +115,9 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
         <?php endif; ?>
       </div>
     </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="/contact.php" class="btn btn-primary">Let's Optimize Your Website</a>
+    </div>
   </div>
 </section>
 
