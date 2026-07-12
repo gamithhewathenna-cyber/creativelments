@@ -747,7 +747,7 @@ body.page-index .navbar.scrolled {
    the country list column next to it, rather than the default center-aligned grid behaviour. */
 .location-grid { align-items: stretch; }
 .location-grid .why-visual { display: flex; }
-.location-visual-image { width: 100%; height: 100%; object-fit: cover; }
+.location-visual-image { width: 100%; height: 100%; object-fit: contain; }
 .why-visual-placeholder {
   width: 100%;
   min-height: 320px;
