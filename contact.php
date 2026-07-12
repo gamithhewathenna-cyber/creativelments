@@ -121,64 +121,11 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
         </div>
       </div>
       <div class="why-visual">
-        <div class="location-worldmap">
-          <div class="worldmap-bg">
-            <svg class="worldmap-svg" viewBox="0 0 360 180" preserveAspectRatio="none">
-              <!-- stylised continents (decorative, not geographically precise) -->
-              <g class="worldmap-land">
-                <ellipse cx="70" cy="38" rx="52" ry="27"></ellipse>
-                <ellipse cx="52" cy="62" rx="17" ry="14"></ellipse>
-                <ellipse cx="133" cy="19" rx="15" ry="9"></ellipse>
-                <ellipse cx="103" cy="102" rx="20" ry="34"></ellipse>
-                <ellipse cx="196" cy="34" rx="24" ry="15"></ellipse>
-                <ellipse cx="197" cy="86" rx="27" ry="37"></ellipse>
-                <ellipse cx="246" cy="56" rx="21" ry="17"></ellipse>
-                <ellipse cx="292" cy="44" rx="44" ry="24"></ellipse>
-                <ellipse cx="311" cy="116" rx="21" ry="13"></ellipse>
-              </g>
-              <!-- curved dashed routes from Colombo, Sri Lanka (HQ) -->
-              <path d="M259.9,83.1 Q300,108 331.2,123.87" class="worldmap-route"></path>
-              <path d="M259.9,83.1 Q180,55 106,49.3" class="worldmap-route"></path>
-              <path d="M259.9,83.1 Q210,50 179.87,38.5" class="worldmap-route"></path>
-              <path d="M259.9,83.1 Q310,100 338.4,117" class="worldmap-route"></path>
-              <path d="M259.9,83.1 Q248,70 235.27,64.8" class="worldmap-route"></path>
-              <!-- decorative planes along two routes -->
-              <g class="worldmap-plane" transform="translate(215,63) rotate(20)"><path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" transform="scale(.7) translate(-12,-12)"></path></g>
-              <g class="worldmap-plane" transform="translate(150,60) rotate(-8)"><path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" transform="scale(.7) translate(-12,-12)"></path></g>
-            </svg>
-          </div>
-
-          <div class="worldmap-node worldmap-node-hub" style="left:72.19%;top:46.17%">
-            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-            <span class="worldmap-dot"></span>
-            <span class="worldmap-pill"><span class="worldmap-flag">🇱🇰</span> Sri Lanka (HQ)</span>
-          </div>
-          <div class="worldmap-node" style="left:92%;top:68.82%">
-            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-            <span class="worldmap-dot"></span>
-            <span class="worldmap-pill"><span class="worldmap-flag">🇦🇺</span> Australia</span>
-          </div>
-          <div class="worldmap-node" style="left:29.44%;top:27.39%">
-            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-            <span class="worldmap-dot"></span>
-            <span class="worldmap-pill"><span class="worldmap-flag">🇺🇸</span> United States</span>
-          </div>
-          <div class="worldmap-node" style="left:49.96%;top:21.39%">
-            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-            <span class="worldmap-dot"></span>
-            <span class="worldmap-pill"><span class="worldmap-flag">🇬🇧</span> United Kingdom</span>
-          </div>
-          <div class="worldmap-node" style="left:94%;top:65%">
-            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-            <span class="worldmap-dot"></span>
-            <span class="worldmap-pill"><span class="worldmap-flag">🇳🇿</span> New Zealand</span>
-          </div>
-          <div class="worldmap-node" style="left:65.35%;top:36%">
-            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
-            <span class="worldmap-dot"></span>
-            <span class="worldmap-pill"><span class="worldmap-flag">🇦🇪</span> UAE</span>
-          </div>
-        </div>
+        <?php if (!empty($settings['locations_image'])): ?>
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['locations_image']) ?>" alt="Where We Serve" class="why-visual-image" loading="lazy">
+        <?php else: ?>
+          <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
