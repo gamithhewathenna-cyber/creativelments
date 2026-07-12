@@ -84,6 +84,7 @@ echo renderBreadcrumbs([
 <?php
 $auCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='Australia' ORDER BY sort_order")->fetchAll();
 $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='United States' ORDER BY sort_order")->fetchAll();
+$ukCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='United Kingdom' ORDER BY sort_order")->fetchAll();
 ?>
 <!-- Where We Serve / Local SEO -->
 <section class="section section-alt">
@@ -104,7 +105,16 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             </ul>
             <?php endif; ?>
           </div>
-          <div class="location-item"><div class="location-item-head"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div></div>
+          <div class="location-item">
+            <div class="location-item-head"><span class="location-flag">🇬🇧</span><span>United Kingdom</span></div>
+            <?php if ($ukCities): ?>
+            <ul class="location-city-list">
+              <?php foreach ($ukCities as $c): ?>
+              <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
           <div class="location-item">
             <div class="location-item-head"><span class="location-flag">🇺🇸</span><span>United States</span></div>
             <?php if ($usCities): ?>
