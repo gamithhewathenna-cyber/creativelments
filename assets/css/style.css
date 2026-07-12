@@ -382,7 +382,7 @@ body.page-index .navbar.scrolled {
 .location-flag { font-size: 1.7rem; line-height: 1; }
 
 /* ---- GEO City Links (Contact page) ---- */
-.city-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.5rem; max-width: 700px; margin: 0 auto; }
+.city-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid #E2E8F0; }
 .city-links-col h3 { font-size: 1.05rem; margin-bottom: 1rem; color: var(--navy); }
 .city-links-list { display: flex; flex-direction: column; gap: .65rem; }
 .city-links-list a { color: var(--text); font-size: .92rem; transition: var(--trans); }
