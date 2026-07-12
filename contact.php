@@ -124,49 +124,57 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
         <div class="location-worldmap">
           <div class="worldmap-bg">
             <svg class="worldmap-svg" viewBox="0 0 360 180" preserveAspectRatio="none">
-              <!-- graticule -->
-              <line x1="0" y1="30" x2="360" y2="30" class="worldmap-grid"></line>
-              <line x1="0" y1="60" x2="360" y2="60" class="worldmap-grid"></line>
-              <line x1="0" y1="90" x2="360" y2="90" class="worldmap-grid"></line>
-              <line x1="0" y1="120" x2="360" y2="120" class="worldmap-grid"></line>
-              <line x1="0" y1="150" x2="360" y2="150" class="worldmap-grid"></line>
-              <line x1="45" y1="0" x2="45" y2="180" class="worldmap-grid"></line>
-              <line x1="90" y1="0" x2="90" y2="180" class="worldmap-grid"></line>
-              <line x1="135" y1="0" x2="135" y2="180" class="worldmap-grid"></line>
-              <line x1="180" y1="0" x2="180" y2="180" class="worldmap-grid"></line>
-              <line x1="225" y1="0" x2="225" y2="180" class="worldmap-grid"></line>
-              <line x1="270" y1="0" x2="270" y2="180" class="worldmap-grid"></line>
-              <line x1="315" y1="0" x2="315" y2="180" class="worldmap-grid"></line>
-              <!-- connections from Colombo, Sri Lanka (HQ) -->
-              <line x1="259.9" y1="83.1" x2="331.2" y2="123.87" class="worldmap-line"></line>
-              <line x1="259.9" y1="83.1" x2="106" y2="49.3" class="worldmap-line"></line>
-              <line x1="259.9" y1="83.1" x2="179.87" y2="38.5" class="worldmap-line"></line>
-              <line x1="259.9" y1="83.1" x2="354.76" y2="126.85" class="worldmap-line"></line>
-              <line x1="259.9" y1="83.1" x2="235.27" y2="64.8" class="worldmap-line"></line>
+              <!-- stylised continents (decorative, not geographically precise) -->
+              <g class="worldmap-land">
+                <ellipse cx="70" cy="38" rx="52" ry="27"></ellipse>
+                <ellipse cx="52" cy="62" rx="17" ry="14"></ellipse>
+                <ellipse cx="133" cy="19" rx="15" ry="9"></ellipse>
+                <ellipse cx="103" cy="102" rx="20" ry="34"></ellipse>
+                <ellipse cx="196" cy="34" rx="24" ry="15"></ellipse>
+                <ellipse cx="197" cy="86" rx="27" ry="37"></ellipse>
+                <ellipse cx="246" cy="56" rx="21" ry="17"></ellipse>
+                <ellipse cx="292" cy="44" rx="44" ry="24"></ellipse>
+                <ellipse cx="311" cy="116" rx="21" ry="13"></ellipse>
+              </g>
+              <!-- curved dashed routes from Colombo, Sri Lanka (HQ) -->
+              <path d="M259.9,83.1 Q300,108 331.2,123.87" class="worldmap-route"></path>
+              <path d="M259.9,83.1 Q180,55 106,49.3" class="worldmap-route"></path>
+              <path d="M259.9,83.1 Q210,50 179.87,38.5" class="worldmap-route"></path>
+              <path d="M259.9,83.1 Q320,110 354.76,126.85" class="worldmap-route"></path>
+              <path d="M259.9,83.1 Q248,70 235.27,64.8" class="worldmap-route"></path>
+              <!-- decorative planes along two routes -->
+              <g class="worldmap-plane" transform="translate(215,63) rotate(20)"><path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" transform="scale(.7) translate(-12,-12)"></path></g>
+              <g class="worldmap-plane" transform="translate(150,60) rotate(-8)"><path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" transform="scale(.7) translate(-12,-12)"></path></g>
             </svg>
           </div>
 
           <div class="worldmap-node worldmap-node-hub" style="left:72.19%;top:46.17%">
+            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇱🇰</span> Sri Lanka (HQ)</span>
           </div>
           <div class="worldmap-node" style="left:92%;top:68.82%">
+            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇦🇺</span> Australia</span>
           </div>
           <div class="worldmap-node" style="left:29.44%;top:27.39%">
+            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇺🇸</span> United States</span>
           </div>
           <div class="worldmap-node" style="left:49.96%;top:21.39%">
+            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇬🇧</span> United Kingdom</span>
           </div>
           <div class="worldmap-node" style="left:98.54%;top:70.47%">
+            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇳🇿</span> New Zealand</span>
           </div>
           <div class="worldmap-node" style="left:65.35%;top:36%">
+            <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇦🇪</span> UAE</span>
           </div>
