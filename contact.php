@@ -122,7 +122,7 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
       </div>
       <div class="why-visual">
         <?php if (!empty($settings['locations_image'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['locations_image']) ?>" alt="Where We Serve" class="why-visual-image" loading="lazy">
+          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['locations_image']) ?>" alt="Where We Serve" class="why-visual-image location-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
         <?php endif; ?>
