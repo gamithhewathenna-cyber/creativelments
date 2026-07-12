@@ -88,7 +88,7 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
 <!-- Where We Serve / Local SEO -->
 <section class="section section-alt">
   <div class="container">
-    <div class="why-grid">
+    <div class="why-grid location-grid">
       <div>
         <span class="section-label">Local SEO</span>
         <h2>Where We Serve</h2>
