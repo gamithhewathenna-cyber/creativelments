@@ -121,8 +121,9 @@ function buildSitemapXml($db) {
         return $xml;
     };
 
-    $services = $db->query("SELECT slug, created_at FROM services WHERE active=1 AND slug IS NOT NULL AND slug != ''")->fetchAll();
-    $posts    = $db->query("SELECT slug, created_at FROM posts WHERE status='published'")->fetchAll();
+    $services  = $db->query("SELECT slug, created_at FROM services WHERE active=1 AND slug IS NOT NULL AND slug != ''")->fetchAll();
+    $posts     = $db->query("SELECT slug, created_at FROM posts WHERE status='published'")->fetchAll();
+    $locations = $db->query("SELECT slug, created_at FROM locations WHERE active=1 AND slug IS NOT NULL AND slug != ''")->fetchAll();
 
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
@@ -137,6 +138,9 @@ function buildSitemapXml($db) {
     }
     foreach ($posts as $p) {
         $xml .= $urlFn(SITE_URL . '/blog-post.php?slug=' . urlencode($p['slug']), $p['created_at'] ?? null, 'monthly', '0.6');
+    }
+    foreach ($locations as $l) {
+        $xml .= $urlFn(SITE_URL . '/location.php?slug=' . urlencode($l['slug']), $l['created_at'] ?? null, 'monthly', '0.7');
     }
     $xml .= "</urlset>\n";
     return $xml;

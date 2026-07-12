@@ -119,4 +119,43 @@ echo renderBreadcrumbs([
   </div>
 </section>
 
+<?php
+$auCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='Australia' ORDER BY sort_order")->fetchAll();
+$usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='United States' ORDER BY sort_order")->fetchAll();
+?>
+<?php if ($auCities || $usCities): ?>
+<!-- GEO Location Links -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Local SEO</span>
+      <h2>Cities We Serve</h2>
+      <p>Explore city-specific web design &amp; digital marketing insights for your local market.</p>
+    </div>
+    <div class="city-links-grid">
+      <?php if ($auCities): ?>
+      <div class="city-links-col">
+        <h3>🇦🇺 Australia Cities</h3>
+        <ul class="city-links-list">
+          <?php foreach ($auCities as $c): ?>
+          <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+      <?php endif; ?>
+      <?php if ($usCities): ?>
+      <div class="city-links-col">
+        <h3>🇺🇸 USA Cities</h3>
+        <ul class="city-links-list">
+          <?php foreach ($usCities as $c): ?>
+          <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <?php require_once 'includes/footer.php'; ?>

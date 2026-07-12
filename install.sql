@@ -205,6 +205,40 @@ CREATE TABLE IF NOT EXISTS `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
+-- GEO Landing Pages (city/location SEO pages)
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city` varchar(100) NOT NULL,
+  `region` varchar(100) DEFAULT '',
+  `country` varchar(100) NOT NULL,
+  `slug` varchar(255) NOT NULL UNIQUE,
+  `seo_title` varchar(255) DEFAULT '',
+  `meta_description` varchar(500) DEFAULT '',
+  `focus_keyphrase` varchar(255) DEFAULT '',
+  `h1` varchar(255) DEFAULT '',
+  `intro` text,
+  `section1_heading` varchar(255) DEFAULT '',
+  `section1_content` longtext,
+  `section2_heading` varchar(255) DEFAULT '',
+  `section2_content` longtext,
+  `section3_heading` varchar(255) DEFAULT '',
+  `section3_content` longtext,
+  `faq1_q` varchar(255) DEFAULT '', `faq1_a` text,
+  `faq2_q` varchar(255) DEFAULT '', `faq2_a` text,
+  `faq3_q` varchar(255) DEFAULT '', `faq3_a` text,
+  `faq4_q` varchar(255) DEFAULT '', `faq4_a` text,
+  `faq5_q` varchar(255) DEFAULT '', `faq5_a` text,
+  `cta_heading` varchar(255) DEFAULT '',
+  `cta_text` text,
+  `image` varchar(255) DEFAULT '',
+  `sort_order` int(11) DEFAULT 0,
+  `active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
 -- Site Settings
 -- ----------------------------
 CREATE TABLE IF NOT EXISTS `settings` (
