@@ -85,6 +85,7 @@ echo renderBreadcrumbs([
 $auCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='Australia' ORDER BY sort_order")->fetchAll();
 $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='United States' ORDER BY sort_order")->fetchAll();
 $ukCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='United Kingdom' ORDER BY sort_order")->fetchAll();
+$nzCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND country='New Zealand' ORDER BY sort_order")->fetchAll();
 ?>
 <!-- Where We Serve / Local SEO -->
 <section class="section section-alt">
@@ -125,7 +126,16 @@ $ukCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             </ul>
             <?php endif; ?>
           </div>
-          <div class="location-item"><div class="location-item-head"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div></div>
+          <div class="location-item">
+            <div class="location-item-head"><span class="location-flag">🇳🇿</span><span>New Zealand</span></div>
+            <?php if ($nzCities): ?>
+            <ul class="location-city-list">
+              <?php foreach ($nzCities as $c): ?>
+              <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
           <div class="location-item"><div class="location-item-head"><span class="location-flag">🇦🇪</span><span>United Arab Emirates (Dubai)</span></div></div>
           <div class="location-item"><div class="location-item-head"><span class="location-flag">🇱🇰</span><span>Sri Lanka</span></div></div>
         </div>
