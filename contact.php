@@ -140,7 +140,7 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
               <path d="M259.9,83.1 Q300,108 331.2,123.87" class="worldmap-route"></path>
               <path d="M259.9,83.1 Q180,55 106,49.3" class="worldmap-route"></path>
               <path d="M259.9,83.1 Q210,50 179.87,38.5" class="worldmap-route"></path>
-              <path d="M259.9,83.1 Q320,110 354.76,126.85" class="worldmap-route"></path>
+              <path d="M259.9,83.1 Q310,100 338.4,117" class="worldmap-route"></path>
               <path d="M259.9,83.1 Q248,70 235.27,64.8" class="worldmap-route"></path>
               <!-- decorative planes along two routes -->
               <g class="worldmap-plane" transform="translate(215,63) rotate(20)"><path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" transform="scale(.7) translate(-12,-12)"></path></g>
@@ -168,7 +168,7 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇬🇧</span> United Kingdom</span>
           </div>
-          <div class="worldmap-node" style="left:98.54%;top:70.47%">
+          <div class="worldmap-node" style="left:94%;top:65%">
             <svg class="worldmap-pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.6 11.36 7.06 11.78a1.4 1.4 0 0 0 1.88 0C13.4 21.36 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
             <span class="worldmap-dot"></span>
             <span class="worldmap-pill"><span class="worldmap-flag">🇳🇿</span> New Zealand</span>
