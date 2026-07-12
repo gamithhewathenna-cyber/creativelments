@@ -121,11 +121,39 @@ $usCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
         </div>
       </div>
       <div class="why-visual">
-        <?php if (!empty($settings['locations_image'])): ?>
-          <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['locations_image']) ?>" alt="Where We Serve" class="why-visual-image" loading="lazy">
-        <?php else: ?>
-          <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
-        <?php endif; ?>
+        <div class="location-network">
+          <svg class="location-network-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+            <line x1="50" y1="50" x2="50" y2="12" class="network-line"></line>
+            <line x1="50" y1="50" x2="86.14" y2="38.26" class="network-line"></line>
+            <line x1="50" y1="50" x2="72.34" y2="80.74" class="network-line"></line>
+            <line x1="50" y1="50" x2="27.66" y2="80.74" class="network-line"></line>
+            <line x1="50" y1="50" x2="13.86" y2="38.26" class="network-line"></line>
+          </svg>
+          <div class="network-node network-node-hub" style="left:50%;top:50%">
+            <span class="network-flag">🇱🇰</span>
+            <span class="network-label">HQ</span>
+          </div>
+          <div class="network-node" style="left:50%;top:12%">
+            <span class="network-flag">🇦🇺</span>
+            <span class="network-label">Australia</span>
+          </div>
+          <div class="network-node" style="left:86.14%;top:38.26%">
+            <span class="network-flag">🇺🇸</span>
+            <span class="network-label">United States</span>
+          </div>
+          <div class="network-node" style="left:72.34%;top:80.74%">
+            <span class="network-flag">🇬🇧</span>
+            <span class="network-label">United Kingdom</span>
+          </div>
+          <div class="network-node" style="left:27.66%;top:80.74%">
+            <span class="network-flag">🇳🇿</span>
+            <span class="network-label">New Zealand</span>
+          </div>
+          <div class="network-node" style="left:13.86%;top:38.26%">
+            <span class="network-flag">🇦🇪</span>
+            <span class="network-label">UAE</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -756,6 +756,50 @@ body.page-index .navbar.scrolled {
   text-align: center;
   padding: 2rem;
 }
+
+/* ---- Location Network Graphic (Contact page) ---- */
+.location-network { position: relative; width: 100%; aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; }
+.location-network-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.network-line {
+  stroke: var(--primary);
+  stroke-width: .6;
+  stroke-dasharray: 3 2;
+  opacity: .5;
+  animation: networkFlow 1.6s linear infinite;
+}
+@keyframes networkFlow { to { stroke-dashoffset: -10; } }
+.network-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem;
+  width: 78px; height: 78px;
+  background: var(--white);
+  border: 1.5px solid #E2E8F0;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(10,15,30,.07);
+  z-index: 2;
+  transition: var(--trans);
+}
+.network-node:hover { border-color: var(--primary); transform: translate(-50%, -50%) scale(1.06); }
+.network-node-hub { width: 96px; height: 96px; background: var(--navy); border-color: var(--navy); }
+.network-flag { font-size: 1.5rem; line-height: 1; }
+.network-node-hub .network-flag { font-size: 1.9rem; }
+.network-label { font-size: .68rem; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.15; }
+.network-node-hub .network-label { color: var(--white); }
+
+@media (max-width: 640px) {
+  .location-network { max-width: 300px; }
+  .network-node { width: 56px; height: 56px; }
+  .network-node-hub { width: 70px; height: 70px; }
+  .network-flag { font-size: 1.1rem; }
+  .network-node-hub .network-flag { font-size: 1.4rem; }
+  .network-label { font-size: .55rem; }
+}
+
 .why-card {
   background: var(--navy);
   color: var(--white);

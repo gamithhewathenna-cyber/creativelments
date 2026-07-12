@@ -115,20 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) 
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('why_us_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
     }
 
-    // "Where We Serve" (Contact page locations) section image upload
-    if (!empty($_FILES['locations_image']['name'])) {
-        $ext = strtolower(pathinfo($_FILES['locations_image']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg','jpeg','png','webp'])) {
-            $newName = 'locations_' . uniqid() . '.' . $ext;
-            $dest    = '../uploads/sections/' . $newName;
-            if (move_uploaded_file($_FILES['locations_image']['tmp_name'], $dest)) {
-                $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('locations_image',?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$newName,$newName]);
-            }
-        }
-    } elseif (!empty($_POST['remove_locations_image'])) {
-        $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES ('locations_image','') ON DUPLICATE KEY UPDATE setting_value=''")->execute();
-    }
-
     // Change password
     if (!empty($_POST['new_password']) && !empty($_POST['current_password'])) {
         $stmt = $db->prepare("SELECT * FROM admin_users WHERE username=?");
@@ -303,32 +289,6 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
     <div class="form-group" style="margin-bottom:0">
       <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
         <input type="checkbox" name="remove_why_us_image" value="1" style="width:auto"> Remove image
-      </label>
-    </div>
-    <?php endif; ?>
-  </div>
-</div>
-
-<div class="card" style="margin-bottom:1.5rem">
-  <div class="card-header"><h2>"Where We Serve" Image (Contact Page)</h2></div>
-  <div class="card-body">
-    <div class="form-group">
-      <label>Current Image</label>
-      <?php if (!empty($settings['locations_image'])): ?>
-        <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['locations_image']) ?>" alt="Current image" style="max-height:160px;border-radius:8px"></div>
-      <?php else: ?>
-        <p style="color:#313131;font-size:.85rem;margin:.5rem 0 1rem">No image uploaded yet — the Contact page section will show a placeholder box until you add one.</p>
-      <?php endif; ?>
-    </div>
-    <div class="form-group">
-      <label>Upload New Image</label>
-      <input type="file" name="locations_image" accept="image/png,image/jpeg,image/webp">
-      <small style="color:#8892A4;display:block;margin-top:.4rem">Shown next to the "Where We Serve" country list on the Contact page.</small>
-    </div>
-    <?php if (!empty($settings['locations_image'])): ?>
-    <div class="form-group" style="margin-bottom:0">
-      <label style="display:flex;align-items:center;gap:.5rem;font-weight:500">
-        <input type="checkbox" name="remove_locations_image" value="1" style="width:auto"> Remove image
       </label>
     </div>
     <?php endif; ?>
