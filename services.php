@@ -36,9 +36,9 @@ echo renderBreadcrumbs([
         <p><?= sanitize($svc['description']) ?></p>
         <div style="margin-top:1.25rem">
           <?php if (!empty($svc['slug'])): ?>
-          <a href="/service.php?slug=<?= urlencode($svc['slug']) ?>" class="btn btn-primary btn-sm" style="font-size:.82rem;padding:.6rem 1.2rem">Get Pricing</a>
+          <a href="/service.php?slug=<?= urlencode($svc['slug']) ?>" class="btn btn-primary btn-sm" style="font-size:.82rem;padding:.6rem 1.2rem">View More</a>
           <?php else: ?>
-          <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary btn-sm" target="_blank" style="font-size:.82rem;padding:.6rem 1.2rem">Get Pricing</a>
+          <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary btn-sm" target="_blank" style="font-size:.82rem;padding:.6rem 1.2rem">View More</a>
           <?php endif; ?>
         </div>
       </div>
