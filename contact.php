@@ -61,11 +61,12 @@ echo renderBreadcrumbs([
             <label for="service">Service Interested In</label>
             <select id="service" name="service">
               <option value="">Select a service…</option>
+              <option>Branding & Brand Identity</option>
+              <option>Search Engine Optimisation (SEO)</option>
               <option>Web Design & Development</option>
               <option>Graphic Design Subscriptions</option>
-              <option>Digital Marketing & SEO</option>
+              <option>Digital Marketing</option>
               <option>Shopify Store Setup</option>
-              <option>Social Media Management</option>
               <option>Digital Menu Boards</option>
               <option>Other</option>
             </select>
