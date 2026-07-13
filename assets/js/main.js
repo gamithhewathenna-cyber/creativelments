@@ -133,19 +133,31 @@ if (logosScroll) {
     }, 25);
   };
   const stopLogosAuto = () => clearInterval(logosAutoTimer);
-  const resetLogosAuto = () => { stopLogosAuto(); startLogosAuto(); };
+
+  // Pause auto-scroll during a manual arrow click and resume only after the
+  // smooth-scroll animation finishes — restarting immediately would set
+  // scrollLeft directly on the very next tick and cancel the animation.
+  let logosResumeTimer;
+  const pauseLogosAuto = () => {
+    stopLogosAuto();
+    clearTimeout(logosResumeTimer);
+    logosResumeTimer = setTimeout(startLogosAuto, 700);
+  };
 
   startLogosAuto();
   logosScroll.addEventListener('mouseenter', stopLogosAuto);
-  logosScroll.addEventListener('mouseleave', startLogosAuto);
+  logosScroll.addEventListener('mouseleave', () => {
+    clearTimeout(logosResumeTimer);
+    startLogosAuto();
+  });
 
   if (logosPrev) logosPrev.addEventListener('click', () => {
+    pauseLogosAuto();
     logosScroll.scrollBy({ left: -logoStep(), behavior: 'smooth' });
-    resetLogosAuto();
   });
   if (logosNext) logosNext.addEventListener('click', () => {
+    pauseLogosAuto();
     logosScroll.scrollBy({ left: logoStep(), behavior: 'smooth' });
-    resetLogosAuto();
   });
 }
 
