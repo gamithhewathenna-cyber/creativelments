@@ -3,7 +3,7 @@ $pageTitle = 'Digital Marketing Agency for Melbourne & Sydney';
 require_once 'includes/header.php';
 
 $services      = $db->query("SELECT * FROM services WHERE active=1 ORDER BY sort_order")->fetchAll();
-$projects      = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY RAND() LIMIT 6")->fetchAll();
+$projects      = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY RAND() LIMIT 12")->fetchAll();
 $testimonials  = $db->query("SELECT * FROM testimonials WHERE active=1 ORDER BY sort_order")->fetchAll();
 $stats         = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
 $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY sort_order")->fetchAll();
