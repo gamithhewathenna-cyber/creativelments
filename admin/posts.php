@@ -20,25 +20,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $keyphrase = trim($_POST['focus_keyphrase'] ?? '');
     $seoTitle  = trim($_POST['seo_title'] ?? '');
     $metaDesc  = trim($_POST['meta_description'] ?? '');
-    if ($id) {
-        $db->prepare("UPDATE posts SET title=?,slug=?,excerpt=?,content=?,category=?,status=?,focus_keyphrase=?,seo_title=?,meta_description=? WHERE id=?")->execute([$title,$slug,$excerpt,$content,$cat,$status,$keyphrase,$seoTitle,$metaDesc,$id]);
-    } else {
-        $db->prepare("INSERT INTO posts (title,slug,excerpt,content,category,status,focus_keyphrase,seo_title,meta_description) VALUES (?,?,?,?,?,?,?,?,?)")->execute([$title,$slug,$excerpt,$content,$cat,$status,$keyphrase,$seoTitle,$metaDesc]);
+
+    $formError = '';
+    $image = '';
+    if (!empty($_FILES['image']['name'])) {
+        if (!is_dir('../uploads/blog') || !is_writable('../uploads/blog')) {
+            $formError = 'Upload folder "uploads/blog" is missing or not writable on the server. Create it and set permissions to 755.';
+        } else {
+            $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, ['jpg','jpeg','png','webp'])) {
+                $formError = 'Featured image must be a JPG, PNG or WEBP file.';
+            } else {
+                $newName = uniqid('blog_') . '.' . $ext;
+                if (move_uploaded_file($_FILES['image']['tmp_name'], '../uploads/blog/' . $newName)) {
+                    $image = $newName;
+                } else {
+                    $formError = 'Featured image upload failed. Please try again.';
+                }
+            }
+        }
     }
-    regenerateSitemap($db);
-    header('Location: /admin/posts.php?msg=saved');
-    exit;
+
+    if (!$formError) {
+        if ($id) {
+            $sql = "UPDATE posts SET title=?,slug=?,excerpt=?,content=?,category=?,status=?,focus_keyphrase=?,seo_title=?,meta_description=?" . ($image ? ",image=?" : "") . " WHERE id=?";
+            $params = [$title,$slug,$excerpt,$content,$cat,$status,$keyphrase,$seoTitle,$metaDesc];
+            if ($image) $params[] = $image;
+            $params[] = $id;
+            $db->prepare($sql)->execute($params);
+        } else {
+            $db->prepare("INSERT INTO posts (title,slug,excerpt,content,image,category,status,focus_keyphrase,seo_title,meta_description) VALUES (?,?,?,?,?,?,?,?,?,?)")->execute([$title,$slug,$excerpt,$content,$image,$cat,$status,$keyphrase,$seoTitle,$metaDesc]);
+        }
+        regenerateSitemap($db);
+        header('Location: /admin/posts.php?msg=saved');
+        exit;
+    }
+
+    // Upload/validation failed — redisplay the form with what was typed
+    $ep = ['id' => $id, 'title' => $title, 'slug' => $slug, 'excerpt' => $excerpt, 'content' => $content, 'category' => $cat, 'status' => $status, 'focus_keyphrase' => $keyphrase, 'seo_title' => $seoTitle, 'meta_description' => $metaDesc];
 }
-$ep = null;
-if (isset($_GET['edit'])) { $s = $db->prepare("SELECT * FROM posts WHERE id=?"); $s->execute([$_GET['edit']]); $ep = $s->fetch(); }
+if (!isset($ep)) {
+    $ep = null;
+    if (isset($_GET['edit'])) { $s = $db->prepare("SELECT * FROM posts WHERE id=?"); $s->execute([$_GET['edit']]); $ep = $s->fetch(); }
+}
 $posts = $db->query("SELECT * FROM posts ORDER BY created_at DESC")->fetchAll();
 require_once 'admin-header.php';
 if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php endif; ?>
+<?php if (!empty($formError)): ?><div class="alert alert-error"><?= htmlspecialchars($formError) ?></div><?php endif; ?>
 
 <div class="card" style="margin-bottom:1.5rem">
   <div class="card-header"><h2><?= $ep ? 'Edit Post' : 'New Post' ?></h2></div>
   <div class="card-body">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $ep['id'] ?? 0 ?>">
       <div class="form-group"><label>Title *</label><input name="title" required value="<?= sanitize($ep['title'] ?? '') ?>" oninput="autoSlug(this)"></div>
       <div class="form-group"><label>URL Slug</label><input name="slug" id="slug" value="<?= sanitize($ep['slug'] ?? '') ?>"></div>
@@ -51,8 +84,19 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label>Featured Image</label>
+        <?php if (!empty($ep['image'])): ?>
+          <div style="margin:.5rem 0 1rem"><img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($ep['image']) ?>" alt="" style="max-height:160px;border-radius:8px"></div>
+        <?php endif; ?>
+        <input type="file" name="image" accept="image/png,image/jpeg,image/webp">
+      </div>
       <div class="form-group"><label>Excerpt</label><textarea name="excerpt" style="min-height:80px"><?= sanitize($ep['excerpt'] ?? '') ?></textarea></div>
-      <div class="form-group"><label>Content</label><textarea name="content" style="min-height:300px"><?= sanitize($ep['content'] ?? '') ?></textarea></div>
+      <div class="form-group">
+        <label>Content</label>
+        <textarea name="content" style="min-height:300px"><?= sanitize($ep['content'] ?? '') ?></textarea>
+        <small style="color:#8892A4;display:block;margin-top:.4rem">You can write HTML here (e.g. copy-paste formatted content from another editor) — it will be rendered as-is on the blog page.</small>
+      </div>
 
       <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
       <h3 style="font-size:.95rem;margin-bottom:1rem">SEO</h3>

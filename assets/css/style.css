@@ -1063,6 +1063,16 @@ body.page-index .navbar.scrolled {
 .blog-body p { color: var(--text); font-size: .88rem; }
 .blog-meta { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--light); font-size: .8rem; color: var(--gray); }
 
+/* ---- Blog post content (admin-pasted HTML) ---- */
+.blog-content h2, .blog-content h3, .blog-content h4 { margin: 1.75rem 0 .75rem; line-height: 1.35; color: var(--navy2); }
+.blog-content p { margin-bottom: 1.1rem; }
+.blog-content img { max-width: 100%; height: auto; border-radius: 10px; margin: 1.25rem 0; }
+.blog-content ul, .blog-content ol { margin: 0 0 1.1rem 1.4rem; }
+.blog-content li { margin-bottom: .4rem; }
+.blog-content a { color: var(--teal); text-decoration: underline; }
+.blog-content blockquote { border-left: 3px solid var(--teal); padding-left: 1rem; margin: 1.25rem 0; color: var(--gray); font-style: italic; }
+.blog-content strong { font-weight: 700; }
+
 /* ---- Page Hero ---- */
 .page-hero {
   background: var(--navy);

@@ -13,7 +13,7 @@ if (!$post) {
     $seoTitle       = $post['seo_title'] ?? '';
     $seoDescription = $post['meta_description'] ?? '';
     if (!empty($post['image'])) {
-        $ogImage = rtrim(SITE_URL, '/') . '/uploads/' . $post['image'];
+        $ogImage = rtrim(SITE_URL, '/') . '/uploads/blog/' . $post['image'];
     }
 }
 
@@ -62,8 +62,11 @@ endif;
     <?php if ($post['excerpt']): ?>
     <p style="font-size:1.15rem;color:#313131;margin-bottom:2rem;font-style:italic"><?= sanitize($post['excerpt']) ?></p>
     <?php endif; ?>
-    <div style="line-height:1.85;font-size:.97rem">
-      <?= nl2br(sanitize($post['content'])) ?>
+    <?php if (!empty($post['image'])): ?>
+    <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" style="width:100%;border-radius:12px;margin-bottom:2rem" loading="lazy">
+    <?php endif; ?>
+    <div class="blog-content" style="line-height:1.85;font-size:.97rem">
+      <?= $post['content'] ?>
     </div>
     <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid #E2E8F0">
       <a href="/blog.php" class="btn btn-dark">← Back to Blog</a>
@@ -80,7 +83,7 @@ endif;
       <a href="/blog-post.php?slug=<?= urlencode($rp['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
         <div class="blog-thumb">
           <?php if ($rp['image']): ?>
-            <img src="<?= SITE_URL ?>/uploads/<?= sanitize($rp['image']) ?>" alt="<?= sanitize($rp['title']) ?>" loading="lazy">
+            <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($rp['image']) ?>" alt="<?= sanitize($rp['title']) ?>" loading="lazy">
           <?php else: ?>
             <?= sanitize($rp['title']) ?>
           <?php endif; ?>
