@@ -29,6 +29,10 @@ if ($post) {
     $rp = $db->prepare("SELECT title, slug, excerpt, image, created_at FROM posts WHERE status='published' AND id != ? ORDER BY created_at DESC LIMIT 3");
     $rp->execute([$post['id']]);
     $relatedPosts = $rp->fetchAll();
+
+    $recentStmt = $db->prepare("SELECT title, slug, image, created_at FROM posts WHERE status='published' AND id != ? ORDER BY created_at DESC LIMIT 5");
+    $recentStmt->execute([$post['id']]);
+    $recentPosts = $recentStmt->fetchAll();
 }
 
 if ($post):
@@ -58,18 +62,41 @@ endif;
 </section>
 
 <section class="section">
-  <div class="container" style="max-width:760px">
-    <?php if ($post['excerpt']): ?>
-    <p style="font-size:1.15rem;color:#313131;margin-bottom:2rem;font-style:italic"><?= sanitize($post['excerpt']) ?></p>
-    <?php endif; ?>
-    <?php if (!empty($post['image'])): ?>
-    <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" style="width:100%;border-radius:12px;margin-bottom:2rem" loading="lazy">
-    <?php endif; ?>
-    <div class="blog-content" style="line-height:1.85;font-size:.97rem">
-      <?= $post['content'] ?>
-    </div>
-    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid #E2E8F0">
-      <a href="/blog.php" class="btn btn-dark">← Back to Blog</a>
+  <div class="container" style="max-width:1200px">
+    <div class="blog-post-layout">
+      <div class="blog-post-main">
+        <?php if ($post['excerpt']): ?>
+        <p style="font-size:1.15rem;color:#313131;margin-bottom:2rem;font-style:italic"><?= sanitize($post['excerpt']) ?></p>
+        <?php endif; ?>
+        <?php if (!empty($post['image'])): ?>
+        <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" style="width:100%;border-radius:12px;margin-bottom:2rem" loading="lazy">
+        <?php endif; ?>
+        <div class="blog-content" style="line-height:1.85;font-size:.97rem">
+          <?= $post['content'] ?>
+        </div>
+        <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid #E2E8F0">
+          <a href="/blog.php" class="btn btn-dark">← Back to Blog</a>
+        </div>
+      </div>
+
+      <?php if ($recentPosts): ?>
+      <aside class="blog-sidebar">
+        <h3 class="blog-sidebar-title">Recent Posts</h3>
+        <?php foreach ($recentPosts as $rec): ?>
+        <a href="/blog-post.php?slug=<?= urlencode($rec['slug']) ?>" class="blog-sidebar-item">
+          <div class="blog-sidebar-thumb">
+            <?php if ($rec['image']): ?>
+              <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($rec['image']) ?>" alt="<?= sanitize($rec['title']) ?>" loading="lazy">
+            <?php endif; ?>
+          </div>
+          <div>
+            <h4><?= sanitize($rec['title']) ?></h4>
+            <span><?= date('d M Y', strtotime($rec['created_at'])) ?></span>
+          </div>
+        </a>
+        <?php endforeach; ?>
+      </aside>
+      <?php endif; ?>
     </div>
   </div>
 </section>
