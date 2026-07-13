@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'Our Work';
 require_once 'includes/header.php';
-$projects = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort_order")->fetchAll();
+$projects = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY RAND()")->fetchAll();
 
 // Projects can belong to multiple categories (comma-separated) — split and de-duplicate
 // them here, but keep the order defined in Admin → Projects → Project Categories.
