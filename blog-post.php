@@ -57,7 +57,10 @@ endif;
   <div class="container">
     <span class="section-label"><?= sanitize($post['category']) ?></span>
     <h1><?= sanitize($post['title']) ?></h1>
-    <p style="margin-top:.75rem;color:rgba(255,255,255,.6)"><?= date('d M Y', strtotime($post['created_at'])) ?></p>
+    <?php if ($post['excerpt']): ?>
+    <p><?= sanitize($post['excerpt']) ?></p>
+    <?php endif; ?>
+    <p style="margin-top:1rem;color:rgba(255,255,255,.5);font-size:.85rem"><?= date('d M Y', strtotime($post['created_at'])) ?></p>
   </div>
 </section>
 
@@ -65,9 +68,6 @@ endif;
   <div class="container" style="max-width:1200px">
     <div class="blog-post-layout">
       <div class="blog-post-main">
-        <?php if ($post['excerpt']): ?>
-        <p style="font-size:1.15rem;color:#313131;margin-bottom:2rem;font-style:italic"><?= sanitize($post['excerpt']) ?></p>
-        <?php endif; ?>
         <?php if (!empty($post['image'])): ?>
         <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" style="width:100%;border-radius:12px;margin-bottom:2rem" loading="lazy">
         <?php endif; ?>
