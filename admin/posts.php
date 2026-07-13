@@ -9,7 +9,29 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Delete category
+if (isset($_GET['delete_cat'])) {
+    $db->prepare("DELETE FROM post_categories WHERE id=?")->execute([$_GET['delete_cat']]);
+    header('Location: /admin/posts.php?msg=cat_deleted');
+    exit;
+}
+
+// Add a new category
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_category'])) {
+    $catName = trim($_POST['new_category']);
+    if ($catName !== '') {
+        $exists = $db->prepare("SELECT id FROM post_categories WHERE name=?");
+        $exists->execute([$catName]);
+        if (!$exists->fetch()) {
+            $maxSort = (int) $db->query("SELECT COALESCE(MAX(sort_order),0) FROM post_categories")->fetchColumn();
+            $db->prepare("INSERT INTO post_categories (name,sort_order) VALUES (?,?)")->execute([$catName, $maxSort + 1]);
+        }
+    }
+    header('Location: /admin/posts.php?msg=cat_saved');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['new_category'])) {
     $id      = intval($_POST['id'] ?? 0);
     $title   = trim($_POST['title'] ?? '');
     $slug    = trim($_POST['slug'] ?? preg_replace('/[^a-z0-9]+/', '-', strtolower($title)));
@@ -64,9 +86,45 @@ if (!isset($ep)) {
     if (isset($_GET['edit'])) { $s = $db->prepare("SELECT * FROM posts WHERE id=?"); $s->execute([$_GET['edit']]); $ep = $s->fetch(); }
 }
 $posts = $db->query("SELECT * FROM posts ORDER BY created_at DESC")->fetchAll();
+$postCategories = $db->query("SELECT * FROM post_categories ORDER BY sort_order")->fetchAll();
 require_once 'admin-header.php';
-if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php endif; ?>
+
+$postMsgs = [
+    'saved'       => 'Saved.',
+    'deleted'     => 'Post deleted.',
+    'cat_saved'   => 'Category saved.',
+    'cat_deleted' => 'Category deleted.',
+];
+if (isset($_GET['msg']) && isset($postMsgs[$_GET['msg']])): ?>
+<div class="alert alert-success"><?= $postMsgs[$_GET['msg']] ?></div>
+<?php endif; ?>
 <?php if (!empty($formError)): ?><div class="alert alert-error"><?= htmlspecialchars($formError) ?></div><?php endif; ?>
+
+<!-- Manage Categories -->
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Blog Categories</h2></div>
+  <div class="card-body">
+    <form method="POST" style="display:flex;gap:.75rem;align-items:flex-end;margin-bottom:1.25rem;flex-wrap:wrap">
+      <div class="form-group" style="margin-bottom:0;flex:1;min-width:200px">
+        <label>New Category Name</label>
+        <input name="new_category" placeholder="e.g. SEO Tips">
+      </div>
+      <button type="submit" class="btn btn-primary">Add Category</button>
+    </form>
+    <?php if ($postCategories): ?>
+    <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+      <?php foreach ($postCategories as $cat): ?>
+      <span class="pill pill-blue" style="display:inline-flex;align-items:center;gap:.5rem">
+        <?= sanitize($cat['name']) ?>
+        <a href="?delete_cat=<?= $cat['id'] ?>" onclick="return confirm('Delete category &quot;<?= sanitize($cat['name']) ?>&quot;? Posts already using it will keep the text but it won\'t be selectable anymore.')" style="color:#991B1B;font-weight:700;text-decoration:none">&times;</a>
+      </span>
+      <?php endforeach; ?>
+    </div>
+    <?php else: ?>
+    <p style="color:#313131;font-size:.85rem">No categories yet — add one above before creating posts.</p>
+    <?php endif; ?>
+  </div>
+</div>
 
 <div class="card" style="margin-bottom:1.5rem">
   <div class="card-header"><h2><?= $ep ? 'Edit Post' : 'New Post' ?></h2></div>
@@ -76,7 +134,22 @@ if (isset($_GET['msg'])): ?><div class="alert alert-success">Saved.</div><?php e
       <div class="form-group"><label>Title *</label><input name="title" required value="<?= sanitize($ep['title'] ?? '') ?>" oninput="autoSlug(this)"></div>
       <div class="form-group"><label>URL Slug</label><input name="slug" id="slug" value="<?= sanitize($ep['slug'] ?? '') ?>"></div>
       <div class="form-row">
-        <div class="form-group"><label>Category</label><input name="category" value="<?= sanitize($ep['category'] ?? 'General') ?>"></div>
+        <div class="form-group">
+          <label>Category</label>
+          <select name="category">
+            <?php $curCat = $ep['category'] ?? 'General'; ?>
+            <?php $catNames = array_map(fn($c) => $c['name'], $postCategories); ?>
+            <?php if ($curCat !== '' && !in_array($curCat, $catNames, true)): ?>
+            <option value="<?= sanitize($curCat) ?>" selected><?= sanitize($curCat) ?></option>
+            <?php endif; ?>
+            <?php foreach ($postCategories as $cat): ?>
+            <option value="<?= sanitize($cat['name']) ?>" <?= $curCat === $cat['name'] ? 'selected' : '' ?>><?= sanitize($cat['name']) ?></option>
+            <?php endforeach; ?>
+          </select>
+          <?php if (!$postCategories): ?>
+          <small style="color:#8892A4;display:block;margin-top:.4rem">Add a category above first.</small>
+          <?php endif; ?>
+        </div>
         <div class="form-group"><label>Status</label>
           <select name="status">
             <option value="draft" <?= ($ep['status'] ?? 'draft') === 'draft' ? 'selected' : '' ?>>Draft</option>
