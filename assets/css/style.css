@@ -670,9 +670,12 @@ body.page-index .navbar.scrolled {
 .reviews-scroll {
   display: flex;
   gap: 1.5rem;
-  overflow-x: hidden;
+  overflow-x: auto;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.reviews-scroll::-webkit-scrollbar { display: none; }
 .testimonial-card {
   flex: 0 0 auto;
   width: 280px;
