@@ -19,7 +19,7 @@ echo renderBreadcrumbs([
 ]);
 ?>
 
-<section class="section">
+<section class="section no-reveal">
   <div class="container">
     <h1 class="sr-only">Our Work</h1>
     <!-- Filter Tabs -->

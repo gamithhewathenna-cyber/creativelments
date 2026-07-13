@@ -301,7 +301,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 document.querySelectorAll(
-  '.service-card, .portfolio-item, .testimonial-card, .blog-card, .stat-num'
+  '.service-card, .testimonial-card, .blog-card, .stat-num'
 ).forEach((el, i) => {
   el.classList.add('reveal');
   el.style.transitionDelay = (i % 4) * 80 + 'ms';
@@ -321,7 +321,7 @@ sectionStyle.textContent = `
 document.head.appendChild(sectionStyle);
 
 const sectionEffects = ['section-reveal-up', 'section-reveal-pop', 'section-reveal-left', 'section-reveal-right'];
-const noRevealSections = ['.hero', '.page-hero', '.cta-banner'];
+const noRevealSections = ['.hero', '.page-hero', '.cta-banner', '.no-reveal'];
 let sectionEffectIndex = 0;
 document.querySelectorAll('section').forEach((section) => {
   if (noRevealSections.some((sel) => section.matches(sel))) return;
