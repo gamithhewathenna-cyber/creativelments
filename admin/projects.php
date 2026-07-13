@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_category'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['new_category'])) {
     $id       = intval($_POST['id'] ?? 0);
     $title    = trim($_POST['title'] ?? '');
-    $category = trim($_POST['category'] ?? '');
+    $category = implode(',', array_map('trim', $_POST['categories'] ?? []));
     $desc     = trim($_POST['description'] ?? '');
     $link     = trim($_POST['link'] ?? '');
     $sort     = intval($_POST['sort_order'] ?? 0);
@@ -176,18 +176,23 @@ if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
   <div class="card-body">
     <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $editProject['id'] ?? 0 ?>">
-      <div class="form-row">
-        <div class="form-group"><label>Project Title *</label><input name="title" required value="<?= sanitize($editProject['title'] ?? '') ?>"></div>
-        <div class="form-group">
-          <label>Category</label>
-          <select name="category">
-            <option value="">Select a category…</option>
-            <?php foreach ($categories as $cat): ?>
-            <option value="<?= sanitize($cat['name']) ?>" <?= ($editProject['category'] ?? '') === $cat['name'] ? 'selected' : '' ?>><?= sanitize($cat['name']) ?></option>
-            <?php endforeach; ?>
-          </select>
-          <?php if (!$categories): ?><small style="color:#8892A4;display:block;margin-top:.4rem">Add a category above first.</small><?php endif; ?>
+      <div class="form-group"><label>Project Title *</label><input name="title" required value="<?= sanitize($editProject['title'] ?? '') ?>"></div>
+      <div class="form-group">
+        <label>Categories</label>
+        <?php $selectedCats = array_map('trim', explode(',', $editProject['category'] ?? '')); ?>
+        <?php if ($categories): ?>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem 1.5rem">
+          <?php foreach ($categories as $cat): ?>
+          <label style="display:flex;align-items:center;gap:.5rem;font-weight:500;font-size:.88rem">
+            <input type="checkbox" name="categories[]" value="<?= sanitize($cat['name']) ?>" style="width:auto" <?= in_array($cat['name'], $selectedCats, true) ? 'checked' : '' ?>>
+            <?= sanitize($cat['name']) ?>
+          </label>
+          <?php endforeach; ?>
         </div>
+        <small style="color:#8892A4;display:block;margin-top:.5rem">Select one or more categories — the project will appear under each on the Our Work filter.</small>
+        <?php else: ?>
+        <small style="color:#8892A4;display:block;margin-top:.4rem">Add a category above first.</small>
+        <?php endif; ?>
       </div>
       <div class="form-group"><label>Description</label><textarea name="description"><?= sanitize($editProject['description'] ?? '') ?></textarea></div>
       <div class="form-row">
@@ -222,7 +227,7 @@ if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
     <tr>
       <td><?php if ($p['image']): $thumb = preg_replace('/(\.[^.]+)$/', '_thumb$1', $p['image']); ?><img src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($thumb) ?>" alt="" style="width:60px;height:75px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($p['title']) ?></strong></td>
-      <td><?= sanitize($p['category']) ?></td>
+      <td><?= sanitize(str_replace(',', ', ', $p['category'])) ?></td>
       <td><span class="pill <?= $p['active'] ? 'pill-green' : 'pill-red' ?>"><?= $p['active'] ? 'Active' : 'Hidden' ?></span></td>
       <td style="display:flex;gap:.5rem">
         <a href="?edit=<?= $p['id'] ?>" class="btn btn-outline btn-sm">Edit</a>

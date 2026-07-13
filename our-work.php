@@ -2,7 +2,17 @@
 $pageTitle = 'Our Work';
 require_once 'includes/header.php';
 $projects = $db->query("SELECT * FROM projects WHERE active=1 ORDER BY sort_order")->fetchAll();
-$categories = $db->query("SELECT DISTINCT category FROM projects WHERE active=1 ORDER BY category")->fetchAll(PDO::FETCH_COLUMN);
+
+// Projects can belong to multiple categories (comma-separated) — split and de-duplicate
+// them here, but keep the order defined in Admin → Projects → Project Categories.
+$allCategoryNames = $db->query("SELECT name FROM project_categories ORDER BY sort_order")->fetchAll(PDO::FETCH_COLUMN);
+$usedCategoryNames = [];
+foreach ($projects as $p) {
+    foreach (array_filter(array_map('trim', explode(',', $p['category']))) as $c) {
+        $usedCategoryNames[$c] = true;
+    }
+}
+$categories = array_values(array_filter($allCategoryNames, fn($c) => isset($usedCategoryNames[$c])));
 echo renderBreadcrumbs([
     ['label' => 'Home', 'url' => '/'],
     ['label' => 'Our Work', 'url' => null],
@@ -37,7 +47,7 @@ echo renderBreadcrumbs([
         <div class="portfolio-overlay">
           <div class="portfolio-meta">
             <h4><?= sanitize($proj['title']) ?></h4>
-            <span><?= sanitize($proj['category']) ?></span>
+            <span><?= sanitize(str_replace(',', ', ', $proj['category'])) ?></span>
           </div>
         </div>
       </div>
@@ -95,7 +105,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
     // Apply the filter — this is what actually changes the grid layout
     items.forEach(item => {
-      const show = filter === 'all' || item.dataset.category === filter;
+      const itemCategories = item.dataset.category.split(',').map(c => c.trim());
+      const show = filter === 'all' || itemCategories.includes(filter);
       item.style.display = show ? '' : 'none';
     });
 
