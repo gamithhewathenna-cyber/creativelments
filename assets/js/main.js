@@ -106,6 +106,49 @@ if (portfolioScroll && portfolioPrev && portfolioNext) {
   portfolioNext.addEventListener('click', () => portfolioScroll.scrollBy({ left: scrollStep(), behavior: 'smooth' }));
 }
 
+// ---- Client Logos auto-scrolling marquee + arrows ----
+const logosScroll = document.getElementById('logosScroll');
+if (logosScroll) {
+  const logosPrev = document.querySelector('.logos-arrow-prev');
+  const logosNext = document.querySelector('.logos-arrow-next');
+
+  const logoStep = () => {
+    const item = logosScroll.querySelector('.logos-item');
+    return item ? item.offsetWidth + 48 : 180;
+  };
+
+  // The logo list is rendered twice back-to-back, so the halfway point of the
+  // scrollable width is an identical match to the start — wrapping there is seamless.
+  const wrapLogosScroll = () => {
+    const half = logosScroll.scrollWidth / 2;
+    if (logosScroll.scrollLeft >= half) logosScroll.scrollLeft -= half;
+    else if (logosScroll.scrollLeft <= 0) logosScroll.scrollLeft += half;
+  };
+
+  let logosAutoTimer;
+  const startLogosAuto = () => {
+    logosAutoTimer = setInterval(() => {
+      logosScroll.scrollLeft += 1;
+      wrapLogosScroll();
+    }, 25);
+  };
+  const stopLogosAuto = () => clearInterval(logosAutoTimer);
+  const resetLogosAuto = () => { stopLogosAuto(); startLogosAuto(); };
+
+  startLogosAuto();
+  logosScroll.addEventListener('mouseenter', stopLogosAuto);
+  logosScroll.addEventListener('mouseleave', startLogosAuto);
+
+  if (logosPrev) logosPrev.addEventListener('click', () => {
+    logosScroll.scrollBy({ left: -logoStep(), behavior: 'smooth' });
+    resetLogosAuto();
+  });
+  if (logosNext) logosNext.addEventListener('click', () => {
+    logosScroll.scrollBy({ left: logoStep(), behavior: 'smooth' });
+    resetLogosAuto();
+  });
+}
+
 // ---- Project detail popup ----
 const projectModal = document.getElementById('projectModal');
 if (projectModal) {

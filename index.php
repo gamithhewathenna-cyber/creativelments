@@ -236,13 +236,28 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
     <div class="section-header logos-section-header">
       <h2 class="logos-heading">Trusted by 130+ Businesses Across Australia & Sri Lanka</h2>
     </div>
-    <div class="logos-grid">
+  </div>
+  <div class="logos-scroll-wrap">
+    <div class="logos-scroll" id="logosScroll">
       <?php foreach ($clientLogos as $logo): ?>
       <div class="logos-item">
         <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>" loading="lazy">
       </div>
       <?php endforeach; ?>
+      <?php foreach ($clientLogos as $logo): ?>
+      <div class="logos-item" aria-hidden="true">
+        <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="" loading="lazy">
+      </div>
+      <?php endforeach; ?>
     </div>
+    <?php if (count($clientLogos) > 1): ?>
+    <button class="logos-arrow logos-arrow-prev" aria-label="Previous logos">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="logos-arrow logos-arrow-next" aria-label="Next logos">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <?php endif; ?>
   </div>
 </section>
 <?php endif; ?>
