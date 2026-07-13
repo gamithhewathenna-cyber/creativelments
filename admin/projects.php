@@ -129,6 +129,15 @@ if (isset($_GET['edit']) && !$editProject) {
 
 $projects   = $db->query("SELECT * FROM projects ORDER BY sort_order")->fetchAll();
 $categories = $db->query("SELECT * FROM project_categories ORDER BY sort_order")->fetchAll();
+
+// Filter the list view by category (admin convenience only — doesn't touch the saved data)
+$filterCat = trim($_GET['filter_cat'] ?? '');
+if ($filterCat !== '') {
+    $projects = array_values(array_filter($projects, function ($p) use ($filterCat) {
+        return in_array($filterCat, array_map('trim', explode(',', $p['category'])), true);
+    }));
+}
+
 require_once 'admin-header.php';
 
 $messages = [
@@ -219,7 +228,19 @@ if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
 
 <!-- Projects Table -->
 <div class="card">
-  <div class="card-header"><h2>All Projects (<?= count($projects) ?>)</h2></div>
+  <div class="card-header">
+    <h2>All Projects (<?= count($projects) ?>)</h2>
+    <form method="GET" style="display:flex;align-items:center;gap:.6rem">
+      <label style="font-size:.82rem;font-weight:600;color:#374151">Filter:</label>
+      <select name="filter_cat" onchange="this.form.submit()" style="width:auto;min-width:180px;padding:.5rem .8rem;border:1.5px solid #E2E8F0;border-radius:8px;font-family:'Poppins',sans-serif;font-size:.85rem">
+        <option value="">All Categories</option>
+        <?php foreach ($categories as $cat): ?>
+        <option value="<?= sanitize($cat['name']) ?>" <?= $filterCat === $cat['name'] ? 'selected' : '' ?>><?= sanitize($cat['name']) ?></option>
+        <?php endforeach; ?>
+      </select>
+      <?php if ($filterCat !== ''): ?><a href="/admin/projects.php" class="btn btn-outline btn-sm">Clear</a><?php endif; ?>
+    </form>
+  </div>
   <table>
     <thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Active</th><th>Actions</th></tr></thead>
     <tbody>
@@ -236,6 +257,7 @@ if (isset($_GET['msg']) && isset($messages[$_GET['msg']])): ?>
       </td>
     </tr>
     <?php endforeach; ?>
+    <?php if (!$projects): ?><tr><td colspan="5" style="text-align:center;color:#313131;padding:2rem">No projects match this filter.</td></tr><?php endif; ?>
     </tbody>
   </table>
 </div>
