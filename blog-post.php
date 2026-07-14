@@ -33,6 +33,8 @@ if ($post) {
     $recentStmt = $db->prepare("SELECT title, slug, image, created_at FROM posts WHERE status='published' AND id != ? ORDER BY created_at DESC LIMIT 5");
     $recentStmt->execute([$post['id']]);
     $recentPosts = $recentStmt->fetchAll();
+
+    $recentWork = $db->query("SELECT title, image, link FROM projects WHERE active=1 ORDER BY created_at DESC LIMIT 3")->fetchAll();
 }
 
 if ($post):
@@ -79,24 +81,43 @@ endif;
         </div>
       </div>
 
-      <?php if ($recentPosts): ?>
-      <aside class="blog-sidebar">
-        <h3 class="blog-sidebar-title">Recent Posts</h3>
-        <?php foreach ($recentPosts as $rec): ?>
-        <a href="/blog-post.php?slug=<?= urlencode($rec['slug']) ?>" class="blog-sidebar-item">
-          <div class="blog-sidebar-thumb">
-            <?php if ($rec['image']): ?>
-              <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($rec['image']) ?>" alt="<?= sanitize($rec['title']) ?>" loading="lazy">
-            <?php endif; ?>
+      <div class="blog-sidebar-col">
+        <?php if ($recentPosts): ?>
+        <aside class="blog-sidebar">
+          <h3 class="blog-sidebar-title">Recent Posts</h3>
+          <?php foreach ($recentPosts as $rec): ?>
+          <a href="/blog-post.php?slug=<?= urlencode($rec['slug']) ?>" class="blog-sidebar-item">
+            <div class="blog-sidebar-thumb">
+              <?php if ($rec['image']): ?>
+                <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($rec['image']) ?>" alt="<?= sanitize($rec['title']) ?>" loading="lazy">
+              <?php endif; ?>
+            </div>
+            <div>
+              <h4><?= sanitize($rec['title']) ?></h4>
+              <span><?= date('d M Y', strtotime($rec['created_at'])) ?></span>
+            </div>
+          </a>
+          <?php endforeach; ?>
+        </aside>
+        <?php endif; ?>
+
+        <?php if ($recentWork): ?>
+        <aside class="blog-sidebar blog-sidebar-work">
+          <h3 class="blog-sidebar-title">Our Recent Work</h3>
+          <div class="blog-sidebar-work-grid">
+            <?php foreach ($recentWork as $w): ?>
+            <a href="<?= !empty($w['link']) ? sanitize($w['link']) : '/our-work.php' ?>" class="blog-work-item" <?= !empty($w['link']) ? 'target="_blank" rel="noopener"' : '' ?>>
+              <?php if ($w['image']): ?>
+                <img src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($w['image']) ?>" alt="<?= sanitize($w['title']) ?>" loading="lazy">
+              <?php endif; ?>
+              <span><?= sanitize($w['title']) ?></span>
+            </a>
+            <?php endforeach; ?>
           </div>
-          <div>
-            <h4><?= sanitize($rec['title']) ?></h4>
-            <span><?= date('d M Y', strtotime($rec['created_at'])) ?></span>
-          </div>
-        </a>
-        <?php endforeach; ?>
-      </aside>
-      <?php endif; ?>
+          <a href="/our-work.php" class="btn btn-outline" style="width:100%;text-align:center;margin-top:1.25rem">View All Work</a>
+        </aside>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
 </section>

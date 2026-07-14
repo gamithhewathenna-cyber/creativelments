@@ -1100,9 +1100,14 @@ body.page-index .navbar.scrolled {
   align-items: start;
 }
 .blog-post-main { min-width: 0; }
-.blog-sidebar {
+.blog-sidebar-col {
   position: sticky;
   top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.blog-sidebar {
   border: 1px solid var(--light);
   border-radius: var(--radius);
   padding: 1.5rem;
@@ -1127,9 +1132,23 @@ body.page-index .navbar.scrolled {
 .blog-sidebar-item:hover h4 { color: var(--teal); }
 .blog-sidebar-item span { font-size: .75rem; color: var(--gray); }
 
+.blog-sidebar-work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+.blog-work-item { display: block; text-decoration: none; }
+.blog-work-item img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--navy3);
+  margin-bottom: .4rem;
+  transition: var(--trans);
+}
+.blog-work-item:hover img { opacity: .85; transform: translateY(-2px); }
+.blog-work-item span { display: block; font-size: .72rem; font-weight: 600; color: var(--navy2); line-height: 1.3; }
+
 @media (max-width: 900px) {
   .blog-post-layout { grid-template-columns: 1fr; }
-  .blog-sidebar { position: static; }
+  .blog-sidebar-col { position: static; }
 }
 
 /* ---- Page Hero ---- */
