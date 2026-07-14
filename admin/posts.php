@@ -37,6 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['new_category'])) {
     $slug    = trim($_POST['slug'] ?? preg_replace('/[^a-z0-9]+/', '-', strtolower($title)));
     $excerpt = trim($_POST['excerpt'] ?? '');
     $content = trim($_POST['content'] ?? '');
+    // Some paste sources (AI writing tools, exported docs) include a full HTML
+    // document rather than just a content fragment. A <style>/<script> tag left in
+    // place applies globally to the live page — not just this post — since browsers
+    // don't scope <style> to where it's placed in the body. Strip all of that out.
+    $content = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $content);
+    $content = preg_replace('#<style\b[^>]*>.*?</style>#is', '', $content);
+    $content = preg_replace('#</?(html|head|body)\b[^>]*>#i', '', $content);
+    $content = trim($content);
     $cat     = trim($_POST['category'] ?? 'General');
     $status  = $_POST['status'] ?? 'draft';
     $keyphrase = trim($_POST['focus_keyphrase'] ?? '');
@@ -168,7 +176,7 @@ if (isset($_GET['msg']) && isset($postMsgs[$_GET['msg']])): ?>
       <div class="form-group">
         <label>Content</label>
         <textarea name="content" style="min-height:300px"><?= sanitize($ep['content'] ?? '') ?></textarea>
-        <small style="color:#8892A4;display:block;margin-top:.4rem">You can write HTML here (e.g. copy-paste formatted content from another editor) — it will be rendered as-is on the blog page.</small>
+        <small style="color:#8892A4;display:block;margin-top:.4rem">You can write HTML here (e.g. copy-paste formatted content from another editor) — it will be rendered on the blog page using the site's own fonts and colors. Paste just the article content, not a full HTML page (any &lt;style&gt;/&lt;script&gt; tags are automatically removed).</small>
       </div>
 
       <hr style="border:none;border-top:1px solid #E2E8F0;margin:1.5rem 0">
