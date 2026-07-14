@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test_email'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) {
     $keys = ['phone','email','address','facebook','instagram','linkedin','google_business','whatsapp','hero_title','hero_subtitle','unique_section_text',
-              'enquiry_email','smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
+              'enquiry_email','smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name','facebook_pixel_id'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
@@ -432,6 +432,17 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
       <label>Google Business Profile URL</label>
       <input name="google_business" value="<?= sanitize($settings['google_business'] ?? '') ?>" placeholder="https://g.page/...">
       <small style="color:#8892A4;display:block;margin-top:.4rem">Link to your Google Business Profile (find it in Google Business Profile → Share profile).</small>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Tracking &amp; Analytics</h2></div>
+  <div class="card-body">
+    <div class="form-group">
+      <label>Facebook Pixel ID</label>
+      <input name="facebook_pixel_id" value="<?= sanitize($settings['facebook_pixel_id'] ?? '') ?>" placeholder="e.g. 123456789012345">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">Find this in Meta Events Manager → Data Sources → your Pixel. Enter just the numeric ID — the tracking code is added to every page automatically. Leave blank to disable.</small>
     </div>
   </div>
 </div>
