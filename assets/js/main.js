@@ -161,6 +161,17 @@ if (logosScroll) {
   });
 }
 
+// ---- Blog post: copy link share button ----
+const blogShareCopy = document.querySelector('.blog-share-copy');
+if (blogShareCopy) {
+  blogShareCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(blogShareCopy.dataset.url).then(() => {
+      blogShareCopy.classList.add('copied');
+      setTimeout(() => blogShareCopy.classList.remove('copied'), 1500);
+    });
+  });
+}
+
 // ---- Project detail popup ----
 const projectModal = document.getElementById('projectModal');
 if (projectModal) {

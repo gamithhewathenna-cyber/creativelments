@@ -1146,6 +1146,23 @@ body.page-index .navbar.scrolled {
 .blog-work-item:hover img { opacity: .85; transform: translateY(-2px); }
 .blog-work-item span { display: block; font-size: .72rem; font-weight: 600; color: var(--navy2); line-height: 1.3; }
 
+/* ---- Blog post: share icons ---- */
+.blog-share { display: flex; align-items: center; gap: .6rem; margin-bottom: 2rem; }
+.blog-share-label { font-size: .82rem; font-weight: 600; color: var(--text); margin-right: .3rem; }
+.blog-share a, .blog-share-copy {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--off);
+  color: var(--navy2);
+  display: grid;
+  place-items: center;
+  border: none;
+  cursor: pointer;
+  transition: var(--trans);
+}
+.blog-share a:hover, .blog-share-copy:hover { background: var(--primary); color: var(--white); }
+.blog-share-copy.copied { background: var(--teal); color: var(--white); }
+
 @media (max-width: 900px) {
   .blog-post-layout { grid-template-columns: 1fr; }
   .blog-sidebar-col { position: static; }
