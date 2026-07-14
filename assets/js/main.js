@@ -344,6 +344,7 @@ if (contactForm) {
       if (data.ok) {
         success.style.display = 'block';
         contactForm.reset();
+        if (typeof fbq === 'function') fbq('track', 'Lead');
       } else {
         error.textContent = data.message || 'Something went wrong. Please try again.';
         error.style.display = 'block';
