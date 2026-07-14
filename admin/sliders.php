@@ -19,6 +19,28 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 
+// Move a slide earlier/later in the loading order
+if (isset($_GET['move_up']) || isset($_GET['move_down'])) {
+    $dir      = isset($_GET['move_up']) ? 'up' : 'down';
+    $targetId = intval($_GET['move_up'] ?? $_GET['move_down']);
+    $ordered  = $db->query("SELECT id FROM hero_slides ORDER BY sort_order, id")->fetchAll(PDO::FETCH_COLUMN);
+    $idx      = array_search($targetId, $ordered);
+    if ($idx !== false) {
+        $swapIdx = $dir === 'up' ? $idx - 1 : $idx + 1;
+        if ($swapIdx >= 0 && $swapIdx < count($ordered)) {
+            [$ordered[$idx], $ordered[$swapIdx]] = [$ordered[$swapIdx], $ordered[$idx]];
+        }
+    }
+    // Re-number sequentially so the order stays unambiguous (some slides may share
+    // the same manually-typed sort_order otherwise, which would make a swap a no-op).
+    $upd = $db->prepare("UPDATE hero_slides SET sort_order=? WHERE id=?");
+    foreach ($ordered as $pos => $id) {
+        $upd->execute([$pos, $id]);
+    }
+    header('Location: /admin/sliders.php');
+    exit;
+}
+
 // Required dimensions/format so every slide displays identically
 const SLIDER_WIDTH  = 1920;
 const SLIDER_HEIGHT = 600;
@@ -179,10 +201,14 @@ if (isset($_GET['msg'])): ?>
 <div class="card">
   <div class="card-header"><h2>All Slides (<?= count($slides) ?>)</h2></div>
   <table>
-    <thead><tr><th>Image</th><th>Heading</th><th>Active</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Order</th><th>Image</th><th>Heading</th><th>Active</th><th>Actions</th></tr></thead>
     <tbody>
-    <?php foreach ($slides as $s): ?>
+    <?php foreach ($slides as $i => $s): ?>
     <tr>
+      <td style="display:flex;gap:.3rem">
+        <a href="?move_up=<?= $s['id'] ?>" class="btn btn-outline btn-sm" title="Move up" style="<?= $i === 0 ? 'visibility:hidden' : '' ?>">&uarr;</a>
+        <a href="?move_down=<?= $s['id'] ?>" class="btn btn-outline btn-sm" title="Move down" style="<?= $i === count($slides) - 1 ? 'visibility:hidden' : '' ?>">&darr;</a>
+      </td>
       <td><?php if ($s['image']): ?><img src="<?= SITE_URL ?>/uploads/hero/<?= sanitize($s['image']) ?>" alt="" style="width:80px;height:32px;object-fit:cover;border-radius:4px"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($s['title']) ?></strong></td>
       <td><span class="pill <?= $s['active'] ? 'pill-green' : 'pill-red' ?>"><?= $s['active'] ? 'Active' : 'Hidden' ?></span></td>
@@ -193,7 +219,7 @@ if (isset($_GET['msg'])): ?>
       </td>
     </tr>
     <?php endforeach; ?>
-    <?php if (!$slides): ?><tr><td colspan="4" style="text-align:center;color:#313131;padding:2rem">No slides yet. Add your first one above.</td></tr><?php endif; ?>
+    <?php if (!$slides): ?><tr><td colspan="5" style="text-align:center;color:#313131;padding:2rem">No slides yet. Add your first one above.</td></tr><?php endif; ?>
     </tbody>
   </table>
 </div>
