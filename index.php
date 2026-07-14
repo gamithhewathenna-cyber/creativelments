@@ -8,6 +8,7 @@ $testimonials  = $db->query("SELECT * FROM testimonials WHERE active=1 ORDER BY 
 $stats         = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll();
 $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY sort_order")->fetchAll();
 $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY sort_order")->fetchAll();
+$latestPosts   = $db->query("SELECT title,slug,excerpt,image,category,created_at FROM posts WHERE status='published' ORDER BY created_at DESC LIMIT 3")->fetchAll();
 ?>
 
 <!-- ===== HERO ===== -->
@@ -300,6 +301,39 @@ $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY 
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
       <?php endif; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
+<!-- ===== LATEST UPDATES ===== -->
+<?php if ($latestPosts): ?>
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>Latest Updates</h2>
+    </div>
+    <div class="blog-grid">
+      <?php foreach ($latestPosts as $post): ?>
+      <a href="/blog-post.php?slug=<?= urlencode($post['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
+        <div class="blog-thumb">
+          <?php if ($post['image']): ?>
+            <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" loading="lazy">
+          <?php else: ?>
+            <?= sanitize($post['category']) ?>
+          <?php endif; ?>
+        </div>
+        <div class="blog-body">
+          <span class="blog-cat"><?= sanitize($post['category']) ?></span>
+          <h3><?= sanitize($post['title']) ?></h3>
+          <p><?= sanitize($post['excerpt']) ?></p>
+          <div class="blog-meta"><?= date('d M Y', strtotime($post['created_at'])) ?></div>
+        </div>
+      </a>
+      <?php endforeach; ?>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="/blog.php" class="btn btn-dark">View All Posts</a>
     </div>
   </div>
 </section>
