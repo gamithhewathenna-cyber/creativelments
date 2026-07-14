@@ -174,7 +174,7 @@ $latestPosts   = $db->query("SELECT title,slug,excerpt,image,category,created_at
               <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3"/></svg>
             </div>
             <div>
-              <h4><?= htmlspecialchars($item[0]) ?></h4>
+              <h3><?= htmlspecialchars($item[0]) ?></h3>
               <p><?= htmlspecialchars($item[1]) ?></p>
             </div>
           </div>

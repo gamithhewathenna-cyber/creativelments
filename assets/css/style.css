@@ -483,7 +483,7 @@ body.page-index .navbar.scrolled {
   display: grid;
   place-items: center;
 }
-.team-card h4 { color: var(--navy2); font-size: 1.05rem; margin-bottom: .25rem; }
+.team-card h3 { color: var(--navy2); font-size: 1.05rem; font-weight: 600; margin-bottom: .25rem; }
 .team-card span { color: var(--gray); font-size: .85rem; }
 
 /* ---- Homepage Services Showcase ---- */
@@ -793,7 +793,7 @@ body.page-index .navbar.scrolled {
   margin-top: .1rem;
 }
 .why-check svg { width: 14px; height: 14px; color: white; stroke: white; stroke-width: 3; }
-.why-item h4 { font-size: 1rem; margin-bottom: .25rem; color: var(--text); }
+.why-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: .25rem; color: var(--text); }
 .why-item p { color: var(--text); font-size: .88rem; }
 
 .why-visual {

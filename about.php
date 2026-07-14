@@ -99,14 +99,14 @@ echo renderBreadcrumbs([
         <?php else: ?>
           <div class="team-photo team-photo-placeholder">Photo</div>
         <?php endif; ?>
-        <h4><?= sanitize($m['name']) ?></h4>
+        <h3><?= sanitize($m['name']) ?></h3>
         <span><?= sanitize($m['job_title']) ?></span>
       </div>
       <?php endforeach; else: ?>
       <?php for ($i = 0; $i < 4; $i++): ?>
       <div class="team-card">
         <div class="team-photo team-photo-placeholder">Photo</div>
-        <h4>Team Member</h4>
+        <h3>Team Member</h3>
         <span>Job Title</span>
       </div>
       <?php endfor; ?>
