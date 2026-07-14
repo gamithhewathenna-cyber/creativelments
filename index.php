@@ -70,7 +70,7 @@ $latestPosts   = $db->query("SELECT title,slug,excerpt,image,category,created_at
       <div class="services-showcase-left">
         <h2>Why Melbourne & Sydney Businesses Choose Creative Elements</h2>
         <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
-        <a href="/services.php" class="btn btn-primary">Read More</a>
+        <a href="/services.php" class="btn btn-primary">Explore Our Services</a>
       </div>
       <div class="services-showcase-grid">
         <?php foreach (array_slice($services, 0, 4) as $svc): ?>
