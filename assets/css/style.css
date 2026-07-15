@@ -1214,17 +1214,20 @@ body.page-index .navbar.scrolled {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 56px; height: 56px;
-  background: #25D366;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .85rem 1.4rem;
+  background: #0A6E3C;
+  border-radius: 100px;
   color: var(--white);
+  font-size: .88rem;
+  font-weight: 600;
   z-index: 999;
-  box-shadow: 0 4px 20px rgba(37,211,102,.4);
+  box-shadow: 0 4px 20px rgba(10,110,60,.4);
   transition: var(--trans);
 }
-.wa-float:hover { transform: scale(1.1); }
+.wa-float:hover { transform: scale(1.05); background: #0d8047; }
 
 /* ---- Footer ---- */
 .footer {
@@ -1285,21 +1288,24 @@ body.page-index .navbar.scrolled {
 /* ---- Floating Contact button + popup ---- */
 .contact-float {
   position: fixed;
-  bottom: 6.5rem;
+  bottom: 7rem;
   right: 2rem;
-  width: 56px; height: 56px;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .85rem 1.4rem;
   background: var(--primary);
   border: none;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
+  border-radius: 100px;
   color: var(--white);
+  font-size: .88rem;
+  font-weight: 600;
   cursor: pointer;
   z-index: 999;
   box-shadow: 0 4px 20px rgba(128,72,153,.4);
   transition: var(--trans);
 }
-.contact-float:hover { transform: scale(1.1); background: var(--orange); }
+.contact-float:hover { transform: scale(1.05); background: var(--orange); }
 
 .contact-modal {
   position: fixed;
@@ -1327,7 +1333,8 @@ body.page-index .navbar.scrolled {
 .contact-modal .contact-card-wrap { grid-template-columns: 300px 1fr; }
 
 @media (max-width: 860px) {
-  .contact-float { bottom: 6rem; right: 1.25rem; width: 50px; height: 50px; }
+  .contact-float { bottom: 6.5rem; right: 1.25rem; padding: .7rem 1.1rem; font-size: .78rem; }
+  .wa-float { right: 1.25rem; padding: .7rem 1.1rem; font-size: .78rem; }
   .contact-modal { padding: 4.5rem 1rem 2rem; align-items: flex-start; }
   .contact-modal .contact-card-wrap { grid-template-columns: 1fr; }
 }
