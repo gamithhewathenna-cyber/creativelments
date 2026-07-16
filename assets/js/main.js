@@ -98,6 +98,22 @@ const whyUsSlider = document.getElementById('whyUsSlider');
 if (whyUsSlider) {
   const whySlides = whyUsSlider.querySelectorAll('.why-slide');
   const whyDots = document.querySelectorAll('.why-slider-dot');
+
+  // Match the slider's box to each image's real aspect ratio so there's no letterboxing.
+  const matchWhyAspect = (slide) => {
+    const img = slide.querySelector('img');
+    if (!img) return;
+    const applyRatio = () => {
+      if (img.naturalWidth && img.naturalHeight) {
+        whyUsSlider.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`;
+      }
+    };
+    if (img.complete) applyRatio();
+    else img.addEventListener('load', applyRatio, { once: true });
+  };
+
+  matchWhyAspect(whySlides[0]);
+
   if (whySlides.length > 1) {
     let currentWhySlide = 0;
     let whyInterval;
@@ -109,6 +125,7 @@ if (whyUsSlider) {
       whySlides[newIndex].classList.add('active');
       whyDots[newIndex]?.classList.add('active');
       currentWhySlide = newIndex;
+      matchWhyAspect(whySlides[newIndex]);
     };
 
     const startWhyAutoplay = () => {
