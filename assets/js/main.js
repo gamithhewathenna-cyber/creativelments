@@ -93,11 +93,12 @@ if (heroSlides.length > 1) {
   if (heroNext) heroNext.addEventListener('click', () => { showHeroSlide(currentHeroSlide + 1, 1); resetHeroAutoplay(); });
 }
 
-// ---- Why Choose Us image slider (fade transition, autoplay) ----
+// ---- Why Choose Us image slider (sliding transition, autoplay) ----
 const whyUsSlider = document.getElementById('whyUsSlider');
 if (whyUsSlider) {
   const whySlides = whyUsSlider.querySelectorAll('.why-slide');
-  const whyDots = document.querySelectorAll('.why-slider-dot');
+  const whyPrev = whyUsSlider.querySelector('.why-slider-arrow-prev');
+  const whyNext = whyUsSlider.querySelector('.why-slider-arrow-next');
 
   // Match the slider's box to each image's real aspect ratio so there's no letterboxing.
   const matchWhyAspect = (slide) => {
@@ -118,18 +119,28 @@ if (whyUsSlider) {
     let currentWhySlide = 0;
     let whyInterval;
 
-    const showWhySlide = (index) => {
-      const newIndex = (index + whySlides.length) % whySlides.length;
-      whySlides[currentWhySlide].classList.remove('active');
-      whyDots[currentWhySlide]?.classList.remove('active');
-      whySlides[newIndex].classList.add('active');
-      whyDots[newIndex]?.classList.add('active');
+    const showWhySlide = (targetIndex, direction = 1) => {
+      const newIndex = (targetIndex + whySlides.length) % whySlides.length;
+      if (newIndex === currentWhySlide) return;
+      const oldSlide = whySlides[currentWhySlide];
+      const newSlide = whySlides[newIndex];
+
+      newSlide.style.transition = 'none';
+      newSlide.style.transform = direction > 0 ? 'translateX(100%)' : 'translateX(-100%)';
+      newSlide.classList.add('active');
+      void newSlide.offsetHeight;
+      newSlide.style.transition = '';
+      newSlide.style.transform = 'translateX(0)';
+
+      oldSlide.style.transform = direction > 0 ? 'translateX(-100%)' : 'translateX(100%)';
+      oldSlide.classList.remove('active');
+
       currentWhySlide = newIndex;
-      matchWhyAspect(whySlides[newIndex]);
+      matchWhyAspect(newSlide);
     };
 
     const startWhyAutoplay = () => {
-      whyInterval = setInterval(() => showWhySlide(currentWhySlide + 1), 4000);
+      whyInterval = setInterval(() => showWhySlide(currentWhySlide + 1, 1), 4000);
     };
     const resetWhyAutoplay = () => {
       clearInterval(whyInterval);
@@ -138,9 +149,8 @@ if (whyUsSlider) {
 
     startWhyAutoplay();
 
-    whyDots.forEach((dot, i) => {
-      dot.addEventListener('click', () => { showWhySlide(i); resetWhyAutoplay(); });
-    });
+    if (whyPrev) whyPrev.addEventListener('click', () => { showWhySlide(currentWhySlide - 1, -1); resetWhyAutoplay(); });
+    if (whyNext) whyNext.addEventListener('click', () => { showWhySlide(currentWhySlide + 1, 1); resetWhyAutoplay(); });
   }
 }
 

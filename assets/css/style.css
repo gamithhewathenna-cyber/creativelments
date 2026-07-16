@@ -815,26 +815,30 @@ body.page-index .navbar.scrolled {
 .why-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .9s ease;
+  transform: translateX(100%);
+  transition: transform .7s cubic-bezier(.65,0,.35,1);
+  z-index: 1;
 }
-.why-slide.active { opacity: 1; visibility: visible; z-index: 2; }
+.why-slide.active { transform: translateX(0); z-index: 2; }
 .why-slide .why-visual-image { border-radius: 16px; object-fit: contain; background: var(--off); }
-.why-slider-dots {
-  display: flex;
-  justify-content: center;
-  gap: .5rem;
-  margin-top: 1.1rem;
-}
-.why-slider-dot {
-  width: 9px; height: 9px;
+.why-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 38px; height: 38px;
   border-radius: 50%;
-  background: var(--light);
+  border: none;
+  background: rgba(10,15,30,.45);
+  color: var(--white);
+  display: grid;
+  place-items: center;
   cursor: pointer;
   transition: var(--trans);
 }
-.why-slider-dot.active { background: var(--orange); width: 22px; border-radius: 5px; }
+.why-slider-arrow:hover { background: var(--orange); }
+.why-slider-arrow-prev { left: 10px; }
+.why-slider-arrow-next { right: 10px; }
 .why-visual-placeholder {
   width: 100%;
   min-height: 320px;
