@@ -93,6 +93,40 @@ if (heroSlides.length > 1) {
   if (heroNext) heroNext.addEventListener('click', () => { showHeroSlide(currentHeroSlide + 1, 1); resetHeroAutoplay(); });
 }
 
+// ---- Why Choose Us image slider (fade transition, autoplay) ----
+const whyUsSlider = document.getElementById('whyUsSlider');
+if (whyUsSlider) {
+  const whySlides = whyUsSlider.querySelectorAll('.why-slide');
+  const whyDots = document.querySelectorAll('.why-slider-dot');
+  if (whySlides.length > 1) {
+    let currentWhySlide = 0;
+    let whyInterval;
+
+    const showWhySlide = (index) => {
+      const newIndex = (index + whySlides.length) % whySlides.length;
+      whySlides[currentWhySlide].classList.remove('active');
+      whyDots[currentWhySlide]?.classList.remove('active');
+      whySlides[newIndex].classList.add('active');
+      whyDots[newIndex]?.classList.add('active');
+      currentWhySlide = newIndex;
+    };
+
+    const startWhyAutoplay = () => {
+      whyInterval = setInterval(() => showWhySlide(currentWhySlide + 1), 4000);
+    };
+    const resetWhyAutoplay = () => {
+      clearInterval(whyInterval);
+      startWhyAutoplay();
+    };
+
+    startWhyAutoplay();
+
+    whyDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { showWhySlide(i); resetWhyAutoplay(); });
+    });
+  }
+}
+
 // ---- Recent Projects arrow navigation ----
 const portfolioScroll = document.getElementById('portfolioScroll');
 const portfolioPrev   = document.querySelector('.portfolio-arrow-prev');

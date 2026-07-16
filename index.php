@@ -9,6 +9,7 @@ $stats         = $db->query("SELECT * FROM stats ORDER BY sort_order")->fetchAll
 $heroSlides    = $db->query("SELECT * FROM hero_slides WHERE active=1 ORDER BY sort_order")->fetchAll();
 $clientLogos   = $db->query("SELECT * FROM client_logos WHERE active=1 ORDER BY sort_order")->fetchAll();
 $latestPosts   = $db->query("SELECT title,slug,excerpt,image,category,created_at FROM posts WHERE status='published' ORDER BY created_at DESC LIMIT 3")->fetchAll();
+$whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AND image != '' ORDER BY created_at DESC LIMIT 5")->fetchAll();
 ?>
 
 <!-- ===== HERO ===== -->
@@ -182,7 +183,22 @@ $latestPosts   = $db->query("SELECT title,slug,excerpt,image,category,created_at
         </div>
       </div>
       <div class="why-visual">
-        <?php if (!empty($settings['why_us_image'])): ?>
+        <?php if ($whyUsImages): ?>
+          <div class="why-slider" id="whyUsSlider">
+            <?php foreach ($whyUsImages as $i => $img): ?>
+            <div class="why-slide <?= $i === 0 ? 'active' : '' ?>">
+              <img src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($img['image']) ?>" alt="<?= sanitize($img['title']) ?>" class="why-visual-image" loading="lazy">
+            </div>
+            <?php endforeach; ?>
+          </div>
+          <?php if (count($whyUsImages) > 1): ?>
+          <div class="why-slider-dots">
+            <?php foreach ($whyUsImages as $i => $img): ?>
+            <span class="why-slider-dot <?= $i === 0 ? 'active' : '' ?>" data-index="<?= $i ?>"></span>
+            <?php endforeach; ?>
+          </div>
+          <?php endif; ?>
+        <?php elseif (!empty($settings['why_us_image'])): ?>
           <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Global Standards, Local Understanding" class="why-visual-image" loading="lazy">
         <?php else: ?>
           <div class="why-visual-placeholder">Upload an image from<br>Admin → Settings</div>
