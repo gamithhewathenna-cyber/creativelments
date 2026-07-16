@@ -804,9 +804,10 @@ body.page-index .navbar.scrolled {
 .why-slider {
   position: relative;
   width: 100%;
-  min-height: 380px;
+  aspect-ratio: 4 / 3;
   border-radius: 16px;
   overflow: hidden;
+  background: var(--off);
   box-shadow: 0 20px 50px rgba(10,15,30,.15);
 }
 .why-slide {
@@ -817,7 +818,7 @@ body.page-index .navbar.scrolled {
   transition: opacity .9s ease;
 }
 .why-slide.active { opacity: 1; visibility: visible; z-index: 2; }
-.why-slide .why-visual-image { border-radius: 16px; }
+.why-slide .why-visual-image { border-radius: 16px; object-fit: contain; background: var(--off); }
 .why-slider-dots {
   display: flex;
   justify-content: center;
