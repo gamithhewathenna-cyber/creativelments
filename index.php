@@ -190,14 +190,15 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
               <img src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($img['image']) ?>" alt="<?= sanitize($img['title']) ?>" class="why-visual-image" loading="lazy">
             </div>
             <?php endforeach; ?>
+            <?php if (count($whyUsImages) > 1): ?>
+            <button class="why-slider-arrow why-slider-arrow-prev" aria-label="Previous image">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="why-slider-arrow why-slider-arrow-next" aria-label="Next image">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <?php endif; ?>
           </div>
-          <?php if (count($whyUsImages) > 1): ?>
-          <div class="why-slider-dots">
-            <?php foreach ($whyUsImages as $i => $img): ?>
-            <span class="why-slider-dot <?= $i === 0 ? 'active' : '' ?>" data-index="<?= $i ?>"></span>
-            <?php endforeach; ?>
-          </div>
-          <?php endif; ?>
         <?php elseif (!empty($settings['why_us_image'])): ?>
           <img src="<?= SITE_URL ?>/uploads/sections/<?= sanitize($settings['why_us_image']) ?>" alt="Global Standards, Local Understanding" class="why-visual-image" loading="lazy">
         <?php else: ?>
