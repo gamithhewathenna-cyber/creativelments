@@ -324,18 +324,47 @@ if (chatbotWidget) {
     .then((data) => { chatbotFaqs = Array.isArray(data) ? data : []; })
     .catch(() => { chatbotFaqs = []; });
 
-  const FAQ_STOPWORDS = new Set(['the','a','an','is','are','do','does','how','what','when','where','why','can','you','your','i','to','of','for','in','on','and','or','with','my','me','we','us','our','it','this','that']);
-  const tokenizeFaqText = (str) => (str.toLowerCase().match(/[a-z0-9']+/g) || []).filter((w) => w.length > 2 && !FAQ_STOPWORDS.has(w));
+  const FAQ_STOPWORDS = new Set(['the','a','an','is','are','was','were','be','been','do','does','did','how','what','when','where','why','who','which','can','could','would','should','will','you','your','yours','i','to','of','for','in','on','at','by','from','up','out','about','into','over','after','and','or','but','with','my','me','we','us','our','it','its','this','that','these','those','have','has','had','get','got','need','want']);
+
+  // Light stemmer — trims common English suffixes so "pricing"/"priced"/"prices" all
+  // collapse to the same root as "price", without pulling in a full stemming library.
+  const stemFaqWord = (w) => {
+    if (w.length > 5 && w.endsWith('ing')) return w.slice(0, -3);
+    if (w.length > 5 && w.endsWith('ies')) return w.slice(0, -3) + 'y';
+    if (w.length > 4 && w.endsWith('ed'))  return w.slice(0, -2);
+    if (w.length > 4 && w.endsWith('es'))  return w.slice(0, -2);
+    if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1);
+    return w;
+  };
+
+  const tokenizeFaqText = (str) => (str.toLowerCase().match(/[a-z0-9']+/g) || [])
+    .filter((w) => w.length > 2 && !FAQ_STOPWORDS.has(w))
+    .map(stemFaqWord);
+
+  const normalizeFaqText = (str) => str.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
 
   const findFaqAnswer = (text) => {
+    if (!chatbotFaqs.length) return null;
+    const normText = normalizeFaqText(text);
+
+    // Exact or near-exact match on the saved question text wins outright.
+    const exact = chatbotFaqs.find((faq) => {
+      const normQuestion = normalizeFaqText(faq.question);
+      return normQuestion && (normText === normQuestion || normText.includes(normQuestion) || normQuestion.includes(normText));
+    });
+    if (exact) return exact;
+
     const userTokens = new Set(tokenizeFaqText(text));
-    if (!userTokens.size || !chatbotFaqs.length) return null;
+    if (!userTokens.size) return null;
+
     let best = null;
     let bestScore = 0;
     chatbotFaqs.forEach((faq) => {
-      const hayTokens = tokenizeFaqText(`${faq.question} ${faq.keywords || ''}`);
+      const questionTokens = tokenizeFaqText(faq.question);
+      const keywordTokens  = tokenizeFaqText(faq.keywords || '');
       let score = 0;
-      hayTokens.forEach((t) => { if (userTokens.has(t)) score++; });
+      questionTokens.forEach((t) => { if (userTokens.has(t)) score += 1; });
+      keywordTokens.forEach((t) => { if (userTokens.has(t)) score += 2; });
       if (score > bestScore) { bestScore = score; best = faq; }
     });
     return best;
