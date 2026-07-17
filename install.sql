@@ -284,18 +284,4 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 INSERT INTO `admin_users` (`username`, `password_hash`, `email`, `role`) VALUES
 ('admin', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'reach@creativelements.co', 'admin');
 
--- ----------------------------
--- Chatbot FAQs
--- ----------------------------
-CREATE TABLE IF NOT EXISTS `chatbot_faqs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question` varchar(500) NOT NULL,
-  `answer` text NOT NULL,
-  `keywords` varchar(500) DEFAULT '',
-  `sort_order` int(11) DEFAULT 0,
-  `active` tinyint(1) DEFAULT 1,
-  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 SET FOREIGN_KEY_CHECKS = 1;
