@@ -19,6 +19,25 @@ if (isset($_GET['toggle'])) {
     exit;
 }
 
+// Move up / down (swap position, then renumber sort_order sequentially)
+if (isset($_GET['move_up']) || isset($_GET['move_down'])) {
+    $direction = isset($_GET['move_up']) ? -1 : 1;
+    $id = intval($_GET['move_up'] ?? $_GET['move_down']);
+    $order = $db->query("SELECT id FROM team_members ORDER BY sort_order, id")->fetchAll(PDO::FETCH_COLUMN);
+    $pos = array_search($id, $order);
+    if ($pos !== false) {
+        $swapPos = $pos + $direction;
+        if (isset($order[$swapPos])) {
+            [$order[$pos], $order[$swapPos]] = [$order[$swapPos], $order[$pos]];
+        }
+    }
+    foreach ($order as $i => $memberId) {
+        $db->prepare("UPDATE team_members SET sort_order=? WHERE id=?")->execute([$i, $memberId]);
+    }
+    header('Location: /admin/team.php');
+    exit;
+}
+
 $formError = '';
 $editMember = null;
 
@@ -107,10 +126,14 @@ if (isset($_GET['msg'])): ?>
 <div class="card">
   <div class="card-header"><h2>All Team Members (<?= count($members) ?>)</h2></div>
   <table>
-    <thead><tr><th>Photo</th><th>Name</th><th>Job Title</th><th>Active</th><th>Actions</th></tr></thead>
+    <thead><tr><th>Order</th><th>Photo</th><th>Name</th><th>Job Title</th><th>Active</th><th>Actions</th></tr></thead>
     <tbody>
-    <?php foreach ($members as $m): ?>
+    <?php foreach ($members as $i => $m): ?>
     <tr>
+      <td style="display:flex;gap:.25rem">
+        <?php if ($i > 0): ?><a href="?move_up=<?= $m['id'] ?>" class="btn btn-outline btn-sm" title="Move up">&uarr;</a><?php else: ?><span class="btn btn-outline btn-sm" style="visibility:hidden">&uarr;</span><?php endif; ?>
+        <?php if ($i < count($members) - 1): ?><a href="?move_down=<?= $m['id'] ?>" class="btn btn-outline btn-sm" title="Move down">&darr;</a><?php else: ?><span class="btn btn-outline btn-sm" style="visibility:hidden">&darr;</span><?php endif; ?>
+      </td>
       <td><?php if ($m['image']): ?><img src="<?= SITE_URL ?>/uploads/team/<?= sanitize($m['image']) ?>" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:50%"><?php else: ?>&mdash;<?php endif; ?></td>
       <td><strong><?= sanitize($m['name']) ?></strong></td>
       <td><?= sanitize($m['job_title']) ?></td>
@@ -122,7 +145,7 @@ if (isset($_GET['msg'])): ?>
       </td>
     </tr>
     <?php endforeach; ?>
-    <?php if (!$members): ?><tr><td colspan="5" style="text-align:center;color:#313131;padding:2rem">No team members yet. Add your first one above.</td></tr><?php endif; ?>
+    <?php if (!$members): ?><tr><td colspan="6" style="text-align:center;color:#313131;padding:2rem">No team members yet. Add your first one above.</td></tr><?php endif; ?>
     </tbody>
   </table>
 </div>
