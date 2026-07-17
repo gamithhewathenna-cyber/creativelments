@@ -307,6 +307,110 @@ if (contactModal && contactFloatBtn) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContactModal(); });
 }
 
+// ---- Marketing chatbot widget ----
+const chatbotWidget = document.getElementById('chatbotWidget');
+if (chatbotWidget) {
+  const chatbotToggle   = document.getElementById('chatbotToggle');
+  const chatbotMessages = document.getElementById('chatbotMessages');
+  const chatbotForm     = document.getElementById('chatbotForm');
+  const chatbotInput    = document.getElementById('chatbotInput');
+  const chatbotBadge    = document.getElementById('chatbotBadge');
+  const chatbotPhone    = chatbotWidget.dataset.phone;
+  let hasGreeted = false;
+
+  const scrollChatToBottom = () => { chatbotMessages.scrollTop = chatbotMessages.scrollHeight; };
+
+  const addBotMessage = (text) => {
+    const el = document.createElement('div');
+    el.className = 'chat-msg bot';
+    el.textContent = text;
+    chatbotMessages.appendChild(el);
+    scrollChatToBottom();
+  };
+
+  const addUserMessage = (text) => {
+    const el = document.createElement('div');
+    el.className = 'chat-msg user';
+    el.textContent = text;
+    chatbotMessages.appendChild(el);
+    scrollChatToBottom();
+  };
+
+  const showTyping = () => {
+    const el = document.createElement('div');
+    el.className = 'chat-msg bot chat-typing';
+    el.id = 'chatbotTyping';
+    el.innerHTML = '<span></span><span></span><span></span>';
+    chatbotMessages.appendChild(el);
+    scrollChatToBottom();
+  };
+  const hideTyping = () => { document.getElementById('chatbotTyping')?.remove(); };
+
+  const addQuickReplies = (replies) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-quick-replies';
+    replies.forEach(({ label, action }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chat-quick-reply';
+      btn.textContent = label;
+      btn.addEventListener('click', () => { addUserMessage(label); wrap.remove(); action(); });
+      wrap.appendChild(btn);
+    });
+    chatbotMessages.appendChild(wrap);
+    scrollChatToBottom();
+  };
+
+  const openContactModalFromChat = () => {
+    const modal = document.getElementById('contactModal');
+    if (modal) { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  };
+
+  const greetVisitor = () => {
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      addBotMessage("Hi there! I'm the Creative Elements assistant. Are you looking to grow your business online?");
+      addQuickReplies([
+        { label: 'Get a Free Quote', action: () => setTimeout(() => { addBotMessage("Awesome — let's get you a free, no-obligation quote."); openContactModalFromChat(); }, 500) },
+        { label: 'View Our Work', action: () => setTimeout(() => { addBotMessage("Here's a look at what we've built for other businesses."); window.location.href = '/our-work.php'; }, 500) },
+        { label: 'Just Looking', action: () => setTimeout(() => addBotMessage("No worries, take your time! I'm here if any questions pop up."), 500) },
+      ]);
+    }, 1100);
+  };
+
+  const openChat = () => {
+    chatbotWidget.classList.add('open');
+    if (chatbotBadge) chatbotBadge.style.display = 'none';
+    if (!hasGreeted) { hasGreeted = true; greetVisitor(); }
+  };
+  const closeChat = () => chatbotWidget.classList.remove('open');
+
+  chatbotToggle.addEventListener('click', () => {
+    chatbotWidget.classList.contains('open') ? closeChat() : openChat();
+  });
+
+  if (!sessionStorage.getItem('ceChatbotAutoOpened')) {
+    sessionStorage.setItem('ceChatbotAutoOpened', '1');
+    setTimeout(() => { if (!chatbotWidget.classList.contains('open')) openChat(); }, 4000);
+  }
+
+  chatbotForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = chatbotInput.value.trim();
+    if (!text) return;
+    addUserMessage(text);
+    chatbotInput.value = '';
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      addBotMessage(chatbotPhone
+        ? `Thanks for your message! Our team will get back to you shortly — or call us now at ${chatbotPhone}.`
+        : "Thanks for your message! Our team will get back to you shortly.");
+    }, 1200);
+  });
+}
+
 // ---- Reviews arrow navigation ----
 const reviewsScroll = document.getElementById('reviewsScroll');
 const reviewsPrev   = document.querySelector('.review-arrow-prev');

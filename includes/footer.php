@@ -157,6 +157,32 @@
 </div>
 <?php endif; ?>
 
+<!-- Marketing Chatbot Widget -->
+<div class="chatbot-widget" id="chatbotWidget" data-phone="<?= sanitize($settings['phone'] ?? '') ?>">
+  <button type="button" class="chatbot-toggle" id="chatbotToggle" aria-label="Open chat">
+    <svg class="chatbot-icon-chat" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <svg class="chatbot-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <span class="chatbot-badge" id="chatbotBadge"></span>
+  </button>
+
+  <div class="chatbot-panel" id="chatbotPanel">
+    <div class="chatbot-header">
+      <div class="chatbot-header-avatar">CE</div>
+      <div class="chatbot-header-info">
+        <h4>Creative Elements</h4>
+        <span><span class="chatbot-status-dot"></span>Typically replies instantly</span>
+      </div>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages"></div>
+    <form class="chatbot-input-row" id="chatbotForm">
+      <input type="text" id="chatbotInput" placeholder="Type your message…" autocomplete="off">
+      <button type="submit" aria-label="Send message">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
 <!-- Project Detail Popup -->
 <div class="project-modal" id="projectModal">
   <button class="project-modal-close" id="projectModalClose" aria-label="Close">&times;</button>
