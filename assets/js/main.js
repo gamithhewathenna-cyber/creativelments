@@ -317,6 +317,29 @@ if (chatbotWidget) {
   const chatbotBadge    = document.getElementById('chatbotBadge');
   const chatbotPhone    = chatbotWidget.dataset.phone;
   let hasGreeted = false;
+  let chatbotFaqs = [];
+
+  fetch('/chatbot-faqs-data.php')
+    .then((res) => res.json())
+    .then((data) => { chatbotFaqs = Array.isArray(data) ? data : []; })
+    .catch(() => { chatbotFaqs = []; });
+
+  const FAQ_STOPWORDS = new Set(['the','a','an','is','are','do','does','how','what','when','where','why','can','you','your','i','to','of','for','in','on','and','or','with','my','me','we','us','our','it','this','that']);
+  const tokenizeFaqText = (str) => (str.toLowerCase().match(/[a-z0-9']+/g) || []).filter((w) => w.length > 2 && !FAQ_STOPWORDS.has(w));
+
+  const findFaqAnswer = (text) => {
+    const userTokens = new Set(tokenizeFaqText(text));
+    if (!userTokens.size || !chatbotFaqs.length) return null;
+    let best = null;
+    let bestScore = 0;
+    chatbotFaqs.forEach((faq) => {
+      const hayTokens = tokenizeFaqText(`${faq.question} ${faq.keywords || ''}`);
+      let score = 0;
+      hayTokens.forEach((t) => { if (userTokens.has(t)) score++; });
+      if (score > bestScore) { bestScore = score; best = faq; }
+    });
+    return best;
+  };
 
   const scrollChatToBottom = () => { chatbotMessages.scrollTop = chatbotMessages.scrollHeight; };
 
@@ -404,9 +427,14 @@ if (chatbotWidget) {
     showTyping();
     setTimeout(() => {
       hideTyping();
-      addBotMessage(chatbotPhone
-        ? `Thanks for your message! Our team will get back to you shortly — or call us now at ${chatbotPhone}.`
-        : "Thanks for your message! Our team will get back to you shortly.");
+      const match = findFaqAnswer(text);
+      if (match) {
+        addBotMessage(match.answer);
+      } else {
+        addBotMessage(chatbotPhone
+          ? `Thanks for your message! Our team will get back to you shortly — or call us now at ${chatbotPhone}.`
+          : "Thanks for your message! Our team will get back to you shortly.");
+      }
     }, 1200);
   });
 }
