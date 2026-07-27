@@ -56,6 +56,15 @@ if ($sameAs) $orgSchema['sameAs'] = $sameAs;
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php if (!empty($settings['google_analytics_id']) && preg_match('/^[A-Za-z0-9\-]+$/', $settings['google_analytics_id'])): ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?= urlencode($settings['google_analytics_id']) ?>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '<?= $settings['google_analytics_id'] ?>');
+</script>
+<?php endif; ?>
 <meta name="google-site-verification" content="TuumGSLz5nSDiOexD4lTLhz6tcXKetlXn8zIXviHrQI" />
 <?php if (!empty($settings['favicon'])): ?>
 <link rel="icon" href="<?= SITE_URL ?>/uploads/branding/<?= sanitize($settings['favicon']) ?>">

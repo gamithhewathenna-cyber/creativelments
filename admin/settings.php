@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test_email'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['send_test_email'])) {
     $keys = ['phone','email','address','facebook','instagram','linkedin','google_business','whatsapp','hero_title','hero_subtitle','unique_section_text',
-              'enquiry_email','smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
+              'google_analytics_id','enquiry_email','smtp_host','smtp_port','smtp_username','smtp_encryption','smtp_from_email','smtp_from_name'];
     foreach ($keys as $key) {
         $val = trim($_POST[$key] ?? '');
         $db->prepare("INSERT INTO settings (setting_key,setting_value) VALUES (?,?) ON DUPLICATE KEY UPDATE setting_value=?")->execute([$key,$val,$val]);
@@ -442,6 +442,20 @@ if (isset($msg)): ?><div class="alert alert-success"><?= htmlspecialchars($msg) 
   <div class="card-body">
     <div class="form-group"><label>Hero Title</label><input name="hero_title" value="<?= sanitize($settings['hero_title'] ?? '') ?>"></div>
     <div class="form-group"><label>Hero Subtitle</label><input name="hero_subtitle" value="<?= sanitize($settings['hero_subtitle'] ?? '') ?>"></div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:1.5rem">
+  <div class="card-header"><h2>Google Analytics</h2></div>
+  <div class="card-body">
+    <p style="color:#313131;font-size:.85rem;margin-bottom:1.25rem">
+      Adds the Google Analytics (GA4) tracking snippet to every page automatically. Find your Measurement ID in Google Analytics under Admin → Data Streams → your web stream.
+    </p>
+    <div class="form-group" style="margin-bottom:0">
+      <label>Measurement ID</label>
+      <input name="google_analytics_id" value="<?= sanitize($settings['google_analytics_id'] ?? '') ?>" placeholder="G-XXXXXXXXXX" style="max-width:320px">
+      <small style="color:#8892A4;display:block;margin-top:.4rem">Starts with "G-". Leave blank to disable tracking.</small>
+    </div>
   </div>
 </div>
 
