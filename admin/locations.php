@@ -216,7 +216,7 @@ if (isset($_GET['msg'])): ?>
       <td><span class="pill <?= $l['active'] ? 'pill-green' : 'pill-red' ?>"><?= $l['active'] ? 'Active' : 'Hidden' ?></span></td>
       <td style="display:flex;gap:.5rem">
         <a href="?edit=<?= $l['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
-        <?php if (!empty($l['slug'])): ?><a href="/location.php?slug=<?= urlencode($l['slug']) ?>" class="btn btn-outline btn-sm" target="_blank">View</a><?php endif; ?>
+        <?php if (!empty($l['slug'])): ?><a href="/location?slug=<?= urlencode($l['slug']) ?>" class="btn btn-outline btn-sm" target="_blank">View</a><?php endif; ?>
         <a href="?toggle=<?= $l['id'] ?>" class="btn btn-outline btn-sm"><?= $l['active'] ? 'Hide' : 'Show' ?></a>
         <a href="?delete=<?= $l['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Del</a>
       </td>

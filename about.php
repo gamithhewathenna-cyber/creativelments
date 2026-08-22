@@ -48,8 +48,8 @@ echo renderBreadcrumbs([
           <?= nl2br(sanitize($settings['about_text'] ?? "Creative Elements was founded in Colombo, Sri Lanka, with a single goal: help businesses grow online without the agency runaround. Today, we work with clients across Melbourne, Sydney, and Australia — delivering web design, SEO, branding, and digital marketing that produces results you can actually measure.\nAustralian businesses choose us because we combine global design standards with a deep understanding of what the Melbourne and Sydney markets respond to. We don't do generic templates or one-size-fits-all strategies — every project is built around your customers, your competitors, and your goals. With 15+ years of combined expertise and 130+ clients worldwide, we've built websites, brands, and campaigns for businesses ranging from Colombo startups to Australian hospitality groups and e-commerce stores. Whatever stage your business is at, we'll help you stand out and scale.")) ?>
         </p>
         <div style="display:flex;gap:1rem;margin-top:1.75rem;flex-wrap:wrap">
-          <a href="/contact.php" class="btn btn-primary">Work With Us</a>
-          <a href="/our-work.php" class="btn btn-dark">View Our Work</a>
+          <a href="/contact" class="btn btn-primary">Work With Us</a>
+          <a href="/our-work" class="btn btn-dark">View Our Work</a>
         </div>
       </div>
       <div class="why-visual">

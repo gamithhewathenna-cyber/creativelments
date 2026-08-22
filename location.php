@@ -27,7 +27,7 @@ $relatedServices = [];
 if ($loc) {
     echo renderBreadcrumbs([
         ['label' => 'Home', 'url' => '/'],
-        ['label' => 'Locations', 'url' => '/contact.php'],
+        ['label' => 'Locations', 'url' => '/contact'],
         ['label' => $loc['city'], 'url' => null],
     ]);
 
@@ -140,7 +140,7 @@ $waIcon  = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
       <h3><?= $locIcons['section1'] ?> Related Services</h3>
       <div class="location-links-list">
         <?php foreach ($relatedServices as $rs): ?>
-        <a href="/service.php?slug=<?= urlencode($rs['slug']) ?>" class="btn btn-outline btn-sm"><?= sanitize($rs['title']) ?></a>
+        <a href="/service?slug=<?= urlencode($rs['slug']) ?>" class="btn btn-outline btn-sm"><?= sanitize($rs['title']) ?></a>
         <?php endforeach; ?>
       </div>
     </div>
@@ -151,7 +151,7 @@ $waIcon  = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
       <h3><?= $pinIcon ?> Other Cities We Serve</h3>
       <div class="location-links-list">
         <?php foreach ($otherLocations as $ol): ?>
-        <a href="/location.php?slug=<?= urlencode($ol['slug']) ?>" class="btn btn-outline btn-sm"><?= sanitize($ol['city']) ?></a>
+        <a href="/location?slug=<?= urlencode($ol['slug']) ?>" class="btn btn-outline btn-sm"><?= sanitize($ol['city']) ?></a>
         <?php endforeach; ?>
       </div>
     </div>
@@ -165,14 +165,14 @@ $waIcon  = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
     <p><?= sanitize($loc['cta_text'] ?: "Get a free consultation and see exactly how we'd help your business dominate search results.") ?></p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
       <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn" style="background:white;color:#804899;font-weight:700" target="_blank"><?= $waIcon ?> Chat on WhatsApp</a>
-      <a href="/contact.php" class="btn btn-dark">Contact Us</a>
+      <a href="/contact" class="btn btn-dark">Contact Us</a>
     </div>
   </div>
 </section>
 <?php else: ?>
 <section class="section" style="text-align:center">
   <h2>Location page not found</h2>
-  <a href="/contact.php" class="btn btn-dark" style="margin-top:1.5rem">← Back to Contact</a>
+  <a href="/contact" class="btn btn-dark" style="margin-top:1.5rem">← Back to Contact</a>
 </section>
 <?php endif; ?>
 

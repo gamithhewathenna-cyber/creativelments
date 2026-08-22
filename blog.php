@@ -21,7 +21,7 @@ echo renderBreadcrumbs([
     <?php if ($posts): ?>
     <div class="blog-grid">
       <?php foreach ($posts as $post): ?>
-      <a href="/blog-post.php?slug=<?= urlencode($post['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
+      <a href="/blog-post?slug=<?= urlencode($post['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
         <div class="blog-thumb">
           <?php if ($post['image']): ?>
             <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" loading="lazy">

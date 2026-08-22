@@ -23,7 +23,7 @@ $relatedPosts = [];
 if ($post) {
     echo renderBreadcrumbs([
         ['label' => 'Home', 'url' => '/'],
-        ['label' => 'Blog', 'url' => '/blog.php'],
+        ['label' => 'Blog', 'url' => '/blog'],
         ['label' => $post['title'], 'url' => null],
     ]);
     $rp = $db->prepare("SELECT title, slug, excerpt, image, created_at FROM posts WHERE status='published' AND id != ? ORDER BY created_at DESC LIMIT 3");
@@ -99,7 +99,7 @@ endif;
           <?= $post['content'] ?>
         </div>
         <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid #E2E8F0">
-          <a href="/blog.php" class="btn btn-dark">← Back to Blog</a>
+          <a href="/blog" class="btn btn-dark">← Back to Blog</a>
         </div>
       </div>
 
@@ -108,7 +108,7 @@ endif;
         <aside class="blog-sidebar">
           <h3 class="blog-sidebar-title">Recent Posts</h3>
           <?php foreach ($recentPosts as $rec): ?>
-          <a href="/blog-post.php?slug=<?= urlencode($rec['slug']) ?>" class="blog-sidebar-item">
+          <a href="/blog-post?slug=<?= urlencode($rec['slug']) ?>" class="blog-sidebar-item">
             <div class="blog-sidebar-thumb">
               <?php if ($rec['image']): ?>
                 <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($rec['image']) ?>" alt="<?= sanitize($rec['title']) ?>" loading="lazy">
@@ -128,7 +128,7 @@ endif;
           <h3 class="blog-sidebar-title">Our Recent Work</h3>
           <div class="blog-sidebar-work-grid">
             <?php foreach ($recentWork as $w): ?>
-            <a href="<?= !empty($w['link']) ? sanitize($w['link']) : '/our-work.php' ?>" class="blog-work-item" <?= !empty($w['link']) ? 'target="_blank" rel="noopener"' : '' ?>>
+            <a href="<?= !empty($w['link']) ? sanitize($w['link']) : '/our-work' ?>" class="blog-work-item" <?= !empty($w['link']) ? 'target="_blank" rel="noopener"' : '' ?>>
               <?php if ($w['image']): ?>
                 <img src="<?= SITE_URL ?>/uploads/projects/<?= sanitize($w['image']) ?>" alt="<?= sanitize($w['title']) ?>" loading="lazy">
               <?php endif; ?>
@@ -136,7 +136,7 @@ endif;
             </a>
             <?php endforeach; ?>
           </div>
-          <a href="/our-work.php" class="btn btn-outline" style="width:100%;text-align:center;margin-top:1.25rem">View All Work</a>
+          <a href="/our-work" class="btn btn-outline" style="width:100%;text-align:center;margin-top:1.25rem">View All Work</a>
         </aside>
         <?php endif; ?>
       </div>
@@ -150,7 +150,7 @@ endif;
     <div class="section-header"><h2>More From the Blog</h2></div>
     <div class="blog-grid">
       <?php foreach ($relatedPosts as $rp): ?>
-      <a href="/blog-post.php?slug=<?= urlencode($rp['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
+      <a href="/blog-post?slug=<?= urlencode($rp['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
         <div class="blog-thumb">
           <?php if ($rp['image']): ?>
             <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($rp['image']) ?>" alt="<?= sanitize($rp['title']) ?>" loading="lazy">
@@ -172,7 +172,7 @@ endif;
 <?php else: ?>
 <section class="section" style="text-align:center">
   <h2>Post not found</h2>
-  <a href="/blog.php" class="btn btn-dark" style="margin-top:1.5rem">← Back to Blog</a>
+  <a href="/blog" class="btn btn-dark" style="margin-top:1.5rem">← Back to Blog</a>
 </section>
 <?php endif; ?>
 

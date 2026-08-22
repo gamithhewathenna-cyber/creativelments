@@ -36,11 +36,11 @@
       <h4>Quick Links</h4>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/our-work.php">Our Work</a></li>
-        <li><a href="/services.php">Services</a></li>
-        <li><a href="/blog.php">Blog</a></li>
-        <li><a href="/about.php">About Us</a></li>
-        <li><a href="/contact.php">Contact</a></li>
+        <li><a href="/our-work">Our Work</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact</a></li>
       </ul>
     </div>
     <div class="footer-services">
@@ -49,7 +49,7 @@
         <?php
         $footerServices = $db->query("SELECT title, slug FROM services WHERE active=1 ORDER BY sort_order LIMIT 6")->fetchAll();
         foreach ($footerServices as $fs):
-          $fsUrl = !empty($fs['slug']) ? '/service.php?slug=' . urlencode($fs['slug']) : '/services.php';
+          $fsUrl = !empty($fs['slug']) ? '/service?slug=' . urlencode($fs['slug']) : '/services';
         ?>
         <li><a href="<?= $fsUrl ?>"><?= sanitize($fs['title']) ?></a></li>
         <?php endforeach; ?>
@@ -185,7 +185,7 @@
         </a>
         <?php endif; ?>
       </div>
-      <a href="/contact.php" class="btn btn-primary">Start Your Project</a>
+      <a href="/contact" class="btn btn-primary">Start Your Project</a>
     </div>
   </div>
 </div>

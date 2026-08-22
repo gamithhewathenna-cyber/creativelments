@@ -8,6 +8,24 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
+# ---- Clean URLs (SEO): public pages are served without the .php extension ----
+# /index(.php) -> /
+RewriteCond %{THE_REQUEST} \s/+index(\.php)?[?\s] [NC]
+RewriteRule ^index(\.php)?$ / [R=301,L]
+
+# Any other public-page request for foo.php -> permanent redirect to /foo (query string
+# preserved automatically). Admin, the contact AJAX endpoint and sitemap.php are excluded —
+# they're not indexed pages, so there's nothing to gain and no reason to touch them.
+RewriteCond %{THE_REQUEST} \s/+([a-zA-Z0-9_\-]+)\.php[\s?] [NC]
+RewriteCond %1 !^(contact-handler|sitemap)$ [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Internally serve /foo as foo.php when foo.php exists (the browser URL stays clean)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ $1.php [L]
+
 ErrorDocument 404 /404.php
 
 # Compress text-based responses (major payload-size win)

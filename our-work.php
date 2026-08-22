@@ -66,7 +66,7 @@ echo renderBreadcrumbs([
     <p>We'd be interested in learning more about your project.</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
       <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary" target="_blank">Start a Project</a>
-      <a href="/contact.php" class="btn btn-outline">Contact Us</a>
+      <a href="/contact" class="btn btn-outline">Contact Us</a>
     </div>
   </div>
 </section>

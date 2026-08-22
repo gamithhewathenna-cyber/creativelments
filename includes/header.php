@@ -110,11 +110,11 @@ if ($sameAs) $orgSchema['sameAs'] = $sameAs;
     </button>
     <ul class="nav-menu" id="navMenu">
       <li><a href="/" class="<?= $currentPage === 'index' ? 'active' : '' ?>">Home</a></li>
-      <li><a href="/our-work.php" class="<?= $currentPage === 'our-work' ? 'active' : '' ?>">Our Work</a></li>
-      <li><a href="/services.php" class="<?= $currentPage === 'services' ? 'active' : '' ?>">Services</a></li>
-      <li><a href="/blog.php" class="<?= $currentPage === 'blog' ? 'active' : '' ?>">Blog</a></li>
-      <li><a href="/about.php" class="<?= $currentPage === 'about' ? 'active' : '' ?>">About</a></li>
-      <li><a href="/contact.php" class="<?= $currentPage === 'contact' ? 'active' : '' ?>">Contact</a></li>
+      <li><a href="/our-work" class="<?= $currentPage === 'our-work' ? 'active' : '' ?>">Our Work</a></li>
+      <li><a href="/services" class="<?= $currentPage === 'services' ? 'active' : '' ?>">Services</a></li>
+      <li><a href="/blog" class="<?= $currentPage === 'blog' ? 'active' : '' ?>">Blog</a></li>
+      <li><a href="/about" class="<?= $currentPage === 'about' ? 'active' : '' ?>">About</a></li>
+      <li><a href="/contact" class="<?= $currentPage === 'contact' ? 'active' : '' ?>">Contact</a></li>
     </ul>
   </div>
 </nav>
