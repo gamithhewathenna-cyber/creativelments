@@ -128,19 +128,19 @@ function buildSitemapXml($db) {
     $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
     $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
     $xml .= $urlFn(SITE_URL . '/', null, 'weekly', '1.0');
-    $xml .= $urlFn(SITE_URL . '/about', null, 'monthly', '0.8');
-    $xml .= $urlFn(SITE_URL . '/services', null, 'monthly', '0.9');
-    $xml .= $urlFn(SITE_URL . '/our-work', null, 'weekly', '0.8');
-    $xml .= $urlFn(SITE_URL . '/blog', null, 'weekly', '0.7');
-    $xml .= $urlFn(SITE_URL . '/contact', null, 'monthly', '0.6');
+    $xml .= $urlFn(SITE_URL . '/about.php', null, 'monthly', '0.8');
+    $xml .= $urlFn(SITE_URL . '/services.php', null, 'monthly', '0.9');
+    $xml .= $urlFn(SITE_URL . '/our-work.php', null, 'weekly', '0.8');
+    $xml .= $urlFn(SITE_URL . '/blog.php', null, 'weekly', '0.7');
+    $xml .= $urlFn(SITE_URL . '/contact.php', null, 'monthly', '0.6');
     foreach ($services as $s) {
-        $xml .= $urlFn(SITE_URL . '/service?slug=' . urlencode($s['slug']), $s['created_at'] ?? null, 'monthly', '0.7');
+        $xml .= $urlFn(SITE_URL . '/service.php?slug=' . urlencode($s['slug']), $s['created_at'] ?? null, 'monthly', '0.7');
     }
     foreach ($posts as $p) {
-        $xml .= $urlFn(SITE_URL . '/blog-post?slug=' . urlencode($p['slug']), $p['created_at'] ?? null, 'monthly', '0.6');
+        $xml .= $urlFn(SITE_URL . '/blog-post.php?slug=' . urlencode($p['slug']), $p['created_at'] ?? null, 'monthly', '0.6');
     }
     foreach ($locations as $l) {
-        $xml .= $urlFn(SITE_URL . '/location?slug=' . urlencode($l['slug']), $l['created_at'] ?? null, 'monthly', '0.7');
+        $xml .= $urlFn(SITE_URL . '/location.php?slug=' . urlencode($l['slug']), $l['created_at'] ?? null, 'monthly', '0.7');
     }
     $xml .= "</urlset>\n";
     return $xml;

@@ -22,7 +22,7 @@ require_once 'includes/header.php';
 if ($service) {
     echo renderBreadcrumbs([
         ['label' => 'Home', 'url' => '/'],
-        ['label' => 'Services', 'url' => '/services'],
+        ['label' => 'Services', 'url' => '/services.php'],
         ['label' => $service['title'], 'url' => null],
     ]);
     $relatedServices = $db->prepare("SELECT * FROM services WHERE active=1 AND id != ? ORDER BY RAND() LIMIT 3");
@@ -119,7 +119,7 @@ $icons = [
         <p><?= sanitize($rs['description']) ?></p>
         <div style="margin-top:1.25rem">
           <?php if (!empty($rs['slug'])): ?>
-          <a href="/service?slug=<?= urlencode($rs['slug']) ?>" class="btn btn-primary btn-sm" style="font-size:.82rem;padding:.6rem 1.2rem">Learn More</a>
+          <a href="/service.php?slug=<?= urlencode($rs['slug']) ?>" class="btn btn-primary btn-sm" style="font-size:.82rem;padding:.6rem 1.2rem">Learn More</a>
           <?php endif; ?>
         </div>
       </div>
@@ -132,14 +132,14 @@ $icons = [
 <section class="section" style="text-align:center;padding-top:0">
   <div class="container" style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
     <a href="https://wa.me/<?= sanitize($settings['whatsapp'] ?? '94777130597') ?>" class="btn btn-primary" target="_blank">Get Pricing</a>
-    <a href="/contact" class="btn btn-outline" style="color:#0A0F1E;border-color:#E2E8F0">Contact Us</a>
-    <a href="/services" class="btn btn-dark">← Back to Services</a>
+    <a href="/contact.php" class="btn btn-outline" style="color:#0A0F1E;border-color:#E2E8F0">Contact Us</a>
+    <a href="/services.php" class="btn btn-dark">← Back to Services</a>
   </div>
 </section>
 <?php else: ?>
 <section class="section" style="text-align:center">
   <h2>Service not found</h2>
-  <a href="/services" class="btn btn-dark" style="margin-top:1.5rem">← Back to Services</a>
+  <a href="/services.php" class="btn btn-dark" style="margin-top:1.5rem">← Back to Services</a>
 </section>
 <?php endif; ?>
 

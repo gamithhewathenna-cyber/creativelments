@@ -213,7 +213,7 @@ if (isset($_GET['msg']) && isset($postMsgs[$_GET['msg']])): ?>
       <td><?= date('d M Y', strtotime($p['created_at'])) ?></td>
       <td style="display:flex;gap:.5rem">
         <a href="?edit=<?= $p['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
-        <a href="/blog-post?slug=<?= urlencode($p['slug']) ?>" class="btn btn-outline btn-sm" target="_blank">View</a>
+        <a href="/blog-post.php?slug=<?= urlencode($p['slug']) ?>" class="btn btn-outline btn-sm" target="_blank">View</a>
         <a href="?delete=<?= $p['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Del</a>
       </td>
     </tr>

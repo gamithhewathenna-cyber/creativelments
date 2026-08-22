@@ -71,14 +71,14 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
       <div class="services-showcase-left">
         <h2>Why Melbourne & Sydney Businesses Choose Creative Elements</h2>
         <p>We combine global design standards with local market knowledge — so your business gets found, clicked, and remembered.</p>
-        <a href="/services" class="btn btn-primary">Explore Our Services</a>
+        <a href="/services.php" class="btn btn-primary">Explore Our Services</a>
       </div>
       <div class="services-showcase-grid">
         <?php foreach (array_slice($services, 0, 4) as $svc): ?>
         <div class="services-showcase-item">
           <h3>
             <?php if (!empty($svc['slug'])): ?>
-            <a href="/service?slug=<?= urlencode($svc['slug']) ?>" style="color:inherit"><?= sanitize($svc['title']) ?></a>
+            <a href="/service.php?slug=<?= urlencode($svc['slug']) ?>" style="color:inherit"><?= sanitize($svc['title']) ?></a>
             <?php else: ?>
             <?= sanitize($svc['title']) ?>
             <?php endif; ?>
@@ -118,7 +118,7 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
       </div>
     </div>
     <div style="text-align:center;margin-top:2.5rem">
-      <a href="/contact" class="btn btn-primary">Let's Optimize Your Website</a>
+      <a href="/contact.php" class="btn btn-primary">Let's Optimize Your Website</a>
     </div>
   </div>
 </section>
@@ -241,7 +241,7 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
   </div>
   <div class="container">
     <div style="text-align:center;margin-top:2.5rem">
-      <a href="/our-work" class="btn btn-primary">View All Projects</a>
+      <a href="/our-work.php" class="btn btn-primary">View All Projects</a>
     </div>
   </div>
 </section>
@@ -332,7 +332,7 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
     </div>
     <div class="blog-grid">
       <?php foreach ($latestPosts as $post): ?>
-      <a href="/blog-post?slug=<?= urlencode($post['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
+      <a href="/blog-post.php?slug=<?= urlencode($post['slug']) ?>" class="blog-card" style="display:block;text-decoration:none;color:inherit">
         <div class="blog-thumb">
           <?php if ($post['image']): ?>
             <img src="<?= SITE_URL ?>/uploads/blog/<?= sanitize($post['image']) ?>" alt="<?= sanitize($post['title']) ?>" loading="lazy">
@@ -350,7 +350,7 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
       <?php endforeach; ?>
     </div>
     <div style="text-align:center;margin-top:2.5rem">
-      <a href="/blog" class="btn btn-dark">View All Posts</a>
+      <a href="/blog.php" class="btn btn-dark">View All Posts</a>
     </div>
   </div>
 </section>

@@ -102,7 +102,7 @@ $nzCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             <?php if ($auCities): ?>
             <ul class="location-city-list">
               <?php foreach ($auCities as $c): ?>
-              <li><a href="/location?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+              <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
               <?php endforeach; ?>
             </ul>
             <?php endif; ?>
@@ -112,7 +112,7 @@ $nzCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             <?php if ($ukCities): ?>
             <ul class="location-city-list">
               <?php foreach ($ukCities as $c): ?>
-              <li><a href="/location?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+              <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
               <?php endforeach; ?>
             </ul>
             <?php endif; ?>
@@ -122,7 +122,7 @@ $nzCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             <?php if ($usCities): ?>
             <ul class="location-city-list">
               <?php foreach ($usCities as $c): ?>
-              <li><a href="/location?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+              <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
               <?php endforeach; ?>
             </ul>
             <?php endif; ?>
@@ -132,7 +132,7 @@ $nzCities = $db->query("SELECT city, slug FROM locations WHERE active=1 AND coun
             <?php if ($nzCities): ?>
             <ul class="location-city-list">
               <?php foreach ($nzCities as $c): ?>
-              <li><a href="/location?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
+              <li><a href="/location.php?slug=<?= urlencode($c['slug']) ?>"><?= sanitize($c['city']) ?></a></li>
               <?php endforeach; ?>
             </ul>
             <?php endif; ?>
