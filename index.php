@@ -248,34 +248,46 @@ $whyUsImages   = $db->query("SELECT title, image FROM projects WHERE active=1 AN
 <?php endif; ?>
 
 <!-- ===== CLIENT LOGOS ===== -->
-<?php if ($clientLogos): ?>
+<?php if ($clientLogos):
+  $logosMid  = (int) ceil(count($clientLogos) / 2);
+  $logosRow1 = array_slice($clientLogos, 0, $logosMid);
+  $logosRow2 = array_slice($clientLogos, $logosMid) ?: $clientLogos;
+?>
 <section class="section">
   <div class="container">
     <div class="section-header logos-section-header">
       <h2 class="logos-heading">Trusted by 130+ Businesses Across Australia & Sri Lanka</h2>
     </div>
   </div>
-  <div class="logos-scroll-wrap">
-    <div class="logos-scroll" id="logosScroll">
-      <?php foreach ($clientLogos as $logo): ?>
-      <div class="logos-item">
-        <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>" loading="lazy">
+  <div class="logos-rows">
+    <div class="logos-scroll-wrap">
+      <div class="logos-scroll" id="logosScrollRow1">
+        <?php foreach ($logosRow1 as $logo): ?>
+        <div class="logos-item">
+          <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>" loading="lazy">
+        </div>
+        <?php endforeach; ?>
+        <?php foreach ($logosRow1 as $logo): ?>
+        <div class="logos-item" aria-hidden="true">
+          <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="" loading="lazy">
+        </div>
+        <?php endforeach; ?>
       </div>
-      <?php endforeach; ?>
-      <?php foreach ($clientLogos as $logo): ?>
-      <div class="logos-item" aria-hidden="true">
-        <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="" loading="lazy">
-      </div>
-      <?php endforeach; ?>
     </div>
-    <?php if (count($clientLogos) > 1): ?>
-    <button class="logos-arrow logos-arrow-prev" aria-label="Previous logos">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button class="logos-arrow logos-arrow-next" aria-label="Next logos">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
-    <?php endif; ?>
+    <div class="logos-scroll-wrap">
+      <div class="logos-scroll" id="logosScrollRow2">
+        <?php foreach ($logosRow2 as $logo): ?>
+        <div class="logos-item">
+          <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="<?= sanitize($logo['name']) ?>" loading="lazy">
+        </div>
+        <?php endforeach; ?>
+        <?php foreach ($logosRow2 as $logo): ?>
+        <div class="logos-item" aria-hidden="true">
+          <img src="<?= SITE_URL ?>/uploads/logos/<?= sanitize($logo['image']) ?>" alt="" loading="lazy">
+        </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
   </div>
 </section>
 <?php endif; ?>

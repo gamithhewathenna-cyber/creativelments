@@ -167,60 +167,36 @@ if (portfolioScroll && portfolioPrev && portfolioNext) {
   portfolioNext.addEventListener('click', () => portfolioScroll.scrollBy({ left: scrollStep(), behavior: 'smooth' }));
 }
 
-// ---- Client Logos auto-scrolling marquee + arrows ----
-const logosScroll = document.getElementById('logosScroll');
-if (logosScroll) {
-  const logosPrev = document.querySelector('.logos-arrow-prev');
-  const logosNext = document.querySelector('.logos-arrow-next');
+// ---- Client Logos auto-scrolling marquee (two rows, opposite directions) ----
+[
+  { el: document.getElementById('logosScrollRow1'), direction: 1 },
+  { el: document.getElementById('logosScrollRow2'), direction: -1 },
+].forEach(({ el, direction }) => {
+  if (!el) return;
 
-  const logoStep = () => {
-    const item = logosScroll.querySelector('.logos-item');
-    return item ? item.offsetWidth + 48 : 180;
-  };
-
-  // The logo list is rendered twice back-to-back, so the halfway point of the
-  // scrollable width is an identical match to the start — wrapping there is seamless.
+  // Each row's logo list is rendered twice back-to-back, so the halfway point of
+  // the scrollable width is an identical match to the start — wrapping there is seamless.
   const wrapLogosScroll = () => {
-    const half = logosScroll.scrollWidth / 2;
-    if (logosScroll.scrollLeft >= half) logosScroll.scrollLeft -= half;
-    else if (logosScroll.scrollLeft <= 0) logosScroll.scrollLeft += half;
+    const half = el.scrollWidth / 2;
+    if (el.scrollLeft >= half) el.scrollLeft -= half;
+    else if (el.scrollLeft <= 0) el.scrollLeft += half;
   };
+
+  if (direction < 0) el.scrollLeft = el.scrollWidth / 2;
 
   let logosAutoTimer;
   const startLogosAuto = () => {
     logosAutoTimer = setInterval(() => {
-      logosScroll.scrollLeft += 1;
+      el.scrollLeft += direction;
       wrapLogosScroll();
     }, 25);
   };
   const stopLogosAuto = () => clearInterval(logosAutoTimer);
 
-  // Pause auto-scroll during a manual arrow click and resume only after the
-  // smooth-scroll animation finishes — restarting immediately would set
-  // scrollLeft directly on the very next tick and cancel the animation.
-  let logosResumeTimer;
-  const pauseLogosAuto = () => {
-    stopLogosAuto();
-    clearTimeout(logosResumeTimer);
-    logosResumeTimer = setTimeout(startLogosAuto, 700);
-  };
-
   startLogosAuto();
-  logosScroll.addEventListener('mouseenter', stopLogosAuto);
-  logosScroll.addEventListener('mouseleave', () => {
-    clearTimeout(logosResumeTimer);
-    startLogosAuto();
-  });
-
-  if (logosPrev) logosPrev.addEventListener('click', () => {
-    pauseLogosAuto();
-    logosScroll.scrollBy({ left: -logoStep(), behavior: 'smooth' });
-  });
-  if (logosNext) logosNext.addEventListener('click', () => {
-    pauseLogosAuto();
-    logosScroll.scrollBy({ left: logoStep(), behavior: 'smooth' });
-  });
-}
+  el.addEventListener('mouseenter', stopLogosAuto);
+  el.addEventListener('mouseleave', startLogosAuto);
+});
 
 // ---- Blog post: copy link share button ----
 const blogShareCopy = document.querySelector('.blog-share-copy');
