@@ -139,8 +139,14 @@ if (isset($_GET['msg']) && isset($postMsgs[$_GET['msg']])): ?>
   <div class="card-body">
     <form method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $ep['id'] ?? 0 ?>">
-      <div class="form-group"><label>Title *</label><input name="title" required value="<?= sanitize($ep['title'] ?? '') ?>" oninput="autoSlug(this)"></div>
-      <div class="form-group"><label>URL Slug</label><input name="slug" id="slug" value="<?= sanitize($ep['slug'] ?? '') ?>"></div>
+      <div class="form-group"><label>Title *</label><input name="title" required value="<?= sanitize($ep['title'] ?? '') ?>"<?= $ep ? '' : ' oninput="autoSlug(this)"' ?>></div>
+      <div class="form-group">
+        <label>URL Slug</label>
+        <input name="slug" id="slug" value="<?= sanitize($ep['slug'] ?? '') ?>">
+        <?php if ($ep): ?>
+        <small style="color:#8892A4;display:block;margin-top:.4rem">Changing this will change the post's live URL and break any existing links to it — only edit it if you're sure.</small>
+        <?php endif; ?>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label>Category</label>
