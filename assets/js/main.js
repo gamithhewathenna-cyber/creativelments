@@ -15,9 +15,10 @@ document.addEventListener('click', (e) => {
   if (url.origin !== window.location.origin) return;
   if (url.href === window.location.href) return;
 
-  e.preventDefault();
+  // Let the browser navigate immediately (no artificial delay) — the fade plays
+  // visually over whatever natural loading time the destination page takes, so a
+  // heavier page never sits on a blank white screen waiting for a fixed timeout.
   document.body.classList.add('page-exiting');
-  setTimeout(() => { window.location.href = url.href; }, 280);
 });
 
 // ---- Custom cursor (desktop with a real mouse only) ----
