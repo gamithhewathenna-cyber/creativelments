@@ -175,7 +175,7 @@ if (isset($_GET['msg']) && isset($postMsgs[$_GET['msg']])): ?>
       <div class="form-group"><label>Excerpt</label><textarea name="excerpt" style="min-height:80px"><?= sanitize($ep['excerpt'] ?? '') ?></textarea></div>
       <div class="form-group">
         <label>Content</label>
-        <textarea name="content" style="min-height:300px"><?= sanitize($ep['content'] ?? '') ?></textarea>
+        <textarea name="content" style="min-height:300px"><?= htmlspecialchars($ep['content'] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
         <small style="color:#8892A4;display:block;margin-top:.4rem">You can write HTML here (e.g. copy-paste formatted content from another editor) — it will be rendered on the blog page using the site's own fonts and colors. Paste just the article content, not a full HTML page (any &lt;style&gt;/&lt;script&gt; tags are automatically removed).</small>
       </div>
 
