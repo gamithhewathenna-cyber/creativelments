@@ -1025,6 +1025,12 @@ body.page-index .navbar.scrolled {
 .contact-form-underline .form-group textarea { min-height: 80px; }
 .contact-form-underline .btn { margin-top: .5rem; align-self: flex-start; }
 
+/* Word verification */
+.captcha-row { display: flex; align-items: center; gap: .6rem; }
+.captcha-image { display: block; width: 230px; max-width: 100%; height: auto; aspect-ratio: 23 / 6; border-radius: 8px; background: #F1F5F9; }
+.captcha-refresh { flex-shrink: 0; width: 40px; height: 40px; border: 1.5px solid #E2E8F0; border-radius: 8px; background: white; color: var(--primary); font-size: 1.2rem; line-height: 1; cursor: pointer; transition: border-color .2s; }
+.captcha-refresh:hover { border-color: var(--primary); }
+
 @media (max-width: 860px) {
   .contact-card-wrap { grid-template-columns: 1fr; border-radius: 16px; }
   .contact-card-info, .contact-card-form { padding: 2rem 1.5rem; }

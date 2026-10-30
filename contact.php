@@ -75,6 +75,14 @@ echo renderBreadcrumbs([
             <label for="message">Message</label>
             <textarea id="message" name="message" required placeholder="Write here your message"></textarea>
           </div>
+          <div class="form-group">
+            <label for="captcha">Type the word shown</label>
+            <div class="captcha-row">
+              <img id="captchaImage" class="captcha-image" alt="Verification word" width="230" height="60">
+              <button type="button" class="captcha-refresh" id="captchaRefresh" aria-label="Show a different word">↻</button>
+            </div>
+            <input type="text" id="captcha" name="captcha" required maxlength="6" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Enter the word">
+          </div>
           <button type="submit" class="btn btn-primary">Send Message</button>
         </form>
       </div>

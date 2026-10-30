@@ -263,6 +263,17 @@ if (projectModal) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProjectModal(); });
 }
 
+// ---- Contact form word verification ----
+// Each load of /captcha.php starts a new challenge on the server.
+function refreshCaptcha() {
+  const captchaImage = document.getElementById('captchaImage');
+  if (!captchaImage) return;
+  captchaImage.src = '/captcha.php?t=' + Date.now();
+  document.getElementById('captcha').value = '';
+}
+const captchaRefresh = document.getElementById('captchaRefresh');
+if (captchaRefresh) captchaRefresh.addEventListener('click', refreshCaptcha);
+
 // ---- Floating Contact button popup ----
 const contactModal    = document.getElementById('contactModal');
 const contactFloatBtn = document.getElementById('contactFloatBtn');
@@ -272,6 +283,8 @@ if (contactModal && contactFloatBtn) {
   const openContactModal = () => {
     contactModal.classList.add('open');
     document.body.style.overflow = 'hidden';
+    // Loaded on first open, so ordinary page views don't generate a challenge
+    if (!document.getElementById('captchaImage').getAttribute('src')) refreshCaptcha();
   };
   const closeContactModal = () => {
     contactModal.classList.remove('open');
@@ -362,6 +375,8 @@ document.querySelectorAll('.counter, .reveal').forEach(el => observer.observe(el
 // ---- AJAX Contact Form ----
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+  if (!contactModal) refreshCaptcha(); // contact page: the form is visible straight away
+
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('[type=submit]');
@@ -392,6 +407,7 @@ if (contactForm) {
     } finally {
       btn.disabled = false;
       btn.textContent = 'Send Message';
+      refreshCaptcha(); // every attempt gets a new word
     }
   });
 }

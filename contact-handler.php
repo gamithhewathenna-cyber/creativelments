@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/config.php';
 require_once 'includes/smtp-mailer.php';
+require_once 'includes/captcha.php';
 
 header('Content-Type: application/json');
 
@@ -23,6 +24,12 @@ if (strlen($message) < 10)           $errors[] = 'Message is too short.';
 
 if ($errors) {
     echo json_encode(['ok' => false, 'message' => implode(' ', $errors)]);
+    exit;
+}
+
+// Checked last so a typo in another field doesn't use up the word.
+if (!verifyCaptcha($_POST['captcha'] ?? '')) {
+    echo json_encode(['ok' => false, 'message' => "The verification word didn't match. Please type the new word shown."]);
     exit;
 }
 
